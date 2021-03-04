@@ -13,6 +13,7 @@
 		B8E1CBA825F14C2D00493EC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E1CBA725F14C2D00493EC5 /* Preview Assets.xcassets */; };
 		B8E1CBB325F14C2D00493EC5 /* StudySnapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBB225F14C2D00493EC5 /* StudySnapTests.swift */; };
 		B8E1CBBE25F14C2D00493EC5 /* StudySnapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */; };
+		B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		B8E1CBB925F14C2D00493EC5 /* StudySnapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudySnapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapUITests.swift; sourceTree = "<group>"; };
 		B8E1CBBF25F14C2D00493EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		B8E1CB9F25F14C2C00493EC5 /* StudySnap */ = {
 			isa = PBXGroup;
 			children = (
+				B8E1CBD725F179CD00493EC5 /* Authentication */,
 				B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */,
 				B8E1CBA225F14C2C00493EC5 /* ContentView.swift */,
 				B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */,
@@ -128,6 +131,14 @@
 				B8E1CBBF25F14C2D00493EC5 /* Info.plist */,
 			);
 			path = StudySnapUITests;
+			sourceTree = "<group>";
+		};
+		B8E1CBD725F179CD00493EC5 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */,
+				B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */,
 				B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
