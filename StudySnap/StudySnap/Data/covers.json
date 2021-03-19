@@ -1,0 +1,26 @@
+[
+  {
+    "id" : 1,
+    "note" : "Science Class Note",
+    "user" : "Ben Sykes",
+    "name" : "cover-lion"
+  },
+  {
+    "id" : 2,
+    "note" : "Biology 101: Introduction",
+    "user" : "Liam Stickney",
+    "name" : "cover-elephant"
+  },
+  {
+    "id" : 3,
+    "note" : "Chemistry 101: Introduction",
+    "user" : "Sheharyaar",
+    "name" : "cover-cheetah"
+  },
+  {
+    "id" : 4,
+    "note" : "Physics 101: Introduciton",
+    "user" : "Stranger",
+    "name" : "cover-zebra"+
+  }
+]

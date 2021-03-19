@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Landing Page@2x.png",
+      "filename" : "cover-elephant.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Landing Page@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Landing Page@2x@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

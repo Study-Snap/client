@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C5952FE29B2494732B0195D /* libPods-StudySnapTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F660D743C9FD44444E8D6FAB /* libPods-StudySnapTests.a */; };
+		4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04FD6C2603F16B00895B0D /* StartButtonView.swift */; };
+		4A04FD7A2604368900895B0D /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04FD792604368900895B0D /* OnBoardingView.swift */; };
+		4A0739B5260530A800A823DF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739B4260530A800A823DF /* MainView.swift */; };
+		4A0739BD2605340D00A823DF /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739BC2605340D00A823DF /* StorageView.swift */; };
+		4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* RecommendationView.swift */; };
+		4A0739FB26054C6100A823DF /* splash3.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A0739FA26054C6000A823DF /* splash3.json */; };
+		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
+		4A073A112605574700A823DF /* covers.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A073A102605574700A823DF /* covers.json */; };
+		4A073A172605579200A823DF /* CoverImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A162605579200A823DF /* CoverImageModel.swift */; };
+		4A073A2B260559C700A823DF /* CodableBundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A2A260559C700A823DF /* CodableBundleExtension.swift */; };
+		4C488D540139899A89853BDC /* libPods-StudySnap-StudySnapUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF12A375BBA691DCD5031DA /* libPods-StudySnap-StudySnapUITests.a */; };
 		B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */; };
 		B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA225F14C2C00493EC5 /* ContentView.swift */; };
 		B8E1CBA525F14C2D00493EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */; };
@@ -14,6 +26,7 @@
 		B8E1CBB325F14C2D00493EC5 /* StudySnapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBB225F14C2D00493EC5 /* StudySnapTests.swift */; };
 		B8E1CBBE25F14C2D00493EC5 /* StudySnapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */; };
 		B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */; };
+		E56D5F316E04E1ECD074511E /* libPods-StudySnap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E584F0C4BDA2B7E0FE157EAD /* libPods-StudySnap.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +47,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23B632DA64E11DA0D2A7EE81 /* Pods-StudySnap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnap.debug.xcconfig"; path = "Target Support Files/Pods-StudySnap/Pods-StudySnap.debug.xcconfig"; sourceTree = "<group>"; };
+		295BA7CA171A209CA10A7A4D /* Pods-StudySnap-StudySnapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnap-StudySnapUITests.release.xcconfig"; path = "Target Support Files/Pods-StudySnap-StudySnapUITests/Pods-StudySnap-StudySnapUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3061487DCEA15032B9DADD7D /* Pods-StudySnap-StudySnapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnap-StudySnapUITests.debug.xcconfig"; path = "Target Support Files/Pods-StudySnap-StudySnapUITests/Pods-StudySnap-StudySnapUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4A04FD6C2603F16B00895B0D /* StartButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonView.swift; sourceTree = "<group>"; };
+		4A04FD792604368900895B0D /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		4A0739B4260530A800A823DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4A0739BC2605340D00A823DF /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
+		4A0739C1260534B000A823DF /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
+		4A0739FA26054C6000A823DF /* splash3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash3.json; sourceTree = "<group>"; };
+		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
+		4A073A102605574700A823DF /* covers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = covers.json; sourceTree = "<group>"; };
+		4A073A162605579200A823DF /* CoverImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverImageModel.swift; sourceTree = "<group>"; };
+		4A073A2A260559C700A823DF /* CodableBundleExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodableBundleExtension.swift; sourceTree = "<group>"; };
+		6BF12A375BBA691DCD5031DA /* libPods-StudySnap-StudySnapUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StudySnap-StudySnapUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E1CB9D25F14C2C00493EC5 /* StudySnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudySnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapApp.swift; sourceTree = "<group>"; };
 		B8E1CBA225F14C2C00493EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -47,6 +74,11 @@
 		B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapUITests.swift; sourceTree = "<group>"; };
 		B8E1CBBF25F14C2D00493EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		BFA3B561B564258116605BED /* Pods-StudySnapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnapTests.release.xcconfig"; path = "Target Support Files/Pods-StudySnapTests/Pods-StudySnapTests.release.xcconfig"; sourceTree = "<group>"; };
+		E0040AC529931BEA7094985D /* Pods-StudySnapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnapTests.debug.xcconfig"; path = "Target Support Files/Pods-StudySnapTests/Pods-StudySnapTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E584F0C4BDA2B7E0FE157EAD /* libPods-StudySnap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StudySnap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8AC18EBCB8E5847C19E3654 /* Pods-StudySnap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudySnap.release.xcconfig"; path = "Target Support Files/Pods-StudySnap/Pods-StudySnap.release.xcconfig"; sourceTree = "<group>"; };
+		F660D743C9FD44444E8D6FAB /* libPods-StudySnapTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StudySnapTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56D5F316E04E1ECD074511E /* libPods-StudySnap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5952FE29B2494732B0195D /* libPods-StudySnapTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +102,83 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C488D540139899A89853BDC /* libPods-StudySnap-StudySnapUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A04FD6B2603F07A00895B0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A0739FA26054C6000A823DF /* splash3.json */,
+				4A04FD6C2603F16B00895B0D /* StartButtonView.swift */,
+				4A04FD792604368900895B0D /* OnBoardingView.swift */,
+				4A0739BC2605340D00A823DF /* StorageView.swift */,
+				4A0739C1260534B000A823DF /* RecommendationView.swift */,
+				4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4A0739C6260534C100A823DF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */,
+				B8E1CBA225F14C2C00493EC5 /* ContentView.swift */,
+				4A0739B4260530A800A823DF /* MainView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4A073A0F2605572E00A823DF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4A073A102605574700A823DF /* covers.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4A073A152605577800A823DF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A073A162605579200A823DF /* CoverImageModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4A073A29260559B800A823DF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4A073A2A260559C700A823DF /* CodableBundleExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7E99872A99072DDC46BF6A7C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				23B632DA64E11DA0D2A7EE81 /* Pods-StudySnap.debug.xcconfig */,
+				E8AC18EBCB8E5847C19E3654 /* Pods-StudySnap.release.xcconfig */,
+				3061487DCEA15032B9DADD7D /* Pods-StudySnap-StudySnapUITests.debug.xcconfig */,
+				295BA7CA171A209CA10A7A4D /* Pods-StudySnap-StudySnapUITests.release.xcconfig */,
+				E0040AC529931BEA7094985D /* Pods-StudySnapTests.debug.xcconfig */,
+				BFA3B561B564258116605BED /* Pods-StudySnapTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B88869A83C33FC114353FC83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E584F0C4BDA2B7E0FE157EAD /* libPods-StudySnap.a */,
+				6BF12A375BBA691DCD5031DA /* libPods-StudySnap-StudySnapUITests.a */,
+				F660D743C9FD44444E8D6FAB /* libPods-StudySnapTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B8E1CB9425F14C2C00493EC5 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +186,8 @@
 				B8E1CBB125F14C2D00493EC5 /* StudySnapTests */,
 				B8E1CBBC25F14C2D00493EC5 /* StudySnapUITests */,
 				B8E1CB9E25F14C2C00493EC5 /* Products */,
+				7E99872A99072DDC46BF6A7C /* Pods */,
+				B88869A83C33FC114353FC83 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,9 +204,12 @@
 		B8E1CB9F25F14C2C00493EC5 /* StudySnap */ = {
 			isa = PBXGroup;
 			children = (
+				4A073A29260559B800A823DF /* Extensions */,
+				4A073A152605577800A823DF /* Model */,
+				4A073A0F2605572E00A823DF /* Data */,
+				4A0739C6260534C100A823DF /* App */,
+				4A04FD6B2603F07A00895B0D /* View */,
 				B8E1CBD725F179CD00493EC5 /* Authentication */,
-				B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */,
-				B8E1CBA225F14C2C00493EC5 /* ContentView.swift */,
 				B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */,
 				B8E1CBA925F14C2D00493EC5 /* Info.plist */,
 				B8E1CBA625F14C2D00493EC5 /* Preview Content */,
@@ -148,6 +258,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8E1CBC225F14C2D00493EC5 /* Build configuration list for PBXNativeTarget "StudySnap" */;
 			buildPhases = (
+				B9025788883C32A6A4E09C9E /* [CP] Check Pods Manifest.lock */,
 				B8E1CB9925F14C2C00493EC5 /* Sources */,
 				B8E1CB9A25F14C2C00493EC5 /* Frameworks */,
 				B8E1CB9B25F14C2C00493EC5 /* Resources */,
@@ -165,6 +276,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8E1CBC525F14C2D00493EC5 /* Build configuration list for PBXNativeTarget "StudySnapTests" */;
 			buildPhases = (
+				0FA61A765F329AAB9CDE54C3 /* [CP] Check Pods Manifest.lock */,
 				B8E1CBAA25F14C2D00493EC5 /* Sources */,
 				B8E1CBAB25F14C2D00493EC5 /* Frameworks */,
 				B8E1CBAC25F14C2D00493EC5 /* Resources */,
@@ -183,6 +295,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8E1CBC825F14C2D00493EC5 /* Build configuration list for PBXNativeTarget "StudySnapUITests" */;
 			buildPhases = (
+				659545A187BBF81092C20F21 /* [CP] Check Pods Manifest.lock */,
 				B8E1CBB525F14C2D00493EC5 /* Sources */,
 				B8E1CBB625F14C2D00493EC5 /* Frameworks */,
 				B8E1CBB725F14C2D00493EC5 /* Resources */,
@@ -244,6 +357,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0739FB26054C6100A823DF /* splash3.json in Resources */,
+				4A073A112605574700A823DF /* covers.json in Resources */,
 				B8E1CBA825F14C2D00493EC5 /* Preview Assets.xcassets in Resources */,
 				B8E1CBA525F14C2D00493EC5 /* Assets.xcassets in Resources */,
 			);
@@ -265,14 +380,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0FA61A765F329AAB9CDE54C3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StudySnapTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		659545A187BBF81092C20F21 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StudySnap-StudySnapUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9025788883C32A6A4E09C9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StudySnap-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B8E1CB9925F14C2C00493EC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
+				4A073A2B260559C700A823DF /* CodableBundleExtension.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */,
+				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
+				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
+				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
+				4A073A172605579200A823DF /* CoverImageModel.swift in Sources */,
+				4A04FD7A2604368900895B0D /* OnBoardingView.swift in Sources */,
 				B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */,
 				B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */,
+				4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +618,7 @@
 		};
 		B8E1CBC325F14C2D00493EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23B632DA64E11DA0D2A7EE81 /* Pods-StudySnap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -448,6 +641,7 @@
 		};
 		B8E1CBC425F14C2D00493EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8AC18EBCB8E5847C19E3654 /* Pods-StudySnap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -470,6 +664,7 @@
 		};
 		B8E1CBC625F14C2D00493EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0040AC529931BEA7094985D /* Pods-StudySnapTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -492,6 +687,7 @@
 		};
 		B8E1CBC725F14C2D00493EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFA3B561B564258116605BED /* Pods-StudySnapTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -514,6 +710,7 @@
 		};
 		B8E1CBC925F14C2D00493EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3061487DCEA15032B9DADD7D /* Pods-StudySnap-StudySnapUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -534,6 +731,7 @@
 		};
 		B8E1CBCA25F14C2D00493EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 295BA7CA171A209CA10A7A4D /* Pods-StudySnap-StudySnapUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
