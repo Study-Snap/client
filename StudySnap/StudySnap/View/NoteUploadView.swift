@@ -9,8 +9,31 @@ import SwiftUI
 
 struct NoteUploadView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var textValue = ""
+    @State var title: String  = ""
+    @State var author: String  = ""
+    @State var keywords: String  = ""
+    @State var subject: String  = ""
+    @State var length = 0
+    //@State var notes: [Note] = Bundle.main.decode("notes_data.json")
+    @ObservedObject var globalString = GlobalString()
+//    func writeJSON(items: [Note]) {
+//     do {
+//     let fileURL = try FileManager.default.url(for: .desktopDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//     .appendingPathComponent("notes_data.json")
+//
+//     let encoder = JSONEncoder()
+//        try encoder.encode(globalString.notesData).write(to: fileURL)
+//     } catch {
+//     print(error.localizedDescription)
+//     }
+//     }
+    let formatter: NumberFormatter = {
+     let formatter = NumberFormatter()
+     formatter.numberStyle = .decimal
+     return formatter
+     }()
     var body: some View {
+        
         //Note Upload
         NavigationView {
             VStack {
@@ -23,22 +46,26 @@ struct NoteUploadView: View {
                         
                         //Note Upload
                         
-                        TextField("Title", text: $textValue)
+                        TextField("Title", text: $title)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.vertical, 10)
-                        TextField("Author", text: $textValue)
+                        
+                        TextField("Author", text: $author)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
                         
-                        TextField("Keywords", text: $textValue)
+                        TextField("Keywords", text: $keywords)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
-                        TextField("Subject", text: $textValue)
+                        TextField("Subject", text: $subject)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
-                        TextField("Length", text: $textValue)
+                        TextField("Length", value: $length, formatter: formatter)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
+                        
+                        
+                        
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -51,15 +78,29 @@ struct NoteUploadView: View {
                                 .resizable()
                                 .frame(width: 80, height: 75, alignment: .center)
                         }
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color("Primary"))
-                                .frame(width: 370, height: 70)
+                        
+                        
+                        Button(action: {
                             
-                            //Upload!
-                            Text("Upload!").font(.custom("Inter Semi Bold", size: 24)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
-                                .padding()
+//                            globalString.notesData.append(Note(id: 26,title: title, author: author, keywords: [keywords], subject: [subject], length: 25, image: "doc.text.fill", isOnline: false, rating: 3, description: "This is some random text to check note insertion"))
+//
+//
+//                            writeJSON(items: globalString.notesData)
+//
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color("Primary"))
+                                    .frame(width: 370, height: 70)
+                                
+                                
+                                //Upload!
+                                Text("Upload!").font(.custom("Inter Semi Bold", size: 24)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
+                            }
                         }
+                        
                         
                     }.padding()
                 }
@@ -78,6 +119,10 @@ struct NoteUploadView: View {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width:25, height:25)
+                            .foregroundColor(Color("Primary"))
+                    
                     }
             )
             
@@ -88,6 +133,6 @@ struct NoteUploadView: View {
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView()
+        NoteUploadView().previewDevice("iPhone 12 Pro")
     }
 }

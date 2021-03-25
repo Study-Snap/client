@@ -20,13 +20,13 @@ struct MainView: View {
             
             StorageView()
               .tabItem {
-                Image(systemName: "map")
+                Image(systemName: "photo.on.rectangle")
                 Text("Storage")
               }
             
             RecommendationView()
               .tabItem {
-                Image(systemName: "photo")
+                Image(systemName: "questionmark")
                 Text("Recommendation")
               }
             
@@ -37,5 +37,7 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+        
+            
     }
 }

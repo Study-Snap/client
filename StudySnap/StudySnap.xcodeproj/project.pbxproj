@@ -10,10 +10,14 @@
 		4A01252B260BE55E009E3F6B /* FruitDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01252A260BE55E009E3F6B /* FruitDataView.swift */; };
 		4A012530260BE58B009E3F6B /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01252F260BE58B009E3F6B /* NoteRowView.swift */; };
 		4A012535260BE633009E3F6B /* FruitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A012534260BE633009E3F6B /* FruitModel.swift */; };
-		4A012555260BFBE0009E3F6B /* CodeableBundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A012554260BFBE0009E3F6B /* CodeableBundleExtension.swift */; };
 		4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01255F260C000D009E3F6B /* NoteUploadView.swift */; };
 		4A01256B260C1AC3009E3F6B /* LocalNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */; };
 		4A012570260C1AE1009E3F6B /* CloudNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */; };
+		4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A012574260C1E9A009E3F6B /* NoteModel.swift */; };
+		4A012585260C22FD009E3F6B /* notes_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A012584260C22FD009E3F6B /* notes_data.json */; };
+		4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A012609260C46C0009E3F6B /* NoteRatingView.swift */; };
+		4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0126A2260C722C009E3F6B /* CodableExtension.swift */; };
+		4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0126F0260C8A58009E3F6B /* NoteDataView.swift */; };
 		4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04FD6C2603F16B00895B0D /* StartButtonView.swift */; };
 		4A04FD7A2604368900895B0D /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04FD792604368900895B0D /* OnBoardingView.swift */; };
 		4A0739B5260530A800A823DF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739B4260530A800A823DF /* MainView.swift */; };
@@ -53,10 +57,14 @@
 		4A01252A260BE55E009E3F6B /* FruitDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitDataView.swift; sourceTree = "<group>"; };
 		4A01252F260BE58B009E3F6B /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
 		4A012534260BE633009E3F6B /* FruitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitModel.swift; sourceTree = "<group>"; };
-		4A012554260BFBE0009E3F6B /* CodeableBundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeableBundleExtension.swift; sourceTree = "<group>"; };
 		4A01255F260C000D009E3F6B /* NoteUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadView.swift; sourceTree = "<group>"; };
 		4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNoteView.swift; sourceTree = "<group>"; };
 		4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudNoteView.swift; sourceTree = "<group>"; };
+		4A012574260C1E9A009E3F6B /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
+		4A012584260C22FD009E3F6B /* notes_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notes_data.json; sourceTree = "<group>"; };
+		4A012609260C46C0009E3F6B /* NoteRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRatingView.swift; sourceTree = "<group>"; };
+		4A0126A2260C722C009E3F6B /* CodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtension.swift; sourceTree = "<group>"; };
+		4A0126F0260C8A58009E3F6B /* NoteDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataView.swift; sourceTree = "<group>"; };
 		4A04FD6C2603F16B00895B0D /* StartButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonView.swift; sourceTree = "<group>"; };
 		4A04FD792604368900895B0D /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		4A0739B4260530A800A823DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 				4A01255F260C000D009E3F6B /* NoteUploadView.swift */,
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */,
+				4A012609260C46C0009E3F6B /* NoteRatingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -136,8 +145,10 @@
 		4A073A0F2605572E00A823DF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				4A012584260C22FD009E3F6B /* notes_data.json */,
 				4A073A102605574700A823DF /* covers.json */,
 				4A01252A260BE55E009E3F6B /* FruitDataView.swift */,
+				4A0126F0260C8A58009E3F6B /* NoteDataView.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -147,6 +158,7 @@
 			children = (
 				4A073A162605579200A823DF /* CoverImageModel.swift */,
 				4A012534260BE633009E3F6B /* FruitModel.swift */,
+				4A012574260C1E9A009E3F6B /* NoteModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -154,7 +166,7 @@
 		4A073A29260559B800A823DF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4A012554260BFBE0009E3F6B /* CodeableBundleExtension.swift */,
+				4A0126A2260C722C009E3F6B /* CodableExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -336,6 +348,7 @@
 				4A073A112605574700A823DF /* covers.json in Resources */,
 				B8E1CBA825F14C2D00493EC5 /* Preview Assets.xcassets in Resources */,
 				B8E1CBA525F14C2D00493EC5 /* Assets.xcassets in Resources */,
+				4A012585260C22FD009E3F6B /* notes_data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,15 +374,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A012530260BE58B009E3F6B /* NoteRowView.swift in Sources */,
+				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
 				4A01252B260BE55E009E3F6B /* FruitDataView.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */,
+				4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */,
 				4A012570260C1AE1009E3F6B /* CloudNoteView.swift in Sources */,
 				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
-				4A012555260BFBE0009E3F6B /* CodeableBundleExtension.swift in Sources */,
+				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
+				4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */,
 				4A012535260BE633009E3F6B /* FruitModel.swift in Sources */,
 				4A01256B260C1AC3009E3F6B /* LocalNoteView.swift in Sources */,
 				4A073A172605579200A823DF /* CoverImageModel.swift in Sources */,

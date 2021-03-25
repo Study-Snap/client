@@ -9,8 +9,9 @@ import SwiftUI
 
 struct NoteRowView: View {
     
-    var fruit: Fruit
-
+    //var fruit: Fruit
+    var note: Note
+    
     var body: some View {
       HStack {
         VStack {
@@ -21,10 +22,10 @@ struct NoteRowView: View {
     
         }
         VStack(alignment: .leading, spacing: 5) {
-          Text(fruit.title)
+          Text(note.title)
             .font(.title2)
             .fontWeight(.bold)
-          Text(fruit.headline)
+          Text(note.author)
             .font(.caption)
             .foregroundColor(Color.secondary)
         }
@@ -33,8 +34,10 @@ struct NoteRowView: View {
 }
 
 struct NoteRowView_Previews: PreviewProvider {
+    static let notes: [Note] = Bundle.main.decode("notes_data.json")
+    
     static var previews: some View {
-     NoteRowView(fruit: fruitsData[0])
+        NoteRowView(note: notes[0])
           .previewLayout(.sizeThatFits)
           .padding()
     }

@@ -1,7 +1,8 @@
 //
-//  Created by Robert Petras
-//  SwiftUI Masterclass ♥ Better Apps. Less Code.
-//  https://swiftuimasterclass.com 
+//  CodableExtension.swift
+//  StudySnap
+//
+//  Created by Malik Sheharyaar Talhat on 2021-03-25.
 //
 
 import Foundation
@@ -30,5 +31,3 @@ extension Bundle {
     return loaded
   }
 }
-
-

@@ -10,17 +10,53 @@ import SwiftUI
 struct MiniNoteCardView: View {
     
     
-    let coverImages: [CoverImage] = Bundle.main.decode("covers.json")
-     
-    
+    //let notes: [Note] = Bundle.main.decode("notes_data.json")
+
+    @ObservedObject var globalString = GlobalString()
     // MARK: - BODY
     
     var body: some View {
       TabView {
-        ForEach(coverImages) { item in
-          Image(item.name)
-            .resizable()
-            .scaledToFill()
+       
+        ForEach(globalString.notesData) { item in
+
+                VStack {
+                    NavigationLink(destination:{
+                        VStack{
+                            if item.isOnline{
+                                CloudNoteView(note: item)
+                            }else{
+                                LocalNoteView(note: item)
+                            }
+                        }
+                    }()) {Image(systemName: "doc.text.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height:100)
+                        .padding(.top)
+                    }
+                    VStack {
+                        HStack {
+                            VStack {
+                                Text(String(item.title))
+                                
+                            }.padding(.horizontal, 50)
+                            
+                        }
+                        HStack {
+                            VStack{
+                                Text(String(item.author))
+                                    .fontWeight(.bold)
+                            }.padding(.horizontal, 50)
+                            .padding(.bottom)
+                            
+                        }
+                    }
+                    
+                }
+            
+
+            
         } //: LOOP
       } //: TAB
       .tabViewStyle(PageTabViewStyle())
@@ -31,6 +67,7 @@ struct MiniNoteCardView: View {
 struct MiniNoteCardView_Previews: PreviewProvider {
     static var previews: some View {
         MiniNoteCardView()
+            .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 400, height: 300))
     }
 }

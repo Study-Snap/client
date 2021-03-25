@@ -26,7 +26,7 @@ struct ContentView: View {
                     
                     VStack {
                         MiniNoteCardView()
-                            .frame(height: 280)
+                           
                           .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .cornerRadius(20)
                             .padding(.horizontal,25)

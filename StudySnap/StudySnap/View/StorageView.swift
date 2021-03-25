@@ -9,16 +9,30 @@ import SwiftUI
 
 struct StorageView: View {
     @State private var isShowingNotes: Bool = false
-    var fruits: [Fruit] = fruitsData
+    //var fruits: [Fruit] = fruitsData
+    //@State var notes: [Note] = Bundle.main.decode("notes_data.json")
+    @ObservedObject var globalString = GlobalString()
+    @State var isDeleted = false
+
     var body: some View {
       NavigationView {
         List {
-          ForEach(fruits.shuffled()) { item in
-            NavigationLink(destination: OnBoardingView()) {
-              NoteRowView(fruit: item)
-                .padding(.vertical, 4)
+            ForEach(globalString.notesData) { item in
+                NavigationLink(destination:{
+                    VStack{
+                        if item.isOnline{
+                            CloudNoteView(note: item)
+                        }else{
+                            LocalNoteView(note: item)
+                        }
+                    }
+                }()) {
+                    NoteRowView(note: item)
+                        .padding(.vertical, 4)
+                    
+                }
             }
-          }
+            .onDelete(perform: delete)
         }
         .navigationTitle("Storage")
         .navigationBarItems(
@@ -27,6 +41,9 @@ struct StorageView: View {
               isShowingNotes = true
             }) {
               Image(systemName: "plus")
+                .resizable()
+                .frame(width:30, height:30)
+                .foregroundColor(Color("Primary"))
             } //: BUTTON
             .sheet(isPresented: $isShowingNotes) {
               NoteUploadView()
@@ -36,7 +53,14 @@ struct StorageView: View {
       } //: NAVIGATION
       .navigationViewStyle(StackNavigationViewStyle())
     }
+    
+    private func delete(at offSet: IndexSet){
+        globalString.notesData.remove(atOffsets: offSet)
+        isDeleted = true
+        
+    }
 }
+
 
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {

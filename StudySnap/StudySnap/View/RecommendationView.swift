@@ -15,6 +15,7 @@ struct RecommendationView: View {
         ZStack {
             VStack {
                 Text("To be released in 2050")
+                    .font(.largeTitle)
             }
         }
         

@@ -8,13 +8,49 @@
 import SwiftUI
 
 struct LocalNoteView: View {
+    let note: Note
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        //Labore sunt veniam amet es...
+        
+        ScrollView {
+            VStack(alignment: .leading) {
+                        //Science Class Note
+                        Text(note.title)
+                            .font(.title)
+                            .padding(.top)
+                        
+                        Text(note.author)
+                            .font(.headline)
+                            .padding(.vertical)
+                        
+                        Text(note.description)
+                            .font(.body)
+                        
+                        Text("Topic(s): " + note.subject.joined(separator: ", "))
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        
+                        Text("Keywords: " + note.keywords.joined(separator: ", "))
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        
+                        Text("Length: " + String(note.length) + " words")
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        Spacer()
+            }.padding(.horizontal,30)
+        }
+                
+            
+        
     }
 }
 
 struct LocalNoteView_Previews: PreviewProvider {
+    static let notes: [Note] = Bundle.main.decode("notes_data.json")
+    
     static var previews: some View {
-        LocalNoteView()
-    }
+        LocalNoteView(note: notes[0])
+            .previewDevice("iPhone 11")    }
 }
