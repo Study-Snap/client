@@ -47,20 +47,25 @@ struct NoteUploadView: View {
                         
                         TextField("Title", text: $title)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title2)
                             .padding(.vertical, 10)
                         
                         TextField("Author", text: $author)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title2)
                             .padding(.bottom, 10)
                         
                         TextField("Keywords", text: $keywords)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title2)
                             .padding(.bottom, 10)
                         TextField("Subject", text: $subject)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title2)
                             .padding(.bottom, 10)
                         TextField("Length", text: $length)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title2)
                             .padding(.bottom, 10)
                         
                         
@@ -68,7 +73,7 @@ struct NoteUploadView: View {
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(#colorLiteral(red: 0.9647058844566345, green: 0.9647058844566345, blue: 0.9647058844566345, alpha: 1)))
+                                .foregroundColor(Color(.lightGray))
                                 .cornerRadius(20)
                                 .padding(.bottom)
                             
@@ -125,13 +130,13 @@ struct NoteUploadView: View {
                     }
             )
             
-        }
+        }.background(Color(UIColor.systemBackground))
                                      
     }
 }
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView().previewDevice("iPhone 12 Pro")
+        NoteUploadView()
     }
 }

@@ -57,7 +57,7 @@ struct MiniNoteCardView: View {
             
 
             
-        } //: LOOP
+        }//: LOOP
       } //: TAB
       .tabViewStyle(PageTabViewStyle())
     }
@@ -67,7 +67,6 @@ struct MiniNoteCardView: View {
 struct MiniNoteCardView_Previews: PreviewProvider {
     static var previews: some View {
         MiniNoteCardView()
-            .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 400, height: 300))
     }
 }

@@ -10,39 +10,67 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var searchText : String = ""
-    let cars = ["Subaru WRX", "Tesla Model 3", "Porsche 911", "Renault Zoe", "DeLorean", "Mitsubishi Lancer", "Audi RS6"]
-    var fruits: [Fruit] = fruitsData
-
+    @ObservedObject var globalString = GlobalString()
     var body: some View {
-        
+        let notes = globalString.notesData
         TabView {
             
             VStack {
                 //Search
-                Text("Search").font(.custom("Inter Semi Bold", size: 30)).multilineTextAlignment(.center)
-                SearchBar(text: $searchText)
-                    .padding(.horizontal)
+
                 NavigationView {
                     
                     VStack {
+                        SearchBar(text: $searchText)
+                            .padding(.horizontal)
                         MiniNoteCardView()
-                           
-                          .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .cornerRadius(20)
                             .padding(.horizontal,25)
+                            .tabViewStyle(PageTabViewStyle())
+                        
+                        List(notes.filter({searchText.isEmpty ? true : $0.title.contains(searchText)})){
+                            item in
                             
-                        
-                        List {
-
-     
-                            ForEach(self.cars.filter {
-                                self.searchText.isEmpty ? true : $0.lowercased().contains(self.searchText.lowercased())
-                            }, id: \.self) { car in
-                                Text(car)
+                            NavigationLink(destination:{
+                                VStack{
+                                    if item.isOnline{
+                                        CloudNoteView(note: item)
+                                    }else{
+                                        LocalNoteView(note: item)
+                                    }
+                                }
+                            }()) {
+                                Text(item.title).cornerRadius(20)
                             }
-                        }
+                        }.listStyle(InsetGroupedListStyle())
+                
                         
-                    }.navigationTitle("We Recommend")
+                            
+                
+
+//                        List {
+//                            ForEach(globalString.notesData){ item in
+//                                if (self.searchText.isEmpty){
+//                                    noteTitleRow(note: item)
+//                                }else{
+//                                    List(todoItems.filter({ searchText.isEmpty ? true : $0.name.contains(searchText) })) { item in
+//                                        Text(item.name)
+//                                    }
+//                                }
+
+//                                self.searchText.isEmpty ? true : item.title.lowercased().contains(self.searchText.lowercased())
+//                                    noteTitleRow(note: item)
+                                
+                        
+     
+//                            ForEach(globalString.notesData) {
+//                                self.searchText.isEmpty ? true : $0.lowercased().contains(self.searchText.lowercased())
+//                            }, id: \.self) { car in
+//                                Text(car)
+//                            }
+                        
+                        
+                    }.navigationTitle("Search")
                     
                     
                 }
@@ -52,6 +80,7 @@ struct ContentView: View {
     }
     
 }
+
 /*struct AppLogo: View {
     var body: some View {
         ZStack(alignment: .top) {
@@ -110,6 +139,6 @@ struct SearchBar: UIViewRepresentable {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(fruits: fruitsData)
+        ContentView()
     }
 }
