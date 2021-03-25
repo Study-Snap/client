@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    @AppStorage("isAnimated") var isAnimated: Bool?
     var body: some View {
         TabView{
             ContentView()

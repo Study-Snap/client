@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LocalNoteView: View {
     let note: Note
-    
+    @State var showToggle = false
     var body: some View {
         //Labore sunt veniam amet es...
         
@@ -38,12 +38,16 @@ struct LocalNoteView: View {
                         Text("Length: " + String(note.length) + " words")
                             .fontWeight(.bold)
                             .padding(.top)
-                        Spacer()
+                
+                Toggle(isOn: $showToggle){
+                    
+                    Text("Public")
+                    
+                }
+
             }.padding(.horizontal,30)
         }
-                
-            
-        
+ 
     }
 }
 

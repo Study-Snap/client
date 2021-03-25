@@ -27,6 +27,7 @@
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
 		4A073A112605574700A823DF /* covers.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A073A102605574700A823DF /* covers.json */; };
 		4A073A172605579200A823DF /* CoverImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A162605579200A823DF /* CoverImageModel.swift */; };
+		4A65D01E260CFFDE00B0F58B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A65D01D260CFFDE00B0F58B /* ImagePicker.swift */; };
 		B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */; };
 		B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA225F14C2C00493EC5 /* ContentView.swift */; };
 		B8E1CBA525F14C2D00493EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A073A102605574700A823DF /* covers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = covers.json; sourceTree = "<group>"; };
 		4A073A162605579200A823DF /* CoverImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverImageModel.swift; sourceTree = "<group>"; };
+		4A65D01D260CFFDE00B0F58B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B8E1CB9D25F14C2C00493EC5 /* StudySnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudySnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapApp.swift; sourceTree = "<group>"; };
 		B8E1CBA225F14C2C00493EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */,
 				4A012609260C46C0009E3F6B /* NoteRatingView.swift */,
+				4A65D01D260CFFDE00B0F58B /* ImagePicker.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				4A012530260BE58B009E3F6B /* NoteRowView.swift in Sources */,
 				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
+				4A65D01E260CFFDE00B0F58B /* ImagePicker.swift in Sources */,
 				4A01252B260BE55E009E3F6B /* FruitDataView.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */,
 				4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */,

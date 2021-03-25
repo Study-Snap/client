@@ -29,8 +29,8 @@
 	<true/>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIImageName</key>
-		<string>LandingPageBkg</string>
+		<key>UIColorName</key>
+		<string>Primary</string>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

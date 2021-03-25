@@ -13,7 +13,7 @@ struct NoteUploadView: View {
     @State var author: String  = ""
     @State var keywords: String  = ""
     @State var subject: String  = ""
-    @State var length = 0
+    @State var length: String =  ""
     //@State var notes: [Note] = Bundle.main.decode("notes_data.json")
     @ObservedObject var globalString = GlobalString()
 //    func writeJSON(items: [Note]) {
@@ -40,7 +40,6 @@ struct NoteUploadView: View {
                 //Note Upload
                 
                 
-                
                 VStack {
                     VStack {
                         
@@ -60,7 +59,7 @@ struct NoteUploadView: View {
                         TextField("Subject", text: $subject)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
-                        TextField("Length", value: $length, formatter: formatter)
+                        TextField("Length", text: $length)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.bottom, 10)
                         
