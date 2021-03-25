@@ -11,38 +11,43 @@ import SwiftUI
 struct ContentView: View {
     @State private var searchText : String = ""
     let cars = ["Subaru WRX", "Tesla Model 3", "Porsche 911", "Renault Zoe", "DeLorean", "Mitsubishi Lancer", "Audi RS6"]
-
+    var fruits: [Fruit] = fruitsData
 
     var body: some View {
-        VStack {
-            //Search
-            Text("Search").font(.custom("Inter Semi Bold", size: 30)).multilineTextAlignment(.center)
-            SearchBar(text: $searchText)
-                .padding(.horizontal)
-            NavigationView {
-                
-                VStack {
+        
+        TabView {
+            
+            VStack {
+                //Search
+                Text("Search").font(.custom("Inter Semi Bold", size: 30)).multilineTextAlignment(.center)
+                SearchBar(text: $searchText)
+                    .padding(.horizontal)
+                NavigationView {
                     
-                    List {
+                    VStack {
                         MiniNoteCardView()
-                            .frame(height: 300)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            
-                            .padding(.vertical)
+                            .frame(height: 280)
+                          .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .cornerRadius(20)
+                            .padding(.horizontal,25)
                             
                         
-                        ForEach(self.cars.filter {
-                            self.searchText.isEmpty ? true : $0.lowercased().contains(self.searchText.lowercased())
-                        }, id: \.self) { car in
-                            Text(car)
+                        List {
+
+     
+                            ForEach(self.cars.filter {
+                                self.searchText.isEmpty ? true : $0.lowercased().contains(self.searchText.lowercased())
+                            }, id: \.self) { car in
+                                Text(car)
+                            }
                         }
-                    }
+                        
+                    }.navigationTitle("We Recommend")
                     
-                }.navigationTitle("We Recommend")
+                    
+                }
                 
-                
-            }.frame(minWidth: 0/*@END_MENU_TOKEN@*/, idealWidth: 100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity, alignment: /*@START_MENU_TOKEN@*/.center)
-            
+            }
         }
     }
     
@@ -105,6 +110,6 @@ struct SearchBar: UIViewRepresentable {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(fruits: fruitsData)
     }
 }

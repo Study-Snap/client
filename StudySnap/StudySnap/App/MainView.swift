@@ -21,13 +21,13 @@ struct MainView: View {
             StorageView()
               .tabItem {
                 Image(systemName: "map")
-                Text("Recommendation")
+                Text("Storage")
               }
             
             RecommendationView()
               .tabItem {
                 Image(systemName: "photo")
-                Text("Stoarge")
+                Text("Recommendation")
               }
             
         }

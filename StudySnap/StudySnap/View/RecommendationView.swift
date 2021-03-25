@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Lottie
+//import Lottie
 
 struct RecommendationView: View {
     @AppStorage("isAnimated") var isAnimated: Bool = true
@@ -14,10 +14,7 @@ struct RecommendationView: View {
         //Text("This is the recommendation view")
         ZStack {
             VStack {
-                if isAnimated{
-                    SplashScreen()
-                   
-                }
+                Text("To be released in 2050")
             }
         }
         
@@ -29,7 +26,7 @@ struct RecommendationView_Previews: PreviewProvider {
         RecommendationView()
     }
 }
-
+/*
 struct SplashScreen : View{
     var body: some View {
         VStack{
@@ -50,3 +47,4 @@ struct AnimatedView: UIViewRepresentable{
         
     }
 }
+ */

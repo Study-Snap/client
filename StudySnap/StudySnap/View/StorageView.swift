@@ -8,9 +8,33 @@
 import SwiftUI
 
 struct StorageView: View {
-    @AppStorage("isAnimated") var isAnimated: Bool = true
+    @State private var isShowingNotes: Bool = false
+    var fruits: [Fruit] = fruitsData
     var body: some View {
-        Text("Storage View")
+      NavigationView {
+        List {
+          ForEach(fruits.shuffled()) { item in
+            NavigationLink(destination: OnBoardingView()) {
+              NoteRowView(fruit: item)
+                .padding(.vertical, 4)
+            }
+          }
+        }
+        .navigationTitle("Storage")
+        .navigationBarItems(
+          trailing:
+            Button(action: {
+              isShowingNotes = true
+            }) {
+              Image(systemName: "plus")
+            } //: BUTTON
+            .sheet(isPresented: $isShowingNotes) {
+              NoteUploadView()
+            }
+        )
+
+      } //: NAVIGATION
+      .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
