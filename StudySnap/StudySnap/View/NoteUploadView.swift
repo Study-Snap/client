@@ -39,10 +39,6 @@ struct NoteUploadView: View {
             VStack {
                 //Note Upload
                 
-                
-                VStack {
-                    VStack {
-                        
                         //Note Upload
                         
                         TextField("Title", text: $title)
@@ -106,17 +102,11 @@ struct NoteUploadView: View {
                         }
                         
                         
-                    }.padding()
-                }
+                  
+                
                 //Rectangle 2
-                
-                
-                
-                
-                
-                
-            }.navigationTitle(//Note Upload
-                Text("Note Upload"))
+     
+            }
             .navigationBarItems(
                 trailing:
                     Button(action: {
@@ -129,8 +119,12 @@ struct NoteUploadView: View {
                     
                     }
             )
+            .navigationTitle("Note Upload")
             
         }.background(Color(UIColor.systemBackground))
+        .navigationViewStyle(StackNavigationViewStyle())
+        .padding()
+        
                                      
     }
 }

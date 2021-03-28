@@ -13,27 +13,27 @@ struct OnBoardingView: View {
         NavigationView{
             ZStack {
                     //image 1
-                    Image(uiImage: #imageLiteral(resourceName: "LandingPageBkg"))
+                    Image("LandingPageBkg")
                         .resizable()
-                        .scaledToFill()
                         .ignoresSafeArea(.all)
+        
 
                     VStack(alignment: .center) {
-                        
+                        Spacer()
                         Image("Logo")
                             .resizable()
                             .scaledToFit()
-                            .padding(.horizontal, 30)
-                            .padding(.vertical, 110)
+                            .padding(50)
+                        Spacer()
+                        Spacer()
                             
-                        Spacer()
-                        Spacer()
-                        StartButtonView()
-                        Spacer()
+                    
+                        StartButtonView().padding()
+                    
                     }
 
                 }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

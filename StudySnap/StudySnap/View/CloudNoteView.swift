@@ -27,6 +27,7 @@ struct CloudNoteView: View {
                         
                         Text(note.description)
                             .font(.body)
+                 
                         
                         Text("Topic(s): " + note.subject.joined(separator: ", "))
                             .fontWeight(.bold)
@@ -43,7 +44,10 @@ struct CloudNoteView: View {
                 NoteRatingView(note: note)
                     .padding(.vertical)
                    
-                
+              
+            }.padding(.horizontal,30)
+            
+            VStack(alignment: .center) {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
@@ -56,8 +60,7 @@ struct CloudNoteView: View {
 
                     }
                 }
-              
-            }.padding(.horizontal,30)
+            }
         }
                 
             
@@ -70,5 +73,5 @@ struct CloudNoteView_Previews: PreviewProvider {
     
     static var previews: some View {
         CloudNoteView(note: notes[4])
-            .previewDevice("iPhone 11")    }
+          }
 }
