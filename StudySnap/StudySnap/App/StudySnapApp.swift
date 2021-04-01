@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct StudySnapApp: App {
+    @AppStorage("isOnboarding") var isOnboarding: Bool = true
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isOnboarding {
+              OnBoardingView()
+            } else {
+              MainView()
+            }
         }
     }
 }
