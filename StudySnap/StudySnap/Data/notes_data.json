@@ -1,0 +1,87 @@
+[
+  {
+    "id" : 1,
+    "title" : "Science Class Note",
+    "author" : "Ben Sykes",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science","Chemistry"],
+    "length" : 750,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia aliquip commodo deserunt mollit. Duis deserunt quis cillum voluptate duis ipsum quis incididunt elit excepteur excepteur labore duis cillum. Voluptate sint nulla minim eiusmod in nulla. Ea id ad duis esse adipisicing culpa ex esse ea dolore consequat. Reprehenderit eu minim veniam aliquip do ipsum duis do qui adipisicing aliquip ad occaecat.\n\nLorem ipsum dolor sit amet, consectetur adipiscing",
+    "isOnline" : true,
+    "rating" : 4,
+    "image" : "cover-lion"
+  },
+  {
+    "id" : 2,
+    "title" : "Biology 101: Introduction",
+    "author" : "Liam Stickney",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science","Biology"],
+    "length" : 700,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : false,
+    "rating" : 5,
+    "image" : "cover-elephant"
+  },
+  {
+    "id" : 3,
+    "title" : "Chemistry 101: Introduction",
+    "author" : "Sheharyaar",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science, Chemistry"],
+    "length" : 650,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : true,
+    "rating" : 3,
+    "image" : "cover-cheetah"
+  },
+  {
+    "id" : 4,
+    "title" : "Science Class Note",
+    "author" : "Ben Sykes",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science"],
+    "length" : 750,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : false,
+    "rating" : 4,
+    "image" : "cover-zebra"
+  },
+  {
+    "id" : 5,
+    "title" : "Science Class Note",
+    "author" : "Ben Sykes",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science"],
+    "length" : 750,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : true,
+    "rating" : 1,
+    "image" : "cover-buffalo"
+  },
+  {
+    "id" : 6,
+    "title" : "Science Class Note",
+    "author" : "Ben Sykes",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science"],
+    "length" : 750,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : true,
+    "rating" : 3,
+    "image" : "cover-giraffe"
+  },
+  {
+    "id" : 7,
+    "title" : "Science Class Note",
+    "author" : "Ben Sykes",
+    "keywords": ["reaction", "hydrogen", "oxygen"],
+    "subject" : ["Science"],
+    "length" : 750,
+    "description" : "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\nFugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia",
+    "isOnline" : false,
+    "rating" : 5,
+    "image" : "cover-gorilla"
+  }
+]
+
