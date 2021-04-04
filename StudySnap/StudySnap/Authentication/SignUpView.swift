@@ -43,19 +43,19 @@ struct SignUpView: View {
             SecureInputField(fieldHeight: 15,placeholder: "Password Again", value: $passwordCheck).padding(.bottom, 10).padding(.horizontal, 17.5).padding(.top, 15)
             Spacer()
             
-            Button(action: {
-                // Perform Sign Up
-                AuthApi().register(firstName: firstName, lastName: lastName, email: email, password: password) {
-                    (user) in
-                    print(user.firstName)
-                }
-            }, label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color("Primary"))
-                        .frame(width: 370, height: 60)
-                    
-                    Text("Sign Up").font(.custom("Inter Semi Bold", size: 24)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
+            PrimaryButtonView(title: "Sign Up", action: {
+                if password.count > 0 && password == passwordCheck && firstName.count > 0 && lastName.count > 0 && email.count > 0 {
+                    // Validation passes, Sign up user
+                    AuthApi().register(firstName: firstName, lastName: lastName, email: email, password: password) {
+                        (user) in
+                        if user.message != nil {
+                            print("User was not created. Reason: \(user.message!)")
+                        } else if user.firstName != nil {
+                            print("User created successfully! Email: \(user.email!), Name: \(user.firstName!) \(user.lastName!)")
+                        }
+                    }
+                } else {
+                    // Validation failed
                 }
             })
             NavigationLink(
@@ -65,65 +65,12 @@ struct SignUpView: View {
                         Text("Already have an account? Login").font(.custom("Inter Semi Bold", size: 16)).foregroundColor(Color("Secondary")).multilineTextAlignment(.center)
                     }.padding()
                 })
-        }.navigationBarHidden(true).navigationTitle("").navigationBarBackButtonHidden(true)
+        }
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
-    }
-}
-
-// Functions
-
-// Components
-struct InputField: View {
-    // Styles
-    var cornerRadius: CGFloat = 7.0
-    var fieldHeight: CGFloat = 10.0
-    var backgroundColor: Color = Color("Accent")
-    var textColor: Color = Color("TextFieldPrimary")
-    var borderColor: Color = Color("TextFieldPrimary")
-    var textStyle: UITextContentType = .name
-    var autoCap: Bool = true
-    
-    // Variables
-    var placeholder: String
-    @Binding var value: String
-    
-    var body: some View {
-            TextField(placeholder, text: $value)
-                .padding(.vertical, fieldHeight)
-                .padding(.horizontal, 10)
-                .background(RoundedRectangle(cornerRadius: self.cornerRadius).foregroundColor(self.backgroundColor))
-                .font(.body)
-                .foregroundColor(self.textColor)
-                .overlay(RoundedRectangle(cornerRadius: self.cornerRadius).stroke(self.borderColor))
-                .textContentType(textStyle)
-                .autocapitalization(autoCap ? .words : .none)
-    }
-}
-
-struct SecureInputField: View {
-    // Styles
-    var cornerRadius: CGFloat = 7.0
-    var fieldHeight: CGFloat = 10.0
-    var backgroundColor: Color = Color("Accent")
-    var textColor: Color = Color("TextFieldPrimary")
-    var borderColor: Color = Color("TextFieldPrimary")
-    
-    // Variables
-    var placeholder: String
-    @Binding var value: String
-    
-    var body: some View {
-            SecureField(placeholder, text: $value)
-                .padding(.vertical, fieldHeight)
-                .padding(.horizontal, 10)
-                .background(RoundedRectangle(cornerRadius: self.cornerRadius).foregroundColor(self.backgroundColor))
-                .font(.body)
-            .foregroundColor(self.textColor)
-            .overlay(RoundedRectangle(cornerRadius: self.cornerRadius).stroke(self.borderColor))
     }
 }

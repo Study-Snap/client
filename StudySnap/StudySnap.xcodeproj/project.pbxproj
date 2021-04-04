@@ -23,6 +23,8 @@
 		4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* RecommendationView.swift */; };
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
+		B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */; };
+		B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */; };
 		B8DACB43261901C00066755A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DACB42261901C00066755A /* LoginView.swift */; };
 		B8DACB492619040D0066755A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DACB482619040D0066755A /* Authentication.swift */; };
 		B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */; };
@@ -68,6 +70,8 @@
 		4A0739C1260534B000A823DF /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldViewCollection.swift; sourceTree = "<group>"; };
+		B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonView.swift; sourceTree = "<group>"; };
 		B8DACB42261901C00066755A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		B8DACB482619040D0066755A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		B8E1CB9D25F14C2C00493EC5 /* StudySnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudySnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +128,8 @@
 				4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */,
 				4A012609260C46C0009E3F6B /* NoteRatingView.swift */,
 				4A65D061260D324A00B0F58B /* Launch Screen.storyboard */,
+				B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */,
+				B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,6 +392,7 @@
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
 				B8DACB492619040D0066755A /* Authentication.swift in Sources */,
+				B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */,
 				4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */,
 				B8DACB43261901C00066755A /* LoginView.swift in Sources */,
 				4A01256B260C1AC3009E3F6B /* LocalNoteView.swift in Sources */,
@@ -393,6 +400,7 @@
 				B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */,
 				B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */,
 				4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */,
+				B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

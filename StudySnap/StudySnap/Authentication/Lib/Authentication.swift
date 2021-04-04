@@ -8,18 +8,35 @@
 import SwiftUI
 
 struct User : Codable {
-    var _id : Int
-    var firstName: String
-    var lastName: String
-    var email: String
+    enum CodingKeys: String, CodingKey {
+        case firstName, lastName, email, message
+        
+        case id = "_id"
+    }
+    
+    var id : Int?
+    var firstName: String?
+    var lastName: String?
+    var email: String?
+    
+    // Useful if there is an error
+    var message: String?
+}
+
+struct UserAuth: Codable {
+    enum CodingKeys: String, CodingKey {
+        case accessToken, refreshToken, message
+    }
+    
     var accessToken: String?
-    var createdAt : String?
-    var updatedAt : String?
+    var refreshToken: String?
+    
+    // Useful if there is an error
+    var message: String?
 }
 
 class AuthApi {
     let authBaseUrl: String = "https://studysnap.ca/auth"
-    @State var isLoggedIn: Bool = false
     
     func register(firstName: String, lastName: String, email: String, password: String, completion: @escaping (User) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(authBaseUrl)/register")
@@ -45,10 +62,54 @@ class AuthApi {
         URLSession.shared.dataTask(with: request) { (data, _, _) in
             guard let data = data else { return }
             
-            let user = try! JSONDecoder().decode(User.self, from: data)
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(user)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(User(message: "Could not get any response from the server"))
+                }
+            }
+        }.resume()
+    }
+    
+    func login(email: String, password: String, completion: @escaping (UserAuth) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(authBaseUrl)/login")
+        
+        let parameters : [String: String] = [
+            "email": email,
+            "password": password
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // JSON Body
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, _, _) in
+            guard let data = data else { return }
             
-            DispatchQueue.main.async {
-                completion(user)
+            do {
+                let auth = try JSONDecoder().decode(UserAuth.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(auth)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(UserAuth(message: "Could not get any response from the server"))
+                }
             }
         }.resume()
     }
