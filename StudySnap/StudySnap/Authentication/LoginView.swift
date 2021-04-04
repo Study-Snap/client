@@ -10,6 +10,8 @@ import SwiftUI
 struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
+    @State var error: Bool = false
+    @State var errorMessage: String?
     
     // Field show
     @State var showPassword: Bool = false
@@ -49,18 +51,23 @@ struct LoginView: View {
                         
                         if res.message != nil {
                             print("Failed to log in. Reason: \(res.message!)")
+                            self.errorMessage = res.message!
+                            self.error.toggle()
                         } else {
                             if res.accessToken != nil && res.refreshToken != nil {
-                                print("Access Token: \(res.accessToken!) and Refresh Token: \(res.refreshToken!)")
+                                // Save access and refresh tokens
+                                TokenService().addToken(token: Token(type: .accessToken, data: res.accessToken!))
+                                TokenService().addToken(token: Token(type: .refreshToken, data: res.refreshToken!))
+                                
+                                // Navigate to MainView
+                                
                             } else {
                                 print("Something went wrong... Malformed response")
+                                self.errorMessage = "Malformed Response"
+                                self.error.toggle()
                             }
                         }
                     }
-                    
-                    // Save access and refresh tokens
-                    
-                    // Failed to log in
                 })
                 
                 // Button to create account
@@ -69,7 +76,9 @@ struct LoginView: View {
                     label: {
                         Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
                 })
-            }
+            }.alert(isPresented: $error, content: {
+                Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
+            })
         }
         .padding(.all, 1)
         .padding(.top, -110)
@@ -83,4 +92,16 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
     }
+}
+
+struct LoginError {
+    enum ErrorType {
+        case badCredentials
+        case service
+        case keychain
+        case userDoesNotExist
+    }
+    
+    var type: ErrorType
+    var message: String
 }
