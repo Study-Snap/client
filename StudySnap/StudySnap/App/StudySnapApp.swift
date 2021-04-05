@@ -20,7 +20,7 @@ struct StudySnapApp: App {
                 // Check logged in
                 if !loggedIn {
                     // Not logged in
-                    LoginView(isActive: true)
+                    LoginView()
                 } else {
                     // If Logged in
                     MainView()

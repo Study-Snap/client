@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State var action: Bool = false
+    
     @State var email: String = ""
     @State var password: String = ""
     @State var error: Bool = false
@@ -70,10 +72,19 @@ struct LoginView: View {
                     }
                 })
                 
-                // Button to create account
-                NavigationLink(
-                    destination: SignUpView()) {
+                // Create new account
+                Button(action: {
+                    self.action.toggle()
+                }) {
                     Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
+                }
+                
+                // Handle navigation logic
+                NavigationLink(
+                    destination: SignUpView(),
+                    isActive: $action
+                ) {
+                    EmptyView() // Button follows
                 }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
