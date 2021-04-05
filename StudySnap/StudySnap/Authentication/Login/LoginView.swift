@@ -72,10 +72,9 @@ struct LoginView: View {
                 
                 // Button to create account
                 NavigationLink(
-                    destination: SignUpView(),
-                    label: {
-                        Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
-                })
+                    destination: SignUpView()) {
+                    Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
+                }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })

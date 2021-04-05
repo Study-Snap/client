@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State var firstName: String = ""
     @State var lastName: String = ""
     @State var email: String = ""
@@ -52,6 +53,7 @@ struct SignUpView: View {
                             print("User was not created. Reason: \(user.message!)")
                         } else if user.firstName != nil {
                             print("User created successfully! Email: \(user.email!), Name: \(user.firstName!) \(user.lastName!)")
+                            self.presentationMode.wrappedValue.dismiss()
                         }
                     }
                 } else {
