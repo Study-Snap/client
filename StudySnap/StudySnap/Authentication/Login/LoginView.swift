@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var action: Bool = false
+    // View Model
+    @StateObject var viewModel: LoginViewModel = LoginViewModel()
     
-    @State var email: String = ""
-    @State var password: String = ""
+    // View event state
+    @State var action: Bool = false
     @State var error: Bool = false
     @State var errorMessage: String?
-    
-    // Field show
     @State var showPassword: Bool = false
     
     var body: some View {
@@ -26,12 +25,12 @@ struct LoginView: View {
                 }
                 
                 // Input fields
-                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $email).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
+                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $viewModel.email).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
                 
                 if showPassword {
-                    InputField(fieldHeight: 15, placeholder: "Password", value: $password).padding(.bottom, 10).padding(.horizontal, 17.5)
+                    InputField(fieldHeight: 15, autoCap: false, placeholder: "Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
                 } else {
-                    SecureInputField(fieldHeight: 15, placeholder: "Password", value: $password).padding(.bottom, 10).padding(.horizontal, 17.5)
+                    SecureInputField(fieldHeight: 15, placeholder: "Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
                 }
                 Button(action: {showPassword.toggle()}, label: {
                     HStack {
@@ -48,28 +47,16 @@ struct LoginView: View {
                 
                 PrimaryButtonView(title: "Log In", action: {
                     // Log in user
-                    AuthApi().login(email: email, password: password) {
-                        (res) in
+                    self.viewModel.performLogin(completion: {
+                        (success, message) in
                         
-                        if res.message != nil {
-                            print("Failed to log in. Reason: \(res.message!)")
-                            self.errorMessage = res.message!
-                            self.error.toggle()
+                        if success {
+                            self.action.toggle() // Trigger move to MainView
                         } else {
-                            if res.accessToken != nil && res.refreshToken != nil {
-                                // Save access and refresh tokens
-                                TokenService().addToken(token: Token(type: .accessToken, data: res.accessToken!))
-                                TokenService().addToken(token: Token(type: .refreshToken, data: res.refreshToken!))
-                                
-                                // Navigate to MainView
-                                
-                            } else {
-                                print("Something went wrong... Malformed response")
-                                self.errorMessage = "Malformed Response"
-                                self.error.toggle()
-                            }
+                            self.error.toggle()
+                            self.errorMessage = message
                         }
-                    }
+                    })
                 })
                 
                 // Create new account
@@ -81,7 +68,7 @@ struct LoginView: View {
                 
                 // Handle navigation logic
                 NavigationLink(
-                    destination: SignUpView(),
+                    destination: MainView(),
                     isActive: $action
                 ) {
                     EmptyView() // Button follows
