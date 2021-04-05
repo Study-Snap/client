@@ -8,9 +8,9 @@
 import SwiftUI
 
 
-var viewModelGlobal = SignUpViewModel()
+
 struct SignUpView: View {
-    @StateObject var viewModel = viewModelGlobal
+    @StateObject var viewModel = SignUpViewModel()
     
     var body: some View {
         SignUpMain(viewModel: viewModel)
@@ -18,7 +18,7 @@ struct SignUpView: View {
 }
 
 struct SignUpMain: View {
-    @StateObject var viewModel = viewModelGlobal
+    @StateObject var viewModel: SignUpViewModel
     
     var body: some View {
         ZStack {
@@ -43,7 +43,7 @@ struct SignUpMain: View {
 
 struct SignUpContent: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var viewModel = viewModelGlobal
+    @StateObject var viewModel: SignUpViewModel
     
     var body: some View {
         VStack {

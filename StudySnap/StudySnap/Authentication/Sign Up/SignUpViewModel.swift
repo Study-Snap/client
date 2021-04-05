@@ -9,7 +9,7 @@ import SwiftUI
 
 class SignUpViewModel: ObservableObject {
     // Navigation
-    @Published var action: Bool = false
+    @Published var action: Bool = true
     
     // Error handling
     @Published var error: Bool = false
