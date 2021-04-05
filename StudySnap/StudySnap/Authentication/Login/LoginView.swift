@@ -12,7 +12,8 @@ struct LoginView: View {
     @StateObject var viewModel: LoginViewModel = LoginViewModel()
     
     // View event state
-    @State var action: Bool = false
+    @State var actionMainView: Bool = false
+    @State var actionSignUpView: Bool = false
     @State var error: Bool = false
     @State var errorMessage: String?
     @State var showPassword: Bool = false
@@ -51,7 +52,7 @@ struct LoginView: View {
                         (success, message) in
                         
                         if success {
-                            self.action.toggle() // Trigger move to MainView
+                            self.actionMainView.toggle() // Trigger move to MainView
                         } else {
                             self.error.toggle()
                             self.errorMessage = message
@@ -61,7 +62,7 @@ struct LoginView: View {
                 
                 // Create new account
                 Button(action: {
-                    self.action.toggle()
+                    self.actionSignUpView.toggle()
                 }) {
                     Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
                 }
@@ -69,9 +70,12 @@ struct LoginView: View {
                 // Handle navigation logic
                 NavigationLink(
                     destination: MainView(),
-                    isActive: $action
+                    isActive: $actionMainView
                 ) {
                     EmptyView() // Button follows
+                }
+                NavigationLink(destination: SignUpView(), isActive: $actionSignUpView) {
+                    EmptyView() // Supports: Sign in programatically
                 }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))

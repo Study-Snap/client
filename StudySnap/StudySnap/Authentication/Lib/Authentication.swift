@@ -108,7 +108,33 @@ class AuthApi {
             } catch {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    completion(UserAuth(message: "Could not get any response from the server"))
+                    completion(UserAuth(message: "Failed to get a proper response from the server"))
+                }
+            }
+        }.resume()
+    }
+    
+    func refreshTokens(refreshToken: String, completion: @escaping (UserAuth) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(authBaseUrl)/login")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("refreshToken=\(refreshToken)", forHTTPHeaderField: "Cookie")
+        
+        URLSession.shared.dataTask(with: request) { (data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let auth = try JSONDecoder().decode(UserAuth.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(auth)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(UserAuth(message: "Failed to get a proper response from the server"))
                 }
             }
         }.resume()
