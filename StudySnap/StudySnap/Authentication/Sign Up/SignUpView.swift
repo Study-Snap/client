@@ -52,7 +52,7 @@ struct SignUpContent: View {
             }) {
                 ZStack {
                     Text("Already have an account? Login").font(.custom("Inter Semi Bold", size: 16)).foregroundColor(Color("Secondary")).multilineTextAlignment(.center)
-                }.padding()
+                }.padding(.top, 5)
             }
         }
         .alert(isPresented: $viewModel.error, content: {

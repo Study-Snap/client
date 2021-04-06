@@ -26,6 +26,8 @@
 		B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */; };
 		B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */; };
 		B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D14110261BA7F400D3822E /* SignUpModel.swift */; };
+		B8D1413B261BE8AD00D3822E /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1413A261BE8AD00D3822E /* KeyboardGuardian.swift */; };
+		B8D14140261BE95300D3822E /* GeometryGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1413F261BE95300D3822E /* GeometryGetter.swift */; };
 		B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA2055261A5E9400EF93AB /* KeychainWrapper.swift */; };
 		B8DA205B261A600500EF93AB /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA205A261A600500EF93AB /* TokenService.swift */; };
 		B8DA2065261A80FC00EF93AB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA2064261A80FC00EF93AB /* LoginViewModel.swift */; };
@@ -78,6 +80,8 @@
 		B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldViewCollection.swift; sourceTree = "<group>"; };
 		B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonView.swift; sourceTree = "<group>"; };
 		B8D14110261BA7F400D3822E /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		B8D1413A261BE8AD00D3822E /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
+		B8D1413F261BE95300D3822E /* GeometryGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryGetter.swift; sourceTree = "<group>"; };
 		B8DA2055261A5E9400EF93AB /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		B8DA205A261A600500EF93AB /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
 		B8DA2064261A80FC00EF93AB /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -174,12 +178,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		B8D14115261BDE2800D3822E /* NoteUpload */ = {
+		B8D14115261BDE2800D3822E /* Upload */ = {
 			isa = PBXGroup;
 			children = (
 				4A01255F260C000D009E3F6B /* NoteUploadView.swift */,
 			);
-			path = NoteUpload;
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		B8D14116261BDE4800D3822E /* NoteManagement */ = {
@@ -189,7 +193,7 @@
 				B8D1411C261BDF1200D3822E /* Organization */,
 				B8D14118261BDE9100D3822E /* Discovery */,
 				B8D14117261BDE5900D3822E /* Viewing */,
-				B8D14115261BDE2800D3822E /* NoteUpload */,
+				B8D14115261BDE2800D3822E /* Upload */,
 			);
 			path = NoteManagement;
 			sourceTree = "<group>";
@@ -226,6 +230,15 @@
 				4A073A0F2605572E00A823DF /* Data */,
 			);
 			path = Old;
+			sourceTree = "<group>";
+		};
+		B8D14139261BE89E00D3822E /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				B8D1413A261BE8AD00D3822E /* KeyboardGuardian.swift */,
+				B8D1413F261BE95300D3822E /* GeometryGetter.swift */,
+			);
+			path = Generic;
 			sourceTree = "<group>";
 		};
 		B8DA2054261A5E8500EF93AB /* Keychain */ = {
@@ -279,6 +292,7 @@
 		B8E1CB9F25F14C2C00493EC5 /* StudySnap */ = {
 			isa = PBXGroup;
 			children = (
+				B8D14139261BE89E00D3822E /* Generic */,
 				B8D1412C261BE0F800D3822E /* Old */,
 				B8E1CBD725F179CD00493EC5 /* Authentication */,
 				B8D14116261BDE4800D3822E /* NoteManagement */,
@@ -460,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A012530260BE58B009E3F6B /* NoteRowView.swift in Sources */,
+				B8D1413B261BE8AD00D3822E /* KeyboardGuardian.swift in Sources */,
 				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
@@ -472,6 +487,7 @@
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
+				B8D14140261BE95300D3822E /* GeometryGetter.swift in Sources */,
 				B8DACB492619040D0066755A /* Authentication.swift in Sources */,
 				B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */,
 				4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */,
