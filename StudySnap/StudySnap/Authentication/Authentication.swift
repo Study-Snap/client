@@ -115,7 +115,7 @@ class AuthApi {
     }
     
     func refreshTokens(refreshToken: String, completion: @escaping (UserAuth) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(authBaseUrl)/login")
+        let reqUrl: URL! = URL(string: "\(authBaseUrl)/refresh")
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "POST"
@@ -138,5 +138,17 @@ class AuthApi {
                 }
             }
         }.resume()
+    }
+    
+    func deauthenticate(completion: @escaping (Bool, String?) -> ()) -> Void {
+        do {
+            // Remove any stored tokens (this will prevent any future authenticated calls to the API)
+            try TokenService().removeToken(key: .accessToken)
+            try TokenService().removeToken(key: .refreshToken)
+        } catch let error as TokenServiceError {
+            completion(false, error.message ?? "no message")
+        } catch {
+            completion(false, nil)
+        }
     }
 }

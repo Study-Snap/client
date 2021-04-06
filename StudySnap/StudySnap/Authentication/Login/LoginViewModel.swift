@@ -11,7 +11,7 @@ class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
-    func performLogin(completion: @escaping (Bool, String) -> Void) -> Void {
+    func performLogin(completion: @escaping (Bool, String?) -> Void) -> Void {
         AuthApi().login(email: email, password: password) {
             (res) in
             
@@ -23,8 +23,14 @@ class LoginViewModel: ObservableObject {
             } else {
                 if res.accessToken != nil && res.refreshToken != nil {
                     // Save access and refresh tokens
-                    TokenService().addToken(token: Token(type: .accessToken, data: res.accessToken!))
-                    TokenService().addToken(token: Token(type: .refreshToken, data: res.refreshToken!))
+                    do {
+                        try TokenService().addToken(token: Token(type: .accessToken, data: res.accessToken!))
+                        try TokenService().addToken(token: Token(type: .refreshToken, data: res.refreshToken!))
+                    } catch let error as TokenServiceError {
+                        completion(false, error.message ?? "no message")
+                    } catch {
+                        completion(false, nil)
+                    }
                     
                     // Complete successfully
                     completion(true, "Login Success")

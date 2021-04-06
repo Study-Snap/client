@@ -22,7 +22,7 @@ struct Token {
 class TokenService {
     let KEYCHAIN_ACCOUNT: String = "StudySnap"
     
-    func addToken(token: Token) -> Void {
+    func addToken(token: Token) throws -> Void {
         let kcw = KeychainWrapper()
         do {
             try kcw.storeGenericPasswordFor(
@@ -32,8 +32,10 @@ class TokenService {
                 )
         } catch let error as KeychainWrapperError {
             print("Exception when setting token in keychain: \(error.message ?? "no message")")
+            throw TokenServiceError(message: error.message ?? "no message", type: TokenServiceError.TokenServiceErrorType.addFailure)
         } catch {
             print("An unknown error occurred setting the token")
+            throw TokenServiceError(type: TokenServiceError.TokenServiceErrorType.addFailure)
         }
     }
     
@@ -47,7 +49,7 @@ class TokenService {
         return ""
     }
     
-    func removeToken(key: Token.TokenType) -> Void {
+    func removeToken(key: Token.TokenType) throws -> Void {
         let kcw = KeychainWrapper()
         do {
             try kcw.deleteGenericPasswordFor(
@@ -56,12 +58,14 @@ class TokenService {
             )
         } catch let error as KeychainWrapperError {
             print("Exception when attempting to remove a token in keychain: \(error.message ?? "no message")")
+            throw TokenServiceError(message: error.message ?? "no message", type: TokenServiceError.TokenServiceErrorType.deleteFail)
         } catch {
             print("An unknown error occurred removing a token from keychain")
+            throw TokenServiceError(type: TokenServiceError.TokenServiceErrorType.deleteFail)
         }
     }
     
-    func updateToken(key: Token.TokenType, data: String) -> Void {
+    func updateToken(key: Token.TokenType, data: String) throws -> Void {
         let kcw = KeychainWrapper()
         do {
             try kcw.updateGenericPasswordFor(
@@ -71,9 +75,32 @@ class TokenService {
             )
         } catch let error as KeychainWrapperError {
             print("Exception when attempting to update a token in keychain: \(error.message ?? "no message")")
+            throw TokenServiceError(message: error.message ?? "no message", type: TokenServiceError.TokenServiceErrorType.badUpdate)
         } catch {
             print("An unknown error occurred updating a token from keychain")
+            throw TokenServiceError(type: TokenServiceError.TokenServiceErrorType.badUpdate)
         }
     }
     
+}
+
+struct TokenServiceError: Error {
+  var message: String?
+  var type: TokenServiceErrorType
+
+  enum TokenServiceErrorType {
+    case deleteFail
+    case badRequest
+    case badUpdate
+    case addFailure
+  }
+    
+  init(type: TokenServiceErrorType) {
+    self.type = type
+  }
+
+  init(message: String, type: TokenServiceErrorType) {
+    self.message = message
+    self.type = type
+  }
 }
