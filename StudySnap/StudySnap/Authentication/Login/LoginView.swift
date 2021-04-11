@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var email: String = ""
-    @State var password: String = ""
+    // View Model
+    @StateObject var viewModel: LoginViewModel = LoginViewModel()
+    
+    // View event state
+    @State var actionMainView: Bool = false
+    @State var actionSignUpView: Bool = false
     @State var error: Bool = false
     @State var errorMessage: String?
-    
-    // Field show
     @State var showPassword: Bool = false
     
     var body: some View {
@@ -24,12 +26,12 @@ struct LoginView: View {
                 }
                 
                 // Input fields
-                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $email).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
+                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $viewModel.email).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
                 
                 if showPassword {
-                    InputField(fieldHeight: 15, placeholder: "Password", value: $password).padding(.bottom, 10).padding(.horizontal, 17.5)
+                    InputField(fieldHeight: 15, autoCap: false, placeholder: "Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
                 } else {
-                    SecureInputField(fieldHeight: 15, placeholder: "Password", value: $password).padding(.bottom, 10).padding(.horizontal, 17.5)
+                    SecureInputField(fieldHeight: 15, placeholder: "Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
                 }
                 Button(action: {showPassword.toggle()}, label: {
                     HStack {
@@ -46,34 +48,34 @@ struct LoginView: View {
                 
                 PrimaryButtonView(title: "Log In", action: {
                     // Log in user
-                    AuthApi().login(email: email, password: password) {
-                        (res) in
+                    self.viewModel.performLogin(completion: {
+                        (success, message) in
                         
-                        if res.message != nil {
-                            print("Failed to log in. Reason: \(res.message!)")
-                            self.errorMessage = res.message!
-                            self.error.toggle()
+                        if success {
+                            self.actionMainView.toggle() // Trigger move to MainView
                         } else {
-                            if res.accessToken != nil && res.refreshToken != nil {
-                                // Save access and refresh tokens
-                                TokenService().addToken(token: Token(type: .accessToken, data: res.accessToken!))
-                                TokenService().addToken(token: Token(type: .refreshToken, data: res.refreshToken!))
-                                
-                                // Navigate to MainView
-                                
-                            } else {
-                                print("Something went wrong... Malformed response")
-                                self.errorMessage = "Malformed Response"
-                                self.error.toggle()
-                            }
+                            self.error.toggle()
+                            self.errorMessage = message
                         }
-                    }
+                    })
                 })
                 
-                // Button to create account
-                NavigationLink(
-                    destination: SignUpView()) {
+                // Create new account
+                Button(action: {
+                    self.actionSignUpView.toggle()
+                }) {
                     Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
+                }
+                
+                // Handle navigation logic
+                NavigationLink(
+                    destination: MainView(),
+                    isActive: $actionMainView
+                ) {
+                    EmptyView() // Button follows
+                }
+                NavigationLink(destination: SignUpView(), isActive: $actionSignUpView) {
+                    EmptyView() // Supports: Sign in programatically
                 }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))

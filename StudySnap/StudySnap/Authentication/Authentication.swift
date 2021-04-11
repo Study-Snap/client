@@ -19,7 +19,7 @@ struct User : Codable {
     var lastName: String?
     var email: String?
     
-    // Useful if there is an error
+    // Useful if there is an error with decodable message format
     var message: String?
 }
 
@@ -38,14 +38,14 @@ struct UserAuth: Codable {
 class AuthApi {
     let authBaseUrl: String = "https://studysnap.ca/auth"
     
-    func register(firstName: String, lastName: String, email: String, password: String, completion: @escaping (User) -> ()) -> Void {
+    func register(student: Student, completion: @escaping (User) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(authBaseUrl)/register")
         
         let parameters : [String: String] = [
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "password": password
+            "firstName": student.firstName,
+            "lastName": student.lastName,
+            "email": student.email,
+            "password": student.password
         ]
         
         var request: URLRequest = URLRequest(url: reqUrl)
@@ -71,7 +71,7 @@ class AuthApi {
             } catch {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    completion(User(message: "Could not get any response from the server"))
+                    completion(User(message: "Oops! We don't know what happened there"))
                 }
             }
         }.resume()
@@ -108,9 +108,47 @@ class AuthApi {
             } catch {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    completion(UserAuth(message: "Could not get any response from the server"))
+                    completion(UserAuth(message: "Failed to get a proper response from the server"))
                 }
             }
         }.resume()
+    }
+    
+    func refreshTokens(refreshToken: String, completion: @escaping (UserAuth) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(authBaseUrl)/refresh")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("refreshToken=\(refreshToken)", forHTTPHeaderField: "Cookie")
+        
+        URLSession.shared.dataTask(with: request) { (data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let auth = try JSONDecoder().decode(UserAuth.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(auth)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(UserAuth(message: "Failed to get a proper response from the server"))
+                }
+            }
+        }.resume()
+    }
+    
+    func deauthenticate(completion: @escaping (Bool, String?) -> ()) -> Void {
+        do {
+            // Remove any stored tokens (this will prevent any future authenticated calls to the API)
+            try TokenService().removeToken(key: .accessToken)
+            try TokenService().removeToken(key: .refreshToken)
+        } catch let error as TokenServiceError {
+            completion(false, error.message ?? "no message")
+        } catch {
+            completion(false, nil)
+        }
     }
 }
