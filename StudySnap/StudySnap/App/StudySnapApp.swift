@@ -10,12 +10,21 @@ import SwiftUI
 @main
 struct StudySnapApp: App {
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    var loggedIn: Bool = !TokenService().getToken(key: .accessToken).isEmpty
+    
     var body: some Scene {
         WindowGroup {
             if isOnboarding {
-              OnBoardingView()
+                OnBoardingView()
             } else {
-              MainView()
+                // Check logged in
+                if !loggedIn {
+                    // Not logged in
+                    LoginView()
+                } else {
+                    // If Logged in
+                    MainView()
+                }
             }
         }
     }
