@@ -23,6 +23,7 @@
 		4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* RecommendationView.swift */; };
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
+		B898743B2626999100C25B23 /* NoteSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B898743A2626999100C25B23 /* NoteSearchViewModel.swift */; };
 		B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */; };
 		B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */; };
 		B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D14110261BA7F400D3822E /* SignUpModel.swift */; };
@@ -35,12 +36,13 @@
 		B8DACB43261901C00066755A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DACB42261901C00066755A /* LoginView.swift */; };
 		B8DACB492619040D0066755A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DACB482619040D0066755A /* Authentication.swift */; };
 		B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */; };
-		B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA225F14C2C00493EC5 /* ContentView.swift */; };
+		B8E1CBA325F14C2C00493EC5 /* NoteSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBA225F14C2C00493EC5 /* NoteSearchView.swift */; };
 		B8E1CBA525F14C2D00493EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */; };
 		B8E1CBA825F14C2D00493EC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8E1CBA725F14C2D00493EC5 /* Preview Assets.xcassets */; };
 		B8E1CBB325F14C2D00493EC5 /* StudySnapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBB225F14C2D00493EC5 /* StudySnapTests.swift */; };
 		B8E1CBBE25F14C2D00493EC5 /* StudySnapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */; };
 		B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */; };
+		B8FC45F7262683BE002179F3 /* Neptune.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC45F6262683BE002179F3 /* Neptune.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,7 @@
 		4A0739C1260534B000A823DF /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B898743A2626999100C25B23 /* NoteSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSearchViewModel.swift; sourceTree = "<group>"; };
 		B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldViewCollection.swift; sourceTree = "<group>"; };
 		B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonView.swift; sourceTree = "<group>"; };
 		B8D14110261BA7F400D3822E /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -90,7 +93,7 @@
 		B8DACB482619040D0066755A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		B8E1CB9D25F14C2C00493EC5 /* StudySnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudySnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapApp.swift; sourceTree = "<group>"; };
-		B8E1CBA225F14C2C00493EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B8E1CBA225F14C2C00493EC5 /* NoteSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSearchView.swift; sourceTree = "<group>"; };
 		B8E1CBA425F14C2D00493EC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8E1CBA725F14C2D00493EC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B8E1CBA925F14C2D00493EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 		B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapUITests.swift; sourceTree = "<group>"; };
 		B8E1CBBF25F14C2D00493EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		B8FC45F6262683BE002179F3 /* Neptune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neptune.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +151,6 @@
 			children = (
 				4A04FD792604368900895B0D /* OnBoardingView.swift */,
 				B8E1CBA025F14C2C00493EC5 /* StudySnapApp.swift */,
-				B8E1CBA225F14C2C00493EC5 /* ContentView.swift */,
 				4A0739B4260530A800A823DF /* MainView.swift */,
 			);
 			path = App;
@@ -210,7 +213,9 @@
 		B8D14118261BDE9100D3822E /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				B8E1CBA225F14C2C00493EC5 /* NoteSearchView.swift */,
 				4A0739C1260534B000A823DF /* RecommendationView.swift */,
+				B898743A2626999100C25B23 /* NoteSearchViewModel.swift */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 		B8D14139261BE89E00D3822E /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				B8FC45F6262683BE002179F3 /* Neptune.swift */,
 				B8D1413A261BE8AD00D3822E /* KeyboardGuardian.swift */,
 				B8D1413F261BE95300D3822E /* GeometryGetter.swift */,
 			);
@@ -478,7 +484,7 @@
 				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
-				B8E1CBA325F14C2C00493EC5 /* ContentView.swift in Sources */,
+				B8E1CBA325F14C2C00493EC5 /* NoteSearchView.swift in Sources */,
 				B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */,
 				4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */,
 				4A012570260C1AE1009E3F6B /* CloudNoteView.swift in Sources */,
@@ -491,6 +497,7 @@
 				B8DACB492619040D0066755A /* Authentication.swift in Sources */,
 				B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */,
 				4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */,
+				B8FC45F7262683BE002179F3 /* Neptune.swift in Sources */,
 				B8DACB43261901C00066755A /* LoginView.swift in Sources */,
 				4A01256B260C1AC3009E3F6B /* LocalNoteView.swift in Sources */,
 				4A04FD7A2604368900895B0D /* OnBoardingView.swift in Sources */,
@@ -500,6 +507,7 @@
 				4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */,
 				B8DA206A261A810D00EF93AB /* SignUpViewModel.swift in Sources */,
 				B8DA205B261A600500EF93AB /* TokenService.swift in Sources */,
+				B898743B2626999100C25B23 /* NoteSearchViewModel.swift in Sources */,
 				B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

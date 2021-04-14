@@ -11,7 +11,7 @@ struct MainView: View {
     var body: some View {
         
                 TabView{
-                    ContentView()
+                    NoteSearchView()
                       .tabItem {
                         Image(systemName: "magnifyingglass.circle")
                         Text("Search")

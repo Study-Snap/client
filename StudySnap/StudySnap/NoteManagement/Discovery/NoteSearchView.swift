@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ContentView: View {
+struct NoteSearchView: View {
     @State private var searchText : String = ""
     @ObservedObject var globalJsonData = GlobalString()
     
@@ -16,7 +16,6 @@ struct ContentView: View {
         let notes = globalJsonData.notesData
         
                 NavigationView {
-                    
                     VStack {
                         SearchBar(text: $searchText)
                             .padding(.horizontal)
@@ -30,7 +29,7 @@ struct ContentView: View {
                                 VStack{
                                     if item.isOnline{
                                         CloudNoteView(note: item)
-                                    }else{
+                                    } else {
                                         LocalNoteView(note: item)
                                     }
                                 }
@@ -50,7 +49,6 @@ struct ContentView: View {
 
 
 struct SearchBar: UIViewRepresentable {
-
     @Binding var text: String
 
     class Coordinator: NSObject, UISearchBarDelegate {
@@ -63,6 +61,16 @@ struct SearchBar: UIViewRepresentable {
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
+        }
+        
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            NeptuneApi().getNotesForQuery(query: text, completion: {results in
+                if (results.message == nil) {
+                    print(results.title!)
+                } else {
+                    print(results.message!)
+                }
+            })
         }
     }
 
@@ -83,6 +91,6 @@ struct SearchBar: UIViewRepresentable {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NoteSearchView()
     }
 }
