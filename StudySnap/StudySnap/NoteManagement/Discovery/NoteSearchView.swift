@@ -9,54 +9,74 @@ import SwiftUI
 
 
 struct NoteSearchView: View {
-    @State private var searchText : String = ""
-    @ObservedObject var globalJsonData = GlobalString()
+    @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
+    @State private var searchText : String = "Search for notes"
     
     var body: some View {
-        let notes = globalJsonData.notesData
-        
-                NavigationView {
-                    VStack {
-                        SearchBar(text: $searchText)
-                            .padding(.horizontal)
-                        MiniNoteCardView()
-                            .cornerRadius(20)
-            
-                        List(notes.filter({searchText.isEmpty ? true : $0.title.contains(searchText)})){
-                            item in
-                            
-                            NavigationLink(destination:{
-                                VStack{
-                                    if item.isOnline{
-                                        CloudNoteView(note: item)
-                                    } else {
-                                        LocalNoteView(note: item)
-                                    }
+        NavigationView {
+            VStack() {
+                SearchBar(viewModel: viewModel, text: $searchText)
+                    .padding(.horizontal)
+                VStack(alignment: .leading) {
+                    Text("Recommended").font(.title).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                    
+                    MiniNoteCardView()
+                        .cornerRadius(20)
+                        .frame(height: 150, alignment: .center)
+                }.padding()
+                VStack(alignment: .leading) {
+                    if viewModel.results.count > 0 {
+                        Text("Other stuff we found").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                        ScrollView{
+                            LazyVStack {
+                                VStack {
+                                    ForEach(viewModel.results) { item in
+                                        NoteListRowItem(title: item.title!, author: String("Liam Stickney"), shortDescription: item.shortDescription!, readTime: 5, rating: item.rating!)
+                                    }.padding(5)
                                 }
-                            }()) {
-                                Text(item.title).cornerRadius(20)
                             }
-                        }.listStyle(InsetGroupedListStyle())
-                  
-                        
-                    }.navigationTitle("Search")
-       
-                }.navigationViewStyle(StackNavigationViewStyle())
+                        }
+                    } else {
+                        VStack(alignment: .center) {
+                            Spacer()
+                            Image(systemName: "questionmark.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("AccentDark"))
+                                .frame(width: 100, height: 100, alignment: .center)
+                                .padding()
+                            Text("We couldn't find anything else")
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .foregroundColor(Color("AccentDark"))
+                            Spacer()
+                        }
+                    }
+                }
+                .padding()
+                Spacer()
+            }
+            .navigationTitle("Search")
+            .alert(isPresented: $viewModel.error, content: {
+                Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
+            })
 
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
-    
 }
 
 
 struct SearchBar: UIViewRepresentable {
+    @StateObject var viewModel: NoteSearchViewModel
     @Binding var text: String
 
     class Coordinator: NSObject, UISearchBarDelegate {
-
+        @StateObject var viewModel: NoteSearchViewModel
         @Binding var text: String
 
-        init(text: Binding<String>) {
+        init(text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>) {
             _text = text
+            _viewModel = viewModel
         }
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -64,18 +84,12 @@ struct SearchBar: UIViewRepresentable {
         }
         
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            NeptuneApi().getNotesForQuery(query: text, completion: {results in
-                if (results.message == nil) {
-                    print(results.title!)
-                } else {
-                    print(results.message!)
-                }
-            })
+            self.viewModel.search(searchQuery: text)
         }
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text)
+        return Coordinator(text: $text, viewModel: _viewModel)
     }
 
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {

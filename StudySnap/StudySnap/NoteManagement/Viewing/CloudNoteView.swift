@@ -41,8 +41,8 @@ struct CloudNoteView: View {
                             .fontWeight(.bold)
                             .padding(.top)
              
-                NoteRatingView(note: note)
-                    .padding(.vertical)
+//                NoteRatingView(note: note)
+//                    .padding(.vertical)
                    
               
             }.padding(.horizontal,30)

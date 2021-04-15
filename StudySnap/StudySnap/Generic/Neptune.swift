@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ApiNote : Codable {
+struct ApiNote : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case title, keywords, shortDescription, body, fileUri, authorId, rating, timeLength, isPublic, allowDownloads, bibtextCitation, message
         
@@ -34,7 +34,7 @@ struct ApiNote : Codable {
 class NeptuneApi {
     let neptuneBaseUrl: String = "https://studysnap.ca/neptune"
     
-    func getNotesForQuery(query: String, completion: @escaping (ApiNote) -> ()) -> Void {
+    func getNotesForQuery(query: String, completion: @escaping ([ApiNote]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/search")
         
         let parameters: [String: Any] = [
@@ -58,15 +58,23 @@ class NeptuneApi {
             guard let data = data else { return }
             
             do {
-                let note: ApiNote = try JSONDecoder().decode(ApiNote.self, from: data)
+                let note: [ApiNote] = try JSONDecoder().decode([ApiNote].self, from: data)
                 
                 DispatchQueue.main.async {
                     completion(note)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(ApiNote(message: "Oops! We don't know what happened there"))
+                do {
+                    let note: ApiNote = try JSONDecoder().decode(ApiNote.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion([note])
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion([ApiNote(message: "Oops! We don't know what happened there")])
+                    }
                 }
             }
         }.resume()

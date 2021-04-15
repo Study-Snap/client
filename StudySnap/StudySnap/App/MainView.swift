@@ -26,11 +26,13 @@ struct MainView: View {
                     
                     RecommendationView()
                       .tabItem {
-                        Image(systemName: "questionmark")
-                        Text("Recommendation")
+                        Image(systemName: "person.crop.circle")
+                        Text("Profile")
                       }
                     
                 }
+                .accentColor(Color("Primary"))
+                .ignoresSafeArea()
               
         
     }

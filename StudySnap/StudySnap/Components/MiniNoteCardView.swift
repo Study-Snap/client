@@ -8,45 +8,30 @@
 import SwiftUI
 
 struct MiniNoteCardView: View {
-    
-    
-    //let notes: [Note] = Bundle.main.decode("notes_data.json")
-
     @ObservedObject var globalString = GlobalString()
-    // MARK: - BODY
-    
     var body: some View {
       TabView {
        
         ForEach(globalString.notesData) { item in
 
                 VStack {
-                    NavigationLink(destination:{
-                        VStack{
-                            if item.isOnline{
-                                CloudNoteView(note: item)
-                            }else{
-                                LocalNoteView(note: item)
-                            }
-                        }
-                    }()) {Image(systemName: "doc.text.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height:100)
-                        .padding(.top)
+                    VStack {
+                        Image(systemName: "doc.text.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height:50)
+                            .padding(.top)
+                            .foregroundColor(Color("Secondary"))
                     }
                     VStack {
                         HStack {
-                            VStack {
-                                Text(String(item.title))
-                                
-                            }.padding(.horizontal, 50)
-                            
+                            Text(item.title).foregroundColor(Color(.gray)).fontWeight(.light)
                         }
                         HStack {
                             VStack{
                                 Text(String(item.author))
-                                    .fontWeight(.bold)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(Color("Secondary"))
                             }.padding(.horizontal, 50)
                             .padding(.bottom)
                             
@@ -57,8 +42,8 @@ struct MiniNoteCardView: View {
             
 
             
-        }//: LOOP
-      } //: TAB
+        }
+      }
       .tabViewStyle(PageTabViewStyle())
     }
   }
