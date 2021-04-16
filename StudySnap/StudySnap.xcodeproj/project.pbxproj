@@ -25,6 +25,7 @@
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
+		B866B1FE262A4B44004C2681 /* NoteViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B866B1FD262A4B44004C2681 /* NoteViewViewModel.swift */; };
 		B898743B2626999100C25B23 /* NoteSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B898743A2626999100C25B23 /* NoteSearchViewModel.swift */; };
 		B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */; };
 		B8AB6562261A231000FC4320 /* PrimaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */; };
@@ -84,6 +85,7 @@
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
+		B866B1FD262A4B44004C2681 /* NoteViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewViewModel.swift; sourceTree = "<group>"; };
 		B898743A2626999100C25B23 /* NoteSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSearchViewModel.swift; sourceTree = "<group>"; };
 		B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldViewCollection.swift; sourceTree = "<group>"; };
 		B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		B866B1FC262A4B04004C2681 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B866B1FD262A4B44004C2681 /* NoteViewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B8985D0D2628D88700E73093 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +239,7 @@
 		B8D14117261BDE5900D3822E /* Viewing */ = {
 			isa = PBXGroup;
 			children = (
+				B866B1FC262A4B04004C2681 /* ViewModel */,
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* CloudNoteView.swift */,
 			);
@@ -520,6 +531,7 @@
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
 				B8D14140261BE95300D3822E /* GeometryGetter.swift in Sources */,
+				B866B1FE262A4B44004C2681 /* NoteViewViewModel.swift in Sources */,
 				B8DACB492619040D0066755A /* Authentication.swift in Sources */,
 				B8AB655D261A1F8100FC4320 /* InputFieldViewCollection.swift in Sources */,
 				4A0126F1260C8A58009E3F6B /* NoteDataView.swift in Sources */,
