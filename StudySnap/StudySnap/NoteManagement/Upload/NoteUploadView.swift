@@ -94,7 +94,7 @@ struct NoteUploadView: View {
                         Image(systemName: "xmark")
                             .resizable()
                             .frame(width:25, height:25)
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("Secondary"))
                     
                     }
             )
