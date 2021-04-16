@@ -19,10 +19,10 @@ struct NoteUploadView: View {
     @State var subject: String  = ""
     
     // File picker state
-    @State var pickedFile: String = ""
+    @State var pickedFileName: String = ""
+    @State var pickedFile: Data = Data()
     @State var show: Bool = false
     @State var alert: Bool = false
-    @State var imageUrl: String = ""
     
     let formatter: NumberFormatter = {
      let formatter = NumberFormatter()
@@ -78,17 +78,23 @@ struct NoteUploadView: View {
                     .aspectRatio(contentMode: .fill)
                     .background(GeometryGetter(rect: $kGuardian.rects[3]))
                     .sheet(isPresented: $show) {
-                        DocumentPicker(alert: self.$alert, picked_file: self.$pickedFile)
+                        DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
                     }
                 }
                 
-                if self.pickedFile.count > 0 {
-                    FilePickedView(picked_file: self.pickedFile)
+                if self.pickedFileName.count > 0 {
+                    FilePickedView(picked_file: self.pickedFileName)
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
 //                    self.presentationMode.wrappedValue.dismiss()
-                    print(self.pickedFile)
+                    print(self.pickedFileName)
+                    print(self.pickedFile.debugDescription)
+                    
+                    NeptuneApi().uploadNoteFile(fileName: self.pickedFileName, fileData: self.pickedFile) { res in
+                        
+                        print("[\(res.statusCode!)] \(res.message!)")
+                    }
                 }
      
             }
@@ -118,7 +124,8 @@ struct DocumentPicker : UIViewControllerRepresentable {
         return DocumentPicker.Coordinator(parent1: self)
     }
     @Binding var alert : Bool
-    @Binding var picked_file : String
+    @Binding var picked_file_name : String
+    @Binding var picked_file_data : Data
     func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPicker>) ->  UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(documentTypes: [String(kUTTypePDF)], in: .open)
         picker.allowsMultipleSelection = false
@@ -137,8 +144,15 @@ struct DocumentPicker : UIViewControllerRepresentable {
             parent = parent1
         }
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            self.parent.picked_file = (urls.first?.deletingPathExtension().lastPathComponent)!
-            
+            guard controller.documentPickerMode == .open, let url = urls.first, url.startAccessingSecurityScopedResource() else { return }
+            defer {
+                    DispatchQueue.main.async {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+            }
+            // Get file data
+            self.parent.picked_file_name = (urls.first?.deletingPathExtension().lastPathComponent)!
+            self.parent.picked_file_data = try! Data.init(contentsOf: urls.first!)
         }
     }
 }

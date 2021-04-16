@@ -8,7 +8,7 @@
 import SwiftUI
 
 class NoteSearchViewModel: ObservableObject {
-    @Published var results: [ApiNote] = []
+    @Published var results: [ApiNoteResponse] = []
     @Published var error: Bool = false
     @Published var errorMessage: String?
     
