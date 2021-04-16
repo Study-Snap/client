@@ -85,6 +85,7 @@ struct SearchBar: UIViewRepresentable {
         
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             self.viewModel.search(searchQuery: text)
+            searchBar.endEditing(true)
         }
     }
 
