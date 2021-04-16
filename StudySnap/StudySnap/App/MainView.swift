@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+var globalEventManager = GlobalString()
 struct MainView: View {
     var body: some View {
         
                 TabView{
-                    ContentView()
+                    NoteSearchView()
                       .tabItem {
                         Image(systemName: "magnifyingglass.circle")
                         Text("Search")
@@ -26,11 +27,13 @@ struct MainView: View {
                     
                     RecommendationView()
                       .tabItem {
-                        Image(systemName: "questionmark")
-                        Text("Recommendation")
+                        Image(systemName: "person.crop.circle")
+                        Text("Profile")
                       }
                     
                 }
+                .accentColor(Color("Primary"))
+                .ignoresSafeArea()
               
         
     }

@@ -43,7 +43,7 @@ struct StorageView: View {
               Image(systemName: "plus")
                 .resizable()
                 .frame(width:30, height:30)
-                .foregroundColor(Color("Primary"))
+                .foregroundColor(Color("Secondary"))
             } //: BUTTON
             .sheet(isPresented: $isShowingNotes) {
               NoteUploadView()
