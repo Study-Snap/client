@@ -51,14 +51,77 @@ struct ApiNoteResponse : Codable, Identifiable {
     var bibtextCitation: String?
     
     // For errors or other messages
+    var statusCode: Int?
+    var error: String?
     var message: String?
 }
 
 class NeptuneApi {
     let neptuneBaseUrl: String = "https://studysnap.ca/neptune"
     
-    func uploadNoteWithData(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
-        // MARK: Implement full request with data
+    func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
+            print("[\(res.statusCode!)] \(res.message!)")
+            
+            if res.statusCode == 201 && res.fileUri != nil {
+                // Successful file upload
+                self.createNoteWithFile(noteData: noteData, fileUri: res.fileUri!) { result in
+                    if result.message == nil {
+                        completion(result)
+                    } else {
+                        print("[ERROR] \(result.message!)")
+                        completion(ApiNoteResponse(message: result.message!))
+                    }
+                }
+            } else {
+                // Failed file upload
+                print("[ERROR] \(res.message!)")
+                completion(ApiNoteResponse(message: "Failed to upload file. \(res.message ?? "No reason specified"). Try again..."))
+            }
+        }
+    }
+    
+    func createNoteWithFile(noteData: CreateNoteData, fileUri: String, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes")
+        
+        let parameters: [String: Any] = [
+            "title": noteData.title,
+            "keywords": noteData.keywords,
+            "shortDescription": noteData.shortDescription,
+            "fileUri": fileUri,
+            "isPublic": noteData.isPublic,
+            "allowDownloads": noteData.allowDownloads,
+            // MARK: include bibtextCitation here once it is fixed on the serverside
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                print(data.debugDescription)
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                }
+            }
+        }.resume()
     }
     
     func uploadNoteFile(fileName: String, fileData: Data, completion: @escaping (ApiFileResponse) -> ()) -> Void {

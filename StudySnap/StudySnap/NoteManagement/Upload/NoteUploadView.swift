@@ -15,14 +15,19 @@ struct NoteUploadView: View {
     
     // Input state
     @State var title: String  = ""
+    @State var shortDescription: String  = ""
     @State var keywords: String  = ""
-    @State var subject: String  = ""
+    @State var isPublic: Bool = false
+    @State var allowDownloads: Bool = false
     
     // File picker state
     @State var pickedFileName: String = ""
     @State var pickedFile: Data = Data()
     @State var show: Bool = false
     @State var alert: Bool = false
+    
+    // Note upload View Model
+    @ObservedObject var viewModel: NoteUploadViewModel = NoteUploadViewModel()
     
     let formatter: NumberFormatter = {
      let formatter = NumberFormatter()
@@ -45,7 +50,7 @@ struct NoteUploadView: View {
                     .padding(.horizontal, 5)
                     .padding(.bottom, 10)
                     .background(GeometryGetter(rect: $kGuardian.rects[0]))
-                InputField(placeholder: "Subject", value: $subject)
+                InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
                     .padding(.horizontal, 5)
                     .padding(.bottom, 10)
                     .background(GeometryGetter(rect: $kGuardian.rects[1]))
@@ -53,6 +58,28 @@ struct NoteUploadView: View {
                     .padding(.horizontal, 5)
                     .padding(.bottom, 10)
                     .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                Toggle(isOn: self.$isPublic, label: {
+                    Image(systemName: "globe").foregroundColor(Color("Secondary"))
+                    Text("Make Public")
+                        .font(.body)
+                        .fontWeight(.light)
+                        .foregroundColor(Color("Secondary"))
+                })
+                .toggleStyle(SwitchToggleStyle(tint: Color("Primary")))
+                .padding(.horizontal)
+                .padding(.bottom, 10)
+                
+                Toggle(isOn: self.$allowDownloads, label: {
+                    Image(systemName: "arrow.down.square").foregroundColor(Color("Secondary"))
+                    Text("Make Downloadable")
+                        .font(.body)
+                        .fontWeight(.light)
+                        .foregroundColor(Color("Secondary"))
+                })
+                .toggleStyle(SwitchToggleStyle(tint: Color("Primary")))
+                .padding(.horizontal)
+                .padding(.bottom, 15)
+                
             
                 Button(action: {
                     self.show.toggle()
@@ -87,19 +114,20 @@ struct NoteUploadView: View {
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
-//                    self.presentationMode.wrappedValue.dismiss()
-                    print(self.pickedFileName)
-                    print(self.pickedFile.debugDescription)
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, isPublic: self.isPublic, allowDownloads: self.allowDownloads, bibtextCitation: nil))
                     
-                    NeptuneApi().uploadNoteFile(fileName: self.pickedFileName, fileData: self.pickedFile) { res in
-                        
-                        print("[\(res.statusCode!)] \(res.message!)")
+                    // If successful dismiss the upload view
+                    if !self.viewModel.error {
+                        self.presentationMode.wrappedValue.dismiss()
                     }
                 }
      
             }
             .onAppear { self.kGuardian.addObserver() }
             .onDisappear { self.kGuardian.removeObserver() }
+            .alert(isPresented: self.$viewModel.error, content: {
+                Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
+            })
             .navigationBarItems(trailing:
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
@@ -151,7 +179,7 @@ struct DocumentPicker : UIViewControllerRepresentable {
                     }
             }
             // Get file data
-            self.parent.picked_file_name = (urls.first?.deletingPathExtension().lastPathComponent)!
+            self.parent.picked_file_name = (urls.first?.lastPathComponent)!
             self.parent.picked_file_data = try! Data.init(contentsOf: urls.first!)
         }
     }
