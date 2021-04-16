@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NoteSearchView: View {
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
-    @State private var searchText : String = "Search for notes"
+    @State private var searchText : String = ""
     
     var body: some View {
         NavigationView {

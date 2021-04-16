@@ -110,7 +110,7 @@ struct NoteUploadView: View {
                 }
                 
                 if self.pickedFileName.count > 0 {
-                    FilePickedView(picked_file: self.pickedFileName)
+                    FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
@@ -118,6 +118,7 @@ struct NoteUploadView: View {
                     
                     // If successful dismiss the upload view
                     if !self.viewModel.error {
+                        // Successful upload (init jiggle)
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }

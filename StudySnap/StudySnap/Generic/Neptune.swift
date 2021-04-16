@@ -61,8 +61,6 @@ class NeptuneApi {
     
     func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
         self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
-            print("[\(res.statusCode!)] \(res.message!)")
-            
             if res.statusCode == 201 && res.fileUri != nil {
                 // Successful file upload
                 self.createNoteWithFile(noteData: noteData, fileUri: res.fileUri!) { result in
@@ -70,7 +68,7 @@ class NeptuneApi {
                         completion(result)
                     } else {
                         print("[ERROR] \(result.message!)")
-                        completion(ApiNoteResponse(message: result.message!))
+                        completion(ApiNoteResponse(error: "Error", message: result.message!))
                     }
                 }
             } else {
@@ -109,7 +107,6 @@ class NeptuneApi {
             guard let data = data else { return }
             
             do {
-                print(data.debugDescription)
                 let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
                 
                 DispatchQueue.main.async {

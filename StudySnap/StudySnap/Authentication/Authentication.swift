@@ -114,8 +114,9 @@ class AuthApi {
         }.resume()
     }
     
-    func refreshTokens(refreshToken: String, completion: @escaping (UserAuth) -> ()) -> Void {
+    func refreshTokens(completion: @escaping (UserAuth) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(authBaseUrl)/refresh")
+        let refreshToken = TokenService().getToken(key: .refreshToken)
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "POST"
@@ -134,6 +135,7 @@ class AuthApi {
             } catch {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
+                    print("Failed proper response from Auth server")
                     completion(UserAuth(message: "Failed to get a proper response from the server"))
                 }
             }

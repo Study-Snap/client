@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FilePickedView: View {
     @State var picked_file: String
+    @State var picked_file_data: Data
+    
     var body: some View {
         HStack {
             Text(picked_file)
@@ -16,6 +18,7 @@ struct FilePickedView: View {
                 .foregroundColor(Color("Secondary"))
             Button(action: {
                 self.picked_file = ""
+                self.picked_file_data = Data()
             }) {
                 if (picked_file != ""){
                     Image(systemName: "xmark")
@@ -33,7 +36,7 @@ struct FilePickedView: View {
 
 struct FilePickedView_Previews: PreviewProvider {
     static var previews: some View {
-        FilePickedView(picked_file: "Science note").previewLayout(.sizeThatFits)
+        FilePickedView(picked_file: "Science note", picked_file_data: Data()).previewLayout(.sizeThatFits)
             .padding()
     }
 }

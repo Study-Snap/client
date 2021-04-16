@@ -35,7 +35,6 @@ struct NoteListRowItem: View {
                             }
                         }
                         .frame(width: 70, height: 70, alignment: .center)
-                        Spacer()
                         VStack(alignment: .leading) {
                             Text(title)
                                 .font(.headline)
@@ -58,7 +57,9 @@ struct NoteListRowItem: View {
                             }
                             
                         }
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, 20)
+                        
+                        Spacer()
                     }
                     .padding(15)
                     .padding(.horizontal, 17)
@@ -71,7 +72,7 @@ struct NoteListRowItem: View {
 
 struct NoteListRowItem_Previews: PreviewProvider {
     static var previews: some View {
-        NoteListRowItem(title: "Science Lecture 5", author: "Liam Stickney", shortDescription: "This is a note about science and biology and includes physics too", readTime: 5, rating: [0,2,3,20,5])
+        NoteListRowItem(title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
     }
 }
 
