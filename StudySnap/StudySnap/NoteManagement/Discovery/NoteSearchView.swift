@@ -45,7 +45,7 @@ struct NoteSearchView: View {
                                 .foregroundColor(Color("AccentDark"))
                                 .frame(width: 100, height: 100, alignment: .center)
                                 .padding()
-                            Text("We couldn't find anything else")
+                            Text("We couldn't find any notes for this query")
                                 .font(.headline)
                                 .fontWeight(.medium)
                                 .foregroundColor(Color("AccentDark"))
