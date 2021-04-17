@@ -28,36 +28,34 @@ struct CloudNoteView: View {
                                 Text(viewModel.noteObj.title!)
                                     .font(.title)
                                     .bold()
+                                    .multilineTextAlignment(.center)
                                     .foregroundColor(.white)
                                     .padding(20)
+                                    .padding(.top, 25)
                                 Text("Liam Stickney")
                                     .font(.title2)
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
                                     .padding(.top, -20)
-                                    .padding(.bottom, 25)
-//                                HStack(alignment: .center) {
-//                                    ForEach(0..<3) { i in
-//                                        let keywords = viewModel.noteObj!.keywords!
-//                                        if !keywords[i].isEmpty {
-//
-//                                            Text(keywords[i])
-//                                                .padding(.vertical, 10)
-//                                                .padding(.horizontal, 20)
-//                                                .foregroundColor(Color("Secondary"))
-//                                                .background(Color(.white))
-//                                                .cornerRadius(7.0)
-//
-//                                        }
-//                                    }
-//                                }
-//                                .padding(.top, 40)
-//                                .padding(.bottom, 0)
+                                HStack(alignment: .center) {
+                                    ForEach(0..<3) { i in
+                                        let keywords = viewModel.noteObj.keywords!
+                                        if keywords.count > i {
+
+                                            Text(keywords[i])
+                                                .padding(.vertical, 10)
+                                                .padding(.horizontal, 20)
+                                                .foregroundColor(Color("Secondary"))
+                                                .background(Color(.white))
+                                                .cornerRadius(7.0)
+
+                                        }
+                                    }
+                                }
+                                .padding(.top, 25)
                                 VStack {
                                     NoteRatingView(avgRating: calculateRating(ratings: viewModel.noteObj.rating!), starFilledColor: .yellow, starEmptyColor: .white)
-                                }
-                                .padding(.top, 20)
-                                .padding(.bottom, -40)
+                                }.padding(.top, 15)
                             }
                         }
                         .frame(height: 340, alignment: .center)
@@ -125,7 +123,7 @@ struct CloudNoteView: View {
                             .padding()
                             .background(Color("Accent"))
                         }.padding()
-                    }
+                    }.padding(.top, -125)
                 }
             }
         }
