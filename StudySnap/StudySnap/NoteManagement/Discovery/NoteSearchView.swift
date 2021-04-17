@@ -78,7 +78,7 @@ struct NoteSearchView: View {
                 })
 
             }.navigationViewStyle(StackNavigationViewStyle())
-        }
+        }.accentColor(.white)
     }
 }
 

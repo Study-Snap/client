@@ -79,7 +79,3 @@ struct NoteListRowItem_Previews: PreviewProvider {
         NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5], onClick: {_ in print("id")})
     }
 }
-
-func calculateRating(ratings: [Int]) -> Int {
-    return ratings.firstIndex(of: ratings.max()!)! + 1
-}
