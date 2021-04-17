@@ -36,14 +36,14 @@ struct CloudNoteView: View {
                         HStack(alignment: .center) {
                             ForEach(0..<3) { i in
                                 if !tempKeywords[i].isEmpty {
-                                    
+
                                     Text(tempKeywords[i])
                                         .padding(.vertical, 10)
                                         .padding(.horizontal, 20)
                                         .foregroundColor(Color("Secondary"))
                                         .background(Color(.white))
                                         .cornerRadius(7.0)
-                                    
+
                                 }
                             }
                         }
@@ -58,13 +58,41 @@ struct CloudNoteView: View {
                 }
                 .frame(height: 340, alignment: .center)
                 .cornerRadius(15.0)
-                Spacer()
             }
             .ignoresSafeArea()
             
             VStack {
+                Button(action: {print("Test")}, label: {
+                    Text("Hello, My Name is Sheharyaar")
+                })
                 
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("DESCRIPTION")
+                        Text("This is a short description of my biology note.")
+                    }.padding()
+                    Spacer()
+                }
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("DETAILS")
+                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet placerat dolor in tempor. Fusce eu vehicula mauris, eu vehicula orci. Fusce at risus eu leo tempus imperdiet. Nullam suscipit dolor sapien, rutrum egestas nunc luctus et. Aenean ullamcorper libero ante, sit amet viverra sapien iaculis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                    }.padding()
+                    Spacer()
+                }
+                Spacer()
+                
+                HStack {
+                    Text("About a 5 minute read")
+                    Button(action: {print("Cited!")}, label: {
+                        Text("Cite This")
+                    })
+                }
+
             }
+            
+            
         }
         .onAppear(perform: {
             self.viewModel.getNoteDetailsForId(id: noteId)
