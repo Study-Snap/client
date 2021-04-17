@@ -10,18 +10,19 @@ import SwiftUI
 class NoteViewViewModel: ObservableObject {
     @Published var error: Bool = false
     @Published var errorMessage: String?
-    @Published var title: String?
-    @Published var description: String?
     @Published var loading: Bool = true
+    
+    @Published var noteObj: ApiNoteResponse = ApiNoteResponse(id: 1, title: "Cool", keywords: ["not", "cool"], shortDescription: "Short description", body: "aiduhwaidu", fileUri: "", authorId: 1, rating: [2, 2, 2, 2, 2], timeLength: 5, isPublic: false, allowDownloads: false, bibtextCitation: "", statusCode: 200)
     
     func getNoteDetailsForId(id: Int) -> Void {
         NeptuneApi().getNoteWithId(noteId: id) { res in
             if res.message != nil {
+                print(res.message!)
+                self.loading.toggle()
                 self.error.toggle()
                 self.errorMessage = res.message
             } else {
-                self.title = res.title
-                self.description = res.shortDescription
+                self.noteObj = res
                 self.loading.toggle()
             }
         }
