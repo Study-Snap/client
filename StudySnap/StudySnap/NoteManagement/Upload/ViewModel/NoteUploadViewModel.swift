@@ -13,15 +13,42 @@ class NoteUploadViewModel: ObservableObject {
     @Published var response: ApiNoteResponse? = nil
     
     func validateNoteUpload(data: CreateNoteData) -> Bool {
-        if data.title.isEmpty || data.shortDescription.isEmpty || data.keywords.isEmpty || data.keywords.count < 2 || data.fileName.isEmpty || data.fileData.isEmpty {
+        if data.title.isEmpty || data.shortDescription.isEmpty || data.keywords.isEmpty || data.fileName.isEmpty || data.fileData.isEmpty {
+            if data.keywords.count > 5 || data.keywords.count < 2 {
+                self.error.toggle()
+                self.errorMessage = "Invalid Upload Request. Must include between 2 and 5 keywords"
+                return false
+            }
+            if data.title.count > 50 {
+                self.error.toggle()
+                self.errorMessage = "Invalid Upload Request. Title must be less than 50 characters long"
+                return false
+            }
+            if data.shortDescription.count > 280 {
+                self.error.toggle()
+                self.errorMessage = "Invalid Upload Request. Short description is too long! Must be under 280 characters"
+                return false
+            }
+            if data.shortDescription.count < 60 {
+                self.error.toggle()
+                self.errorMessage = "Invalid Upload Request. Short description is somehow too short! Must be above 60 characters"
+                return false
+            }
+            if data.fileName.components(separatedBy: ".").last != "pdf" {
+                self.error.toggle()
+                self.errorMessage = "Invalid Upload Request. Invalid file format. We currently only accept PDF files"
+                return false
+            }
+            
+            // All other errors
             self.error.toggle()
-            self.errorMessage = "Invalid Upload Request. Check that all fields are filled correctly then try again!"
+            self.errorMessage = "Invalid Upload Request. Check that all fields are filled in"
             return false
         }
         return true
     }
     
-    func performUpload(noteData: CreateNoteData) -> Void {
+    func performUpload(noteData: CreateNoteData, completion: @escaping () -> ()) -> Void {
         if validateNoteUpload(data: noteData) {
             NeptuneApi().createNote(noteData: noteData) { res in
                 if res.message != nil || res.error != nil {
@@ -34,6 +61,7 @@ class NoteUploadViewModel: ObservableObject {
                                 self.errorMessage = "Cannot refresh your session. You must login again."
                             } else {
                                 do {
+                                    // MARK: Refresh authentication if possible, else, send user back to login
                                     try TokenService().removeToken(key: .accessToken)
                                     try TokenService().removeToken(key: .refreshToken)
                                     try TokenService().addToken(token: Token(type: .accessToken, data: tokens.accessToken!))
@@ -45,7 +73,7 @@ class NoteUploadViewModel: ObservableObject {
                                 }
                                 
                                 // Call the function again to try again
-                                self.performUpload(noteData: noteData)
+                                self.performUpload(noteData: noteData, completion: completion)
                             }
                         }
                     } else {
@@ -58,5 +86,7 @@ class NoteUploadViewModel: ObservableObject {
                 }
             }
         }
+        
+        completion()
     }
 }
