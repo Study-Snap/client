@@ -48,16 +48,22 @@ struct LoginView: View {
                 
                 PrimaryButtonView(title: "Log In", action: {
                     // Log in user
-                    self.viewModel.performLogin(completion: {
-                        (success, message) in
-                        
-                        if success {
-                            self.actionMainView.toggle() // Trigger move to MainView
-                        } else {
-                            self.error.toggle()
-                            self.errorMessage = message
-                        }
-                    })
+                    if self.viewModel.email.isEmpty || self.viewModel.password.isEmpty {
+                        // Validation error
+                        self.error.toggle()
+                        self.errorMessage = "Ensure to enter BOTH your email and password!"
+                    } else {
+                        self.viewModel.performLogin(completion: {
+                            (success, message) in
+                            
+                            if success {
+                                self.actionMainView.toggle() // Trigger move to MainView
+                            } else {
+                                self.error.toggle()
+                                self.errorMessage = message
+                            }
+                        })
+                    }
                 })
                 
                 // Create new account

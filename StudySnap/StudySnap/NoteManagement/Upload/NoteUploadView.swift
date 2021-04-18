@@ -26,6 +26,9 @@ struct NoteUploadView: View {
     @State var show: Bool = false
     @State var alert: Bool = false
     
+    // Upload State
+    @State var loading: Bool = false
+    
     // Note upload View Model
     @ObservedObject var viewModel: NoteUploadViewModel = NoteUploadViewModel()
     
@@ -114,12 +117,18 @@ struct NoteUploadView: View {
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
-                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, isPublic: self.isPublic, allowDownloads: self.allowDownloads, bibtextCitation: nil))
-                    
-                    // If successful dismiss the upload view
-                    if !self.viewModel.error {
-                        // Successful upload (init jiggle)
-                        self.presentationMode.wrappedValue.dismiss()
+                    self.loading.toggle() // Start loading indication
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, isPublic: self.isPublic, allowDownloads: self.allowDownloads, bibtextCitation: nil)) {
+                        
+                        // Stop loading
+                        self.loading.toggle()
+                        
+                        // If successful dismiss the upload view
+                        if !self.viewModel.error {
+                            // Successful upload
+                            // MARK: (init jiggle)
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
                     }
                 }
      
