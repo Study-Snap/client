@@ -69,9 +69,18 @@ class AuthApi {
                     completion(user)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(User(message: "Oops! We don't know what happened there"))
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(User(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(User(message: "Oops! We don't know what happened there"))
+                    }
                 }
             }
         }.resume()
@@ -106,9 +115,18 @@ class AuthApi {
                     completion(auth)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(UserAuth(message: "Failed to get a proper response from the server"))
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(UserAuth(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(UserAuth(message: "Oops! We don't know what happened there"))
+                    }
                 }
             }
         }.resume()
@@ -133,10 +151,18 @@ class AuthApi {
                     completion(auth)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    print("Failed proper response from Auth server")
-                    completion(UserAuth(message: "Failed to get a proper response from the server"))
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(UserAuth(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(UserAuth(message: "Oops! We don't know what happened there"))
+                    }
                 }
             }
         }.resume()

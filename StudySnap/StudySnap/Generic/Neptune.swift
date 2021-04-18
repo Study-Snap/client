@@ -113,9 +113,18 @@ class NeptuneApi {
                     completion(note)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                    }
                 }
             }
         }.resume()
@@ -154,9 +163,18 @@ class NeptuneApi {
                     completion(file)
                 }
             } catch {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(ApiFileResponse(message: "Oops! We don't know what happened there"))
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiFileResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiFileResponse(message: "Oops! We don't know what happened there"))
+                    }
                 }
             }
         }.resume()
@@ -199,9 +217,18 @@ class NeptuneApi {
                         completion([note])
                     }
                 } catch {
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        completion([ApiNoteResponse(message: "Oops! We don't know what happened there")])
+                    do {
+                        print(error.localizedDescription)
+                        let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                        
+                        DispatchQueue.main.async {
+                            completion([ApiNoteResponse(message: validation.message!.first!)])
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                        DispatchQueue.main.async {
+                            completion([ApiNoteResponse(message: "Oops! We don't know what happened there")])
+                        }
                     }
                 }
             }
