@@ -208,6 +208,8 @@
 				B866B1FD262A4B44004C2681 /* NoteViewViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B864A7C3262BAAAC0058493F /* Types */ = {
 			isa = PBXGroup;
 			children = (
