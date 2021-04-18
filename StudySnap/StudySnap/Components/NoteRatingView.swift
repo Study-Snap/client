@@ -11,6 +11,10 @@ struct NoteRatingView: View {
     var avgRating: Int
     var size: Int = 5
     
+    // Styles
+    var starFilledColor: Color = Color("Primary")
+    var starEmptyColor: Color = Color("AccentDark")
+    
     var body: some View {
       HStack(alignment: .center, spacing: 5) {
         
@@ -18,12 +22,12 @@ struct NoteRatingView: View {
             if i <= avgRating {
                 Image(systemName: "star.fill")
                     .font(.body)
-                    .foregroundColor(Color("Primary"))
+                    .foregroundColor(starFilledColor)
                     .scaledToFit()
             } else {
                 Image(systemName: "star.fill")
                     .font(.body)
-                    .foregroundColor(Color("AccentDark"))
+                    .foregroundColor(starEmptyColor)
                     .scaledToFit()
             }
         }

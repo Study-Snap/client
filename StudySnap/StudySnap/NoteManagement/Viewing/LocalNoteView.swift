@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LocalNoteView: View {
     let note: Note
+    
     @State var showToggle = false
     var body: some View {
         //Labore sunt veniam amet es...

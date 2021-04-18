@@ -9,69 +9,132 @@ import SwiftUI
 
 struct CloudNoteView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let note: Note
+    let noteId: Int
+    
+    // View model
+    @StateObject var viewModel: NoteViewViewModel = NoteViewViewModel()
     
     var body: some View {
-        //Labore sunt veniam amet es...
-        
-        ScrollView {
-            VStack(alignment: .leading) {
-                        //Science Class Note
-                        Text(note.title)
-                            .font(.title)
-                            .padding(.top)
-                        
-                        Text(note.author)
-                            .font(.headline)
-                            .padding(.vertical)
-                        
-                        Text(note.description)
-                            .font(.body)
-                 
-                        
-                        Text("Topic(s): " + note.subject.joined(separator: ", "))
-                            .fontWeight(.bold)
-                            .padding(.top)
-                        
-                        Text("Keywords: " + note.keywords.joined(separator: ", "))
-                            .fontWeight(.bold)
-                            .padding(.top)
-                        
-                        Text("Length: " + String(note.length) + " words")
-                            .fontWeight(.bold)
-                            .padding(.top)
-             
-//                NoteRatingView(note: note)
-//                    .padding(.vertical)
-                   
-              
-            }.padding(.horizontal,30)
-            
-            VStack(alignment: .center) {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 30)
-                            .fill(Color("Primary"))
-                            .frame(width: 370, height: 60)
-                        //Save Note
-                        Text("Save Note").font(.custom("Inter Semi Bold", size: 16)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
+        VStack {
+            if viewModel.loading {
+                ProgressView("Loading note details...")
+                    .foregroundColor(Color("Secondary"))
+            } else {
+                VStack {
+                    VStack {
+                        ZStack {
+                            Color("Primary")
+                            VStack {
+                                Text(viewModel.noteObj.title!)
+                                    .font(.title)
+                                    .bold()
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.white)
+                                    .padding(20)
+                                    .padding(.top, 25)
+                                Text("Liam Stickney")
+                                    .font(.title2)
+                                    .fontWeight(.light)
+                                    .foregroundColor(.white)
+                                    .padding(.top, -20)
+                                HStack(alignment: .center) {
+                                    ForEach(0..<3) { i in
+                                        let keywords = viewModel.noteObj.keywords!
+                                        if keywords.count > i {
 
+                                            Text(keywords[i])
+                                                .padding(.vertical, 10)
+                                                .padding(.horizontal, 20)
+                                                .foregroundColor(Color("Secondary"))
+                                                .background(Color(.white))
+                                                .cornerRadius(7.0)
+
+                                        }
+                                    }
+                                }
+                                .padding(.top, 25)
+                                VStack {
+                                    NoteRatingView(avgRating: calculateRating(ratings: viewModel.noteObj.rating!), starFilledColor: .yellow, starEmptyColor: .white)
+                                }.padding(.top, 15)
+                            }
+                        }
+                        .frame(height: 340, alignment: .center)
+                        .cornerRadius(15.0)
                     }
+                    .ignoresSafeArea()
+                    
+                    VStack {
+                        // MARK: Note Download Button
+                        HStack {
+                            Button(action: {print("Test")}, label: {
+                                Text("Get Full Note").foregroundColor(Color("Secondary")).padding()
+                            })
+                            Spacer()
+                            Image(systemName: "square.and.arrow.down")
+                                .font(.title3)
+                                .foregroundColor(Color("Secondary"))
+                                .padding(.horizontal)
+                        }
+                        .padding(.horizontal, 10)
+                        .background(Color("Accent"))
+                        .cornerRadius(7.0)
+                        .padding(.horizontal)
+                        .padding(.bottom, 15)
+                        
+                        // MARK: Main Content
+                        ScrollView {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("DESCRIPTION")
+                                        .font(.caption)
+                                        .foregroundColor(Color("Primary"))
+                                        .padding(.bottom, 0)
+                                    
+                                    Text(viewModel.noteObj.shortDescription!).fontWeight(.light)
+                                }.padding()
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("DETAILS")
+                                        .font(.caption)
+                                        .foregroundColor(Color("Primary"))
+                                        .padding(.bottom, 0)
+                                    
+                                    Text(viewModel.noteObj.body!).fontWeight(.light)
+                                }.padding()
+                                Spacer()
+                            }
+                            Spacer()
+                        }
+                        
+                        // MARK: Bottom buttons
+                        HStack {
+                            Text("About a \(viewModel.noteObj.timeLength!) minute read")
+                                .foregroundColor(Color("Secondary"))
+                                .padding(.horizontal, 45)
+                                .padding(.vertical)
+                                .background(Color("Accent"))
+                            Button(action: {print("Cited!")}, label: {
+                                Text("Cite Note")
+                            })
+                            .foregroundColor(Color("Secondary"))
+                            .padding()
+                            .background(Color("Accent"))
+                        }.padding()
+                    }.padding(.top, -125)
                 }
             }
         }
-                
-            
-        
+        .onAppear(perform: {
+            self.viewModel.getNoteDetailsForId(id: noteId)
+        })
     }
 }
 
 struct CloudNoteView_Previews: PreviewProvider {
-    static let notes: [Note] = Bundle.main.decode("notes_data.json")
-    
     static var previews: some View {
-        CloudNoteView(note: notes[4])
-          }
+        CloudNoteView(noteId: 1)
+    }
 }

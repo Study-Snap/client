@@ -20,11 +20,7 @@ struct StorageView: View {
             ForEach(globalString.notesData) { item in
                 NavigationLink(destination:{
                     VStack{
-                        if item.isOnline{
-                            CloudNoteView(note: item)
-                        }else{
-                            LocalNoteView(note: item)
-                        }
+                        LocalNoteView(note: item)
                     }
                 }()) {
                     NoteRowView(note: item)

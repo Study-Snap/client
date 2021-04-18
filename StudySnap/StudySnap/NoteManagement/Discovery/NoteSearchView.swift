@@ -11,57 +11,74 @@ import SwiftUI
 struct NoteSearchView: View {
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     @State private var searchText : String = ""
+    @State var showNoteDetails: Bool = false
+    @State var targetNoteId: Int? = 1
     
     var body: some View {
         NavigationView {
-            VStack() {
-                SearchBar(viewModel: viewModel, text: $searchText)
-                    .padding(.horizontal)
-                VStack(alignment: .leading) {
-                    Text("Recommended").font(.title).fontWeight(.medium).foregroundColor(Color("Secondary"))
-                    
-                    MiniNoteCardView()
-                        .cornerRadius(20)
-                        .frame(height: 150, alignment: .center)
-                }.padding()
-                VStack(alignment: .leading) {
-                    if viewModel.results.count > 0 {
-                        Text("Other stuff we found").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
-                        ScrollView{
-                            LazyVStack {
-                                VStack {
-                                    ForEach(viewModel.results) { item in
-                                        NoteListRowItem(title: item.title!, author: String("Liam Stickney"), shortDescription: item.shortDescription!, readTime: 5, rating: item.rating!)
-                                    }.padding(5)
+            VStack {
+                VStack {
+                NavigationLink(
+                    destination: CloudNoteView(noteId: self.targetNoteId!),
+                    isActive: $showNoteDetails,
+                    label: {
+                        EmptyView()
+                    })
+                }
+                VStack() {
+                    SearchBar(viewModel: viewModel, text: $searchText)
+                        .padding(.horizontal)
+                    VStack(alignment: .leading) {
+                        Text("Recommended").font(.title).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                        
+                        MiniNoteCardView()
+                            .cornerRadius(20)
+                            .frame(height: 150, alignment: .center)
+                    }.padding()
+                    VStack(alignment: .leading) {
+                        if viewModel.results.count > 0 {
+                            Text("Other stuff we found").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                            ScrollView{
+                                LazyVStack {
+                                    VStack {
+                                        ForEach(viewModel.results) { item in
+                                            NoteListRowItem(id: item.id!, title: item.title!, author: String("Liam Stickney"), shortDescription: item.shortDescription!, readTime: 5, rating: item.rating!, onClick:
+                                            { noteId in
+                                                // trigger navigation
+                                                self.targetNoteId = noteId
+                                                self.showNoteDetails.toggle()
+                                            })
+                                        }.padding(5)
+                                    }
                                 }
                             }
-                        }
-                    } else {
-                        VStack(alignment: .center) {
-                            Spacer()
-                            Image(systemName: "questionmark.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color("AccentDark"))
-                                .frame(width: 100, height: 100, alignment: .center)
-                                .padding()
-                            Text("We couldn't find any notes for this query")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .foregroundColor(Color("AccentDark"))
-                            Spacer()
+                        } else {
+                            VStack(alignment: .center) {
+                                Spacer()
+                                Image(systemName: "questionmark.circle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color("AccentDark"))
+                                    .frame(width: 100, height: 100, alignment: .center)
+                                    .padding()
+                                Text("We couldn't find any notes for this query")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(Color("AccentDark"))
+                                Spacer()
+                            }
                         }
                     }
+                    .padding()
+                    Spacer()
                 }
-                .padding()
-                Spacer()
-            }
-            .navigationTitle("Search")
-            .alert(isPresented: $viewModel.error, content: {
-                Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
-            })
+                .navigationTitle("Search")
+                .alert(isPresented: $viewModel.error, content: {
+                    Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
+                })
 
-        }.navigationViewStyle(StackNavigationViewStyle())
+            }.navigationViewStyle(StackNavigationViewStyle())
+        }.accentColor(.white)
     }
 }
 

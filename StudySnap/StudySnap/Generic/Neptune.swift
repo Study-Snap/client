@@ -180,6 +180,32 @@ class NeptuneApi {
         }.resume()
     }
     
+    func getNoteWithId(noteId: Int, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/\(noteId)")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                }
+            }
+        }.resume()
+    }
+    
     func getNotesForQuery(query: String, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/search")
         
