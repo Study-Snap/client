@@ -14,37 +14,37 @@ class NoteUploadViewModel: ObservableObject {
     
     func validateNoteUpload(data: CreateNoteData) -> Bool {
         if data.title.isEmpty || data.shortDescription.isEmpty || data.keywords.isEmpty || data.fileName.isEmpty || data.fileData.isEmpty {
-            if data.keywords.count > 5 || data.keywords.count < 2 {
-                self.error.toggle()
-                self.errorMessage = "Invalid Upload Request. Must include between 2 and 5 keywords"
-                return false
-            }
-            if data.title.count > 50 {
-                self.error.toggle()
-                self.errorMessage = "Invalid Upload Request. Title must be less than 50 characters long"
-                return false
-            }
-            if data.shortDescription.count > 280 {
-                self.error.toggle()
-                self.errorMessage = "Invalid Upload Request. Short description is too long! Must be under 280 characters"
-                return false
-            }
-            if data.shortDescription.count < 60 {
-                self.error.toggle()
-                self.errorMessage = "Invalid Upload Request. Short description is somehow too short! Must be above 60 characters"
-                return false
-            }
-            if data.fileName.components(separatedBy: ".").last != "pdf" {
-                self.error.toggle()
-                self.errorMessage = "Invalid Upload Request. Invalid file format. We currently only accept PDF files"
-                return false
-            }
-            
-            // All other errors
             self.error.toggle()
             self.errorMessage = "Invalid Upload Request. Check that all fields are filled in"
             return false
         }
+        if data.keywords.count > 5 || data.keywords.count < 2 {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. Must include between 2 and 5 keywords"
+            return false
+        }
+        if data.title.count > 50 {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. Title must be less than 50 characters long"
+            return false
+        }
+        if data.shortDescription.count > 280 {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. Short description is too long! Must be under 280 characters"
+            return false
+        }
+        if data.shortDescription.count < 60 {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. Short description is somehow too short! Must be above 60 characters"
+            return false
+        }
+        if data.fileName.components(separatedBy: ".").last != "pdf" {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. Invalid file format. We currently only accept PDF files"
+            return false
+        }
+        
+        // No client validation errors
         return true
     }
     

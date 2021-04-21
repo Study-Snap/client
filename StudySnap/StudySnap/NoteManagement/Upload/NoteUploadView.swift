@@ -10,7 +10,6 @@ import MobileCoreServices
 
 struct NoteUploadView: View {
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 4)
-    @ObservedObject var globalString = globalEventManager
     @Environment(\.presentationMode) var presentationMode
     
     // Input state
