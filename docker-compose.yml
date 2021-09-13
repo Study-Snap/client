@@ -1,0 +1,88 @@
+# Development Setup for working on Neptune
+version: "3.7"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.2
+    container_name: sem_elasticsearch
+    restart: on-failure
+    environment: 
+      - "discovery.type=single-node"
+    ports: 
+      - 9200:9200
+    networks: 
+      - client-dev-network
+  logstash:
+    image: studysnap/logstash-pg-es:1.x
+    container_name: sem_logstash
+    restart: on-failure
+    environment:
+      LS_HOST: "0.0.0.0"
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: studysnap
+      DB_PASS: snapstudy
+      DB_NAME: studysnap_db
+      ES_HOST: elasticsearch
+      ES_PORT: 9200
+    volumes:
+      - "./.docker/es-search/config:/usr/share/logstash/config"
+      - "./.docker/es-search/pipelines:/usr/share/logstash/pipeline"
+    depends_on: 
+      - ssdb
+      - elasticsearch
+    networks: 
+      - client-dev-network
+  ssdb:
+    image: postgres:13.1
+    container_name: studysnap_db
+    restart: on-failure
+    environment:
+      POSTGRES_DB: studysnap_db
+      POSTGRES_USER: studysnap
+      POSTGRES_PASSWORD: snapstudy
+    ports:
+      - "8888:5432"
+    networks:
+      - client-dev-network
+  neptune:
+    image: studysnap/neptune:develop.0.x
+    container_name: neptune
+    restart: on-failure
+    environment: 
+      PORT: 7777
+      DB_USER: studysnap
+      DB_PASS: snapstudy
+      DB_HOST: ssdb
+      DB_DATABASE_NAME: studysnap_db
+      JWT_SECRET: dev
+    depends_on: 
+      - ssdb
+      - authentication
+    ports: 
+      - 7777:7777
+    networks:
+      - client-dev-network
+  authentication:
+    image: studysnap/authentication:1.x
+    container_name: authentication
+    restart: on-failure
+    environment:
+      PORT: 5555
+      DB_USER: studysnap
+      DB_PASS: snapstudy
+      DB_HOST: ssdb
+      DB_USER_DATABASE: studysnap_db
+      JWT_SECRET: dev
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 999m
+    depends_on:
+      - ssdb
+    ports:
+      - 5555:5555
+    networks:
+      - client-dev-network
+
+networks:
+  client-dev-network:
+    driver: bridge
+volumes:
+  classdb_data:
