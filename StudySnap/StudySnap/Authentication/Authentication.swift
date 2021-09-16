@@ -11,7 +11,7 @@ struct User : Codable {
     enum CodingKeys: String, CodingKey {
         case firstName, lastName, email, message
         
-        case id = "_id"
+        case id = "id"
     }
     
     var id : Int?
@@ -36,7 +36,7 @@ struct UserAuth: Codable {
 }
 
 class AuthApi {
-    let authBaseUrl: String = "https://studysnap.ca/auth"
+    let authBaseUrl: String = "\(InfoPlistParser.getStringValue(forKey: Constants.PROTOCOL_KEY))://\(InfoPlistParser.getStringValue(forKey: Constants.AUTH_KEY))"
     
     func register(student: Student, completion: @escaping (User) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(authBaseUrl)/register")

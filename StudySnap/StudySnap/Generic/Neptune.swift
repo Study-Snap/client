@@ -57,7 +57,7 @@ struct ApiNoteResponse : Codable, Identifiable {
 }
 
 class NeptuneApi {
-    let neptuneBaseUrl: String = "https://studysnap.ca/neptune"
+    let neptuneBaseUrl: String = "\(InfoPlistParser.getStringValue(forKey: Constants.PROTOCOL_KEY))://\(InfoPlistParser.getStringValue(forKey: Constants.NEPTUNE_KEY))"
     
     func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
         self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
