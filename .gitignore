@@ -88,3 +88,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# File storage for development purposes
+temp-file-store/*
