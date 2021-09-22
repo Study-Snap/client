@@ -18,8 +18,6 @@ struct NoteUploadView: View {
     @State var shortDescription: String  = ""
     @State var keywords: String  = ""
     @State var classId: String = ""
-    //@State var isPublic: Bool = false
-    //@State var allowDownloads: Bool = false
     
     // File picker state
     @State var pickedFileName: String = ""
