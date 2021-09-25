@@ -29,15 +29,28 @@ struct NoteSearchView: View {
                     SearchBar(viewModel: viewModel, text: $searchText)
                         .padding(.horizontal)
                     VStack(alignment: .leading) {
-                        Text("Recommended").font(.title).fontWeight(.medium).foregroundColor(Color("Secondary"))
-                        
-                        MiniNoteCardView()
+                        if viewModel.trending.count > 0 {
+                            Text("Top picks by the community").font(.title3).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                            
+                            MiniNoteCardView(notes: self.viewModel.trending, onClick: {noteId in
+                                // Trigger navigation to the note
+                                self.targetNoteId = noteId
+                                self.showNoteDetails.toggle()
+                            })
                             .cornerRadius(20)
                             .frame(height: 150, alignment: .center)
-                    }.padding()
+                        } else {
+                            // No top notes available
+                            EmptyView()
+                        }
+                    }
+                    .padding()
+                    .onAppear(perform: {
+                        self.viewModel.getTopTrendingNotes()
+                    })
                     VStack(alignment: .leading) {
                         if viewModel.results.count > 0 {
-                            Text("Other stuff we found").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
+                            Text("We found these").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
                             ScrollView{
                                 LazyVStack {
                                     VStack {
@@ -61,7 +74,7 @@ struct NoteSearchView: View {
                                     .foregroundColor(Color("AccentDark"))
                                     .frame(width: 100, height: 100, alignment: .center)
                                     .padding()
-                                Text("We couldn't find any notes for this query")
+                                Text("No notes to show. Try searching for some!")
                                     .font(.headline)
                                     .fontWeight(.medium)
                                     .foregroundColor(Color("AccentDark"))

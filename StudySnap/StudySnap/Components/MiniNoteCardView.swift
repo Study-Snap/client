@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct MiniNoteCardView: View {
-    @ObservedObject var globalString = GlobalString()
+    var notes: [ApiNoteResponse]
+    var onClick: (Int) -> () = { noteId in print("Clicked \(noteId)") }
+    
     var body: some View {
       TabView {
        
-        ForEach(globalString.notesData) { item in
-
+        ForEach(notes) { item in
+            Button(action: {onClick(item.id!)}, label: {
                 VStack {
                     VStack {
                         Image(systemName: "doc.text.fill")
@@ -25,11 +27,11 @@ struct MiniNoteCardView: View {
                     }
                     VStack {
                         HStack {
-                            Text(item.title).foregroundColor(Color(.gray)).fontWeight(.light)
+                            Text(item.title!).foregroundColor(Color(.gray)).fontWeight(.light)
                         }
                         HStack {
                             VStack{
-                                Text(String(item.author))
+                                Text("Ben Sykes")
                                     .fontWeight(.medium)
                                     .foregroundColor(Color("Secondary"))
                             }.padding(.horizontal, 50)
@@ -39,9 +41,7 @@ struct MiniNoteCardView: View {
                     }
                     
                 }
-            
-
-            
+            }).buttonStyle(PlainButtonStyle())
         }
       }
       .tabViewStyle(PageTabViewStyle())
@@ -51,7 +51,7 @@ struct MiniNoteCardView: View {
 
 struct MiniNoteCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniNoteCardView()
+        MiniNoteCardView(notes: [])
             .previewLayout(.fixed(width: 400, height: 300))
     }
 }
