@@ -12,7 +12,7 @@ class NoteViewViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var loading: Bool = true
     
-    @Published var noteObj: ApiNoteResponse = ApiNoteResponse(id: 1, title: "Cool", keywords: ["not", "cool"], shortDescription: "Short description", body: "aiduhwaidu", fileUri: "", authorId: 1, rating: [2, 2, 2, 2, 2], timeLength: 5, isPublic: false, allowDownloads: false, bibtextCitation: "", statusCode: 200)
+    @Published var noteObj: ApiNoteResponse = ApiNoteResponse(id: 1, title: "Cool", classId: "8834jjr9js9", keywords: ["not", "cool"], shortDescription: "Short description", body: "aiduhwaidu", fileUri: "", authorId: 1, rating: [2, 2, 2, 2, 2], timeLength: 5, bibtextCitation: "", statusCode: 200)
     
     func getNoteDetailsForId(id: Int) -> Void {
         NeptuneApi().getNoteWithId(noteId: id) { res in

@@ -17,8 +17,7 @@ struct NoteUploadView: View {
     @State var title: String  = ""
     @State var shortDescription: String  = ""
     @State var keywords: String  = ""
-    @State var isPublic: Bool = false
-    @State var allowDownloads: Bool = false
+    @State var classId: String = ""
     
     // File picker state
     @State var pickedFileName: String = ""
@@ -61,27 +60,8 @@ struct NoteUploadView: View {
                     .padding(.horizontal, 5)
                     .padding(.bottom, 10)
                     .background(GeometryGetter(rect: $kGuardian.rects[2]))
-                Toggle(isOn: self.$isPublic, label: {
-                    Image(systemName: "globe").foregroundColor(Color("Secondary"))
-                    Text("Make Public")
-                        .font(.body)
-                        .fontWeight(.light)
-                        .foregroundColor(Color("Secondary"))
-                })
-                .toggleStyle(SwitchToggleStyle(tint: Color("Primary")))
-                .padding(.horizontal)
-                .padding(.bottom, 10)
-                
-                Toggle(isOn: self.$allowDownloads, label: {
-                    Image(systemName: "arrow.down.square").foregroundColor(Color("Secondary"))
-                    Text("Make Downloadable")
-                        .font(.body)
-                        .fontWeight(.light)
-                        .foregroundColor(Color("Secondary"))
-                })
-                .toggleStyle(SwitchToggleStyle(tint: Color("Primary")))
-                .padding(.horizontal)
-                .padding(.bottom, 15)
+
+            
                 
             
                 Button(action: {
@@ -118,7 +98,7 @@ struct NoteUploadView: View {
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
                     self.loading.toggle() // Start loading indication
-                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, isPublic: self.isPublic, allowDownloads: self.allowDownloads, bibtextCitation: nil)) {
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
                         
                         // Stop loading
                         self.loading.toggle()

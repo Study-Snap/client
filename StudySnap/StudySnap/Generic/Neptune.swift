@@ -9,16 +9,15 @@ import SwiftUI
 
 struct CreateNoteData: Codable {
     enum CodingKeys: String, CodingKey {
-        case title, keywords, shortDescription, fileName, fileData, isPublic, allowDownloads, bibtextCitation
+        case title, classId, keywords, shortDescription, fileName, fileData, bibtextCitation
     }
     
     var title: String
+    var classId: String
     var keywords: [String]
     var shortDescription: String
     var fileName: String
     var fileData: Data
-    var isPublic: Bool
-    var allowDownloads: Bool
     var bibtextCitation: String?
 }
 
@@ -32,13 +31,14 @@ struct ApiFileResponse: Codable {
 
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
-        case title, keywords, shortDescription, body, fileUri, authorId, rating, timeLength, isPublic, allowDownloads, bibtextCitation, message
+        case title, classId, keywords, shortDescription, body, fileUri, authorId, rating, timeLength,  bibtextCitation, message
         
-        case id = "_id"
+        case id = "id"
     }
     
     var id: Int?
     var title: String?
+    var classId: String?
     var keywords: [String]?
     var shortDescription: String?
     var body: String?
@@ -46,8 +46,6 @@ struct ApiNoteResponse : Codable, Identifiable {
     var authorId: Int?
     var rating: [Int]?
     var timeLength: Int?
-    var isPublic: Bool?
-    var allowDownloads: Bool?
     var bibtextCitation: String?
     
     // For errors or other messages
@@ -57,7 +55,7 @@ struct ApiNoteResponse : Codable, Identifiable {
 }
 
 class NeptuneApi {
-    let neptuneBaseUrl: String = "https://studysnap.ca/neptune"
+    let neptuneBaseUrl: String = "\(InfoPlistParser.getStringValue(forKey: Constants.PROTOCOL_KEY))://\(InfoPlistParser.getStringValue(forKey: Constants.NEPTUNE_KEY))"
     
     func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
         self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
@@ -87,8 +85,6 @@ class NeptuneApi {
             "keywords": noteData.keywords,
             "shortDescription": noteData.shortDescription,
             "fileUri": fileUri,
-            "isPublic": noteData.isPublic,
-            "allowDownloads": noteData.allowDownloads,
             // MARK: include bibtextCitation here once it is fixed on the serverside
         ]
         
@@ -213,7 +209,8 @@ class NeptuneApi {
             "queryType": "query_string",
             "query": [
                 "query": query
-            ]
+            ],
+            "classId": "448f7db0-e3ac-4875-9235-5e08ffa4ed82" //MARK: Implement after classroom features are created
         ]
         
         var request: URLRequest = URLRequest(url: reqUrl)
