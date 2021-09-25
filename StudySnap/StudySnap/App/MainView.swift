@@ -12,10 +12,10 @@ struct MainView: View {
     var body: some View {
         
                 TabView{
-                    NoteSearchView()
+                    ClassroomsView()
                       .tabItem {
-                        Image(systemName: "magnifyingglass.circle")
-                        Text("Search")
+                        Image(systemName: "person.3.fill")
+                        Text("Classrooms")
                         
                       }
                     
