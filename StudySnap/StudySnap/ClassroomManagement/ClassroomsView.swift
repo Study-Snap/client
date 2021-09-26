@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+struct NavigationConfigurator: UIViewControllerRepresentable {
+    var configure: (UINavigationController) -> Void = { _ in }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
+        UIViewController()
+    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
+        if let nc = uiViewController.navigationController {
+            self.configure(nc)
+        }
+    }
+
+}
 struct ClassroomsView: View {
 
     var classrooms: [Classroom] = Bundle.main.decode("classrooms_data.json")
@@ -20,7 +33,7 @@ struct ClassroomsView: View {
     //: MARK - FUNCTIONS
     
     func gridSwitch() {
-      gridLayout = Array(repeating: .init(.flexible()), count: gridLayout.count % 3 + 1)
+      gridLayout = Array(repeating: .init(.flexible()), count: gridLayout.count % 2 + 1)
       gridColumn = gridLayout.count
       print("Grid Number: \(gridColumn)")
       
@@ -29,8 +42,6 @@ struct ClassroomsView: View {
       case 1:
         toolbarIcon = "square.grid.2x2"
       case 2:
-        toolbarIcon = "square.grid.3x2"
-      case 3:
         toolbarIcon = "rectangle.grid.1x2"
       default:
         toolbarIcon = "square.grid.2x2"
@@ -55,7 +66,9 @@ struct ClassroomsView: View {
                     .animation(.easeIn)
                   } //: SCROLL
               } //: GROUP
+              
               .navigationBarTitle("Classrooms", displayMode: .large)
+              
               .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                   HStack(spacing: 16) {
@@ -72,20 +85,21 @@ struct ClassroomsView: View {
                     }
                   } //: HSTACK
                 } //: BUTTONS
-              } //: TOOLBAR
+              }.background(Color(.systemGray6)) //: TOOLBAR
             } //: NAVIGATION
+            
             HStack{
                 PrimaryButtonView(title: "Join Classroom", action: {})
                     .padding(.leading, 10)
                    
                 PrimaryButtonView(title: "Create Classroom", action: {})
                     .padding(.trailing, 10)
-                
+
+            }
+            .padding(.bottom)
             
-            }.padding(.bottom)
-            
-        }
-      }
+        }.background(Color(.systemGray6))
+    }
 }
 
 struct ClassroomsView_Previews: PreviewProvider {

@@ -20,7 +20,7 @@ struct ClassroomGridItemView: View {
               .resizable()
               .scaledToFit()
               .cornerRadius(12)
-            Text(classroom.name)
+            Text(classroom.name).bold()
         }
 
     }
