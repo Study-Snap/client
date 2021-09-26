@@ -117,17 +117,7 @@ struct NoteUploadView: View {
             .alert(isPresented: self.$viewModel.error, content: {
                 Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })
-            .navigationBarItems(trailing:
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .frame(width:25, height:25)
-                            .foregroundColor(Color("Secondary"))
-                    
-                    }
-            )
+
             
         }
         .background(Color(UIColor.systemBackground))

@@ -28,6 +28,10 @@
 		4A72D93226FFB4F800519D6A /* ClassroomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D93126FFB4F800519D6A /* ClassroomModel.swift */; };
 		4A72D93D26FFBCB900519D6A /* classrooms_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A72D93C26FFBCB900519D6A /* classrooms_data.json */; };
 		4A72D95726FFDD1700519D6A /* ClassroomUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D95626FFDD1700519D6A /* ClassroomUserModel.swift */; };
+		4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D97026FFF4D700519D6A /* JoinClassroomView.swift */; };
+		4A72D999270009C600519D6A /* CreateClassroomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D998270009C600519D6A /* CreateClassroomView.swift */; };
+		4A72D9A32700144000519D6A /* CreateClassroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */; };
+		4A72D9AB2700145800519D6A /* JoinClassroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */; };
 		4A7EDFE926F3EF120007D91B /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */; };
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
@@ -97,6 +101,10 @@
 		4A72D93126FFB4F800519D6A /* ClassroomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomModel.swift; sourceTree = "<group>"; };
 		4A72D93C26FFBCB900519D6A /* classrooms_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = classrooms_data.json; sourceTree = "<group>"; };
 		4A72D95626FFDD1700519D6A /* ClassroomUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomUserModel.swift; sourceTree = "<group>"; };
+		4A72D97026FFF4D700519D6A /* JoinClassroomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinClassroomView.swift; sourceTree = "<group>"; };
+		4A72D998270009C600519D6A /* CreateClassroomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClassroomView.swift; sourceTree = "<group>"; };
+		4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClassroomViewModel.swift; sourceTree = "<group>"; };
+		4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinClassroomViewModel.swift; sourceTree = "<group>"; };
 		4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		4A7EDFF026F3F1910007D91B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
@@ -217,6 +225,8 @@
 				4A72D93026FFB2C000519D6A /* Models */,
 				4A72D92226FFA6B900519D6A /* ClassroomsView.swift */,
 				4A72D92B26FFB23F00519D6A /* ClassroomGridItemView.swift */,
+				4A72D9A0270013E700519D6A /* Join Classroom */,
+				4A72D9A12700140400519D6A /* Create Classroom */,
 			);
 			path = ClassroomManagement;
 			sourceTree = "<group>";
@@ -228,6 +238,24 @@
 				4A72D95626FFDD1700519D6A /* ClassroomUserModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4A72D9A0270013E700519D6A /* Join Classroom */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D97026FFF4D700519D6A /* JoinClassroomView.swift */,
+				4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */,
+			);
+			path = "Join Classroom";
+			sourceTree = "<group>";
+		};
+		4A72D9A12700140400519D6A /* Create Classroom */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D998270009C600519D6A /* CreateClassroomView.swift */,
+				4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */,
+			);
+			path = "Create Classroom";
 			sourceTree = "<group>";
 		};
 		B833318D262A005900365D11 /* ViewModel */ = {
@@ -576,15 +604,18 @@
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* NoteSearchView.swift in Sources */,
 				B842E96C262B63880027E2CB /* UtilFunctions.swift in Sources */,
+				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
 				4A72D92C26FFB23F00519D6A /* ClassroomGridItemView.swift in Sources */,
 				B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */,
 				4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */,
+				4A72D9A32700144000519D6A /* CreateClassroomViewModel.swift in Sources */,
 				4A012570260C1AE1009E3F6B /* CloudNoteView.swift in Sources */,
 				4A72D93226FFB4F800519D6A /* ClassroomModel.swift in Sources */,
 				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
+				4A72D9AB2700145800519D6A /* JoinClassroomViewModel.swift in Sources */,
 				4A0739BD2605340D00A823DF /* StorageView.swift in Sources */,
 				B8D14140261BE95300D3822E /* GeometryGetter.swift in Sources */,
 				B866B1FE262A4B44004C2681 /* NoteViewViewModel.swift in Sources */,
@@ -600,6 +631,7 @@
 				4A72D92326FFA6B900519D6A /* ClassroomsView.swift in Sources */,
 				B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */,
 				B8E1CBA125F14C2C00493EC5 /* StudySnapApp.swift in Sources */,
+				4A72D999270009C600519D6A /* CreateClassroomView.swift in Sources */,
 				B8DA2065261A80FC00EF93AB /* LoginViewModel.swift in Sources */,
 				B833317A26294CF700365D11 /* FilePickedView.swift in Sources */,
 				4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */,
