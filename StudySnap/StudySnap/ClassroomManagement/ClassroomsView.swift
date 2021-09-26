@@ -49,15 +49,33 @@ struct ClassroomsView: View {
                 VStack {
                     Group {
                             ScrollView(.vertical, showsIndicators: false) {
-                                LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
-                                    ForEach(classrooms) { classroomItem in
-                                        NavigationLink(destination: RecommendationView()) {
-                                            ClassroomGridItemView(classroom: classroomItem)
-                                        } //: LINK
-                                    } //: LOOP
-                                } //: GRID
-                                .padding(10)
-                                .animation(.easeIn)
+                                
+                                if !classrooms.isEmpty {
+                                    LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
+                                        ForEach(classrooms) { classroomItem in
+                                            NavigationLink(destination: RecommendationView()) {
+                                                ClassroomGridItemView(classroom: classroomItem)
+                                            } //: LINK
+                                        } //: LOOP
+                                    } //: GRID
+                                    .padding(10)
+                                    .animation(.easeIn)
+                                } else {
+
+                                    VStack(alignment: .center){
+                                        Image(systemName: "questionmark.circle.fill")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(Color("AccentDark"))
+                                            .frame(width: 100, height: 100, alignment: .center)
+                                            .padding()
+                                        Text("You are not registered in any classroom")
+                                            .font(.headline)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color(.systemGray))
+                                        Spacer()
+                                    }
+                                }
                             } //: SCROLL
                         } //: GROUP
 

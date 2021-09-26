@@ -9,8 +9,7 @@ import SwiftUI
 
 struct StorageView: View {
     @State private var isShowingNotes: Bool = false
-    //var fruits: [Fruit] = fruitsData
-    //@State var notes: [Note] = Bundle.main.decode("notes_data.json")
+
     @ObservedObject var globalString = GlobalString()
     @State var isDeleted = false
 
