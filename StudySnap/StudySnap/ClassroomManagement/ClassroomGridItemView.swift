@@ -15,7 +15,7 @@ struct ClassroomGridItemView: View {
     // MARK: - BODY
 
     var body: some View {
-        VStack{
+        VStack(alignment:.center){
             Image("classroomImage")
               .resizable()
               .scaledToFit()

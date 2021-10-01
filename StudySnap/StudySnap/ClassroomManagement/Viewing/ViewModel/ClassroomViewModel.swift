@@ -34,7 +34,7 @@ class ClassroomViewViewModel: ObservableObject {
         }
     }
     func getUserId() -> Void {
-        NeptuneApi().getUserIdForClassroom() { res in
+        NeptuneApi().getUser() { res in
             if res.message != nil {
                 // Failed to find user
          

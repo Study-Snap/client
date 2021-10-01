@@ -21,10 +21,31 @@ struct CreateNoteData: Codable {
     var bibtextCitation: String?
 }
 
+struct CreateClassroom: Codable {
+    enum CodingKeys: String, CodingKey {
+        case title, classId, keywords, shortDescription, fileName, fileData, bibtextCitation
+    }
+    
+    var title: String
+    var classId: String
+    var keywords: [String]
+    var shortDescription: String
+    var fileName: String
+    var fileData: Data
+    var bibtextCitation: String?
+}
+
 struct ApiFileResponse: Codable {
     var statusCode: Int?
     var fileUri: String?
     
+    // Info and error messaging
+    var message: String?
+}
+
+struct ApiJoinClassResponse: Codable {
+    var statusCode: Int?
+
     // Info and error messaging
     var message: String?
 }
@@ -157,7 +178,95 @@ class NeptuneApi {
             }
         }.resume()
     }
+    func joinClassroom(classIdData: String,completion: @escaping (ApiJoinClassResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms/join/\(classIdData)")
+        
+        let parameters: [String: Any] = [
+            "name": classIdData
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let classroom: ApiJoinClassResponse = try JSONDecoder().decode(ApiJoinClassResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(classroom)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiJoinClassResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiJoinClassResponse(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+        }.resume()
+    }
     
+    func createClassroom(classNameData: String,completion: @escaping (ApiClassroomsResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
+        
+        let parameters: [String: Any] = [
+            "name": classNameData
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let classroom: ApiClassroomsResponse = try JSONDecoder().decode(ApiClassroomsResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(classroom)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiClassroomsResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiClassroomsResponse(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+        }.resume()
+    }
     func uploadNoteFile(fileName: String, fileData: Data, completion: @escaping (ApiFileResponse) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files")
         let reqFileParamName: String = "file"
@@ -233,7 +342,7 @@ class NeptuneApi {
             }
         }.resume()
     }
-    func getUserIdForClassroom(completion: @escaping (ApiUserId) -> ()) -> Void {
+    func getUser(completion: @escaping (ApiUserId) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users")
         
         var request: URLRequest = URLRequest(url: reqUrl)
@@ -299,6 +408,7 @@ class NeptuneApi {
             }
         }.resume()
     }
+    
     
     func getTopNotesByRating(count: Int = 5, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/top")

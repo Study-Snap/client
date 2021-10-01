@@ -118,6 +118,8 @@ struct ClassroomsView: View {
                                 }
                                 
                             }.padding(.bottom,10)
+                            
+                            //Debugging code only
                             var check = print("This is the error message \(self.viewModel.errorMessage)")
                             var check2 = print("This is the correct message \(self.viewModel.results)")
                             
@@ -131,6 +133,8 @@ struct ClassroomsView: View {
                                     Button(action: {
                                         print("Update classroom view")
                                         isUpdateClassroomView = true
+                                        self.viewModel.loading = true
+                                        self.viewModel.getUserId()
                                         //MARK: Include code for updating the classroom view
                                     }) {
                                         Image(systemName: "arrow.clockwise")

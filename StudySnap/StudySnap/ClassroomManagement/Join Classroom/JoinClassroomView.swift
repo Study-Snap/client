@@ -16,6 +16,7 @@ struct JoinClassroomView: View {
                 InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter the class invitation code", value: $viewModel.classId).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
                 Spacer()
                 PrimaryButtonView(title:"Join", action: {
+                    self.viewModel.joinUserClassroom(classId: viewModel.classId)
                     presentationMode.wrappedValue.dismiss()
                 }).padding()
             }.navigationBarTitle("Join Classroom", displayMode: .inline)

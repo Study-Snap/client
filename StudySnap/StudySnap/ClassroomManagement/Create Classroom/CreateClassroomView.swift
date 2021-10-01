@@ -17,6 +17,7 @@ struct CreateClassroomView: View {
                 InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter a classroom name", value: $viewModel.name).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
                 Spacer()
                 PrimaryButtonView(title:"Create", action: {
+                    self.viewModel.postUserClassroom(className: viewModel.name)
                     presentationMode.wrappedValue.dismiss()
                 })
                 .padding()
