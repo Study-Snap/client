@@ -11,8 +11,6 @@ import SwiftUI
 struct ClassroomsView: View {
     
     //var classrooms: [Classroom] = Bundle.main.decode("classrooms_data.json")
-    //var classrooms: [ApiClassroomsResponse]
-    let userId: Int
     
 
     @State private var isGridViewActive: Bool = false
@@ -169,6 +167,6 @@ struct ClassroomsView: View {
 
 struct ClassroomsView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassroomsView(userId: 1)
+        ClassroomsView()
     }
 }
