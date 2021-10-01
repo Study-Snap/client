@@ -12,7 +12,7 @@ struct MainView: View {
     var body: some View {
         
                 TabView{
-                    ClassroomsView()
+                    ClassroomsView(userId: 1)
                       .tabItem {
                         Image(systemName: "person.3.fill")
                         Text("Classrooms")

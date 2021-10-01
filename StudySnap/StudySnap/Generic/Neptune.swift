@@ -28,7 +28,39 @@ struct ApiFileResponse: Codable {
     // Info and error messaging
     var message: String?
 }
-
+struct ApiClassroomsResponse: Codable, Identifiable{
+    enum CodingKeys: String, CodingKey {
+        case name, ownerId, message
+        
+        case id = "id"
+    }
+    var id: String?
+    var name: String?
+    var ownerId: Int?
+    
+    // For errors or other messages
+    var statusCode: Int?
+    var error: String?
+    var message: String?
+    
+}
+struct ApiUserId: Codable, Identifiable{
+    enum CodingKeys: String, CodingKey {
+        case email,firstName,lastName
+        
+        case id = "id"
+    }
+    var id: Int?
+    var email: String?
+    var firstName: String?
+    var lastName: String?
+    
+    // For errors or other messages
+    var statusCode: Int?
+    var error: String?
+    var message: String?
+    
+}
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case title, classId, keywords, shortDescription, body, fileUri, authorId, rating, timeLength,  bibtextCitation, message
@@ -197,6 +229,72 @@ class NeptuneApi {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
                     completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                }
+            }
+        }.resume()
+    }
+    func getUserIdForClassroom(completion: @escaping (ApiUserId) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard let data = data else { return }
+            
+            do {
+                let user: ApiUserId = try JSONDecoder().decode(ApiUserId.self, from: data)
+                DispatchQueue.main.async {
+                    completion(user)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiUserId(message: "Oops! We don't know what happened there"))
+                }
+            }
+        }.resume()
+    }
+    func getUserClassrooms(userId: Int, completion: @escaping ([ApiClassroomsResponse]) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/by-id/\(userId)/classrooms")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let classrooms: [ApiClassroomsResponse] = try JSONDecoder().decode([ApiClassroomsResponse].self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(classrooms)
+                }
+            } catch {
+                do {
+                    let classrooms: ApiClassroomsResponse = try JSONDecoder().decode(ApiClassroomsResponse.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion([classrooms])
+                    }
+                } catch {
+                    do {
+                        print(error.localizedDescription)
+                        let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                        
+                        DispatchQueue.main.async {
+                            completion([ApiClassroomsResponse(message: validation.message!.first!)])
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                        DispatchQueue.main.async {
+                            completion([ApiClassroomsResponse(message: "Oops! We don't know what happened there in attempting to load the classrooms")])
+                        }
+                    }
                 }
             }
         }.resume()

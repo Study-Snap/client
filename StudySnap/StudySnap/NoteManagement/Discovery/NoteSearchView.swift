@@ -79,19 +79,25 @@ struct NoteSearchView: View {
                                     .fontWeight(.medium)
                                     .foregroundColor(Color("AccentDark"))
                                 Spacer()
+                                Spacer()
                             }
                         }
                     }
+                    .navigationBarTitle("Search")
                     .padding()
-                    Spacer()
+                    
+                    
+                    
                 }
-                .navigationTitle("Search")
                 .alert(isPresented: $viewModel.error, content: {
                     Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
                 })
 
             }.navigationViewStyle(StackNavigationViewStyle())
+           
+            
         }.accentColor(.white)
+       
     }
 }
 

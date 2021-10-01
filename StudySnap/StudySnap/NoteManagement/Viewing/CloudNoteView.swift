@@ -135,6 +135,6 @@ struct CloudNoteView: View {
 
 struct CloudNoteView_Previews: PreviewProvider {
     static var previews: some View {
-        CloudNoteView(noteId: 1)
+        CloudNoteView(noteId: 9)
     }
 }
