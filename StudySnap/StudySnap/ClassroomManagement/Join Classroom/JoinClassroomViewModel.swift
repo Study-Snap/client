@@ -14,15 +14,13 @@ class JoinClassroomViewModel: ObservableObject{
     func joinUserClassroom(classId: String) -> Void {
         NeptuneApi().joinClassroom(classIdData: classId) { res in
             if res.message != nil {
-                // Failed to find user
-         
+                // Received message
                 self.error.toggle()
                 self.errorMessage = res.message
             
-            } else {
-                // Successful search
+            } else{
+                // Failed to receive message
                 self.errorMessage = res.message
-                
             }
         }
     }

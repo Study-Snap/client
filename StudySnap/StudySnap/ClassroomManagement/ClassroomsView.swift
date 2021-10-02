@@ -120,8 +120,8 @@ struct ClassroomsView: View {
                             }.padding(.bottom,10)
                             
                             //Debugging code only
-                            var check = print("This is the error message \(self.viewModel.errorMessage)")
-                            var check2 = print("This is the correct message \(self.viewModel.results)")
+                            //var check = print("This is the error message \(self.viewModel.errorMessage)")
+                            //var check2 = print("This is the correct message \(self.viewModel.results)")
                             
                      
                         }

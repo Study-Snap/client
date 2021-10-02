@@ -179,23 +179,15 @@ class NeptuneApi {
         }.resume()
     }
     func joinClassroom(classIdData: String,completion: @escaping (ApiJoinClassResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms/join/\(classIdData)")
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/classroom/join/\(classIdData)")
         
-        let parameters: [String: Any] = [
-            "name": classIdData
-        ]
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
         
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
+
         URLSession.shared.dataTask(with: request) {(data, _, _) in
             guard let data = data else { return }
             
