@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
-
+import MobileCoreServices
 
 struct NoteSearchView: View {
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     @State private var searchText : String = ""
     @State var showNoteDetails: Bool = false
     @State var targetNoteId: Int? = 1
-    
+    @State var classID: String
     var body: some View {
-        NavigationView {
+
             VStack {
                 VStack {
                 NavigationLink(
@@ -26,7 +26,28 @@ struct NoteSearchView: View {
                     })
                 }
                 VStack() {
-                    SearchBar(viewModel: viewModel, text: $searchText)
+
+                    HStack {
+                        Text("Class ID:")
+                            .font(.caption)
+                            .frame(width: .infinity, height: 10, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .padding(.top)
+                        Text(classID)
+                            .bold()
+                            .font(.caption)
+                            .frame(width: .infinity, height: 10, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
+                            .padding(.top)
+                            .contextMenu {
+                                Button(action: {
+                                    UIPasteboard.general.string = classID
+                                }) {
+                                    Text("Copy to clipboard")
+                                    Image(systemName: "doc.on.clipboard")
+                                }
+                        }
+                    }
+                    SearchBar(viewModel: viewModel, text: $searchText, classID: classID)
                         .padding(.horizontal)
                     VStack(alignment: .leading) {
                         if viewModel.trending.count > 0 {
@@ -46,7 +67,8 @@ struct NoteSearchView: View {
                     }
                     .padding()
                     .onAppear(perform: {
-                        self.viewModel.getTopTrendingNotes()
+                        self.viewModel.getTopTrendingNotes(currentClassId: classID)
+                    
                     })
                     VStack(alignment: .leading) {
                         if viewModel.results.count > 0 {
@@ -93,10 +115,10 @@ struct NoteSearchView: View {
                     Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
                 })
 
-            }.navigationViewStyle(StackNavigationViewStyle())
+            }
            
             
-        }.accentColor(.white)
+
        
     }
 }
@@ -105,14 +127,16 @@ struct NoteSearchView: View {
 struct SearchBar: UIViewRepresentable {
     @StateObject var viewModel: NoteSearchViewModel
     @Binding var text: String
-
+    @State var classID: String
+    
     class Coordinator: NSObject, UISearchBarDelegate {
         @StateObject var viewModel: NoteSearchViewModel
         @Binding var text: String
-
-        init(text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>) {
+        @State var classID: String
+        init(text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
             _text = text
             _viewModel = viewModel
+            _classID = classID
         }
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -120,13 +144,13 @@ struct SearchBar: UIViewRepresentable {
         }
         
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            self.viewModel.search(searchQuery: text)
+            self.viewModel.search(searchQuery: text, currentClassId: classID)
             searchBar.endEditing(true)
         }
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text, viewModel: _viewModel)
+        return Coordinator(text: $text, viewModel: _viewModel ,classID: _classID)
     }
 
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
@@ -142,6 +166,6 @@ struct SearchBar: UIViewRepresentable {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteSearchView()
+        NoteSearchView(classID: "448f7db0-e3ac")
     }
 }

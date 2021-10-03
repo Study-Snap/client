@@ -33,6 +33,7 @@
 		4A72D999270009C600519D6A /* CreateClassroomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D998270009C600519D6A /* CreateClassroomView.swift */; };
 		4A72D9A32700144000519D6A /* CreateClassroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */; };
 		4A72D9AB2700145800519D6A /* JoinClassroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */; };
+		4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7CC1C727094C24003E1ACF /* UserModel.swift */; };
 		4A7EDFE926F3EF120007D91B /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */; };
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
@@ -107,6 +108,7 @@
 		4A72D998270009C600519D6A /* CreateClassroomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClassroomView.swift; sourceTree = "<group>"; };
 		4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClassroomViewModel.swift; sourceTree = "<group>"; };
 		4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinClassroomViewModel.swift; sourceTree = "<group>"; };
+		4A7CC1C727094C24003E1ACF /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		4A7EDFF026F3F1910007D91B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
@@ -277,6 +279,14 @@
 			path = "Create Classroom";
 			sourceTree = "<group>";
 		};
+		4A7CC1C627094C0A003E1ACF /* User */ = {
+			isa = PBXGroup;
+			children = (
+				4A7CC1C727094C24003E1ACF /* UserModel.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		B833318D262A005900365D11 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +441,7 @@
 		B8E1CB9F25F14C2C00493EC5 /* StudySnap */ = {
 			isa = PBXGroup;
 			children = (
+				4A7CC1C627094C0A003E1ACF /* User */,
 				4A72D92126FFA66200519D6A /* ClassroomManagement */,
 				B8D14139261BE89E00D3822E /* Generic */,
 				B8D1412C261BE0F800D3822E /* Old */,
@@ -624,6 +635,7 @@
 				B8E1CBA325F14C2C00493EC5 /* NoteSearchView.swift in Sources */,
 				B842E96C262B63880027E2CB /* UtilFunctions.swift in Sources */,
 				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
+				4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */,
 				4A72D92C26FFB23F00519D6A /* ClassroomGridItemView.swift in Sources */,
 				B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */,
 				4A0126A3260C722C009E3F6B /* CodableExtension.swift in Sources */,

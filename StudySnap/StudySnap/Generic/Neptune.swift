@@ -84,7 +84,7 @@ struct ApiUserId: Codable, Identifiable{
 }
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
-        case title, classId, keywords, shortDescription, body, fileUri, authorId, rating, timeLength,  bibtextCitation, message
+        case title, classId, keywords, shortDescription, body, fileUri, authorId, rating, timeLength,  bibtextCitation, user, message
         
         case id = "id"
     }
@@ -100,7 +100,7 @@ struct ApiNoteResponse : Codable, Identifiable {
     var rating: [Int]?
     var timeLength: Int?
     var bibtextCitation: String?
-    
+    var user: UserModel?
     // For errors or other messages
     var statusCode: Int?
     var error: String?
@@ -315,7 +315,7 @@ class NeptuneApi {
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) {(data, _, _) in
             guard let data = data else { return }
@@ -358,6 +358,7 @@ class NeptuneApi {
             }
         }.resume()
     }
+
     func getUserClassrooms(userId: Int, completion: @escaping ([ApiClassroomsResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/by-id/\(userId)/classrooms")
         
@@ -402,12 +403,13 @@ class NeptuneApi {
     }
     
     
-    func getTopNotesByRating(count: Int = 5, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/top")
+    func getTopNotesByRating(count: Int = 5,classId: String, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms/by-uuid/\(classId)/notes/top")
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) {(data, _, _) in
             guard let data = data else { return }
@@ -444,7 +446,7 @@ class NeptuneApi {
         }.resume()
     }
     
-    func getNotesForQuery(query: String, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
+    func getNotesForQuery(query: String,classId: String, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/search")
         
         let parameters: [String: Any] = [
@@ -452,12 +454,13 @@ class NeptuneApi {
             "query": [
                 "query": query
             ],
-            "classId": "448f7db0-e3ac-4875-9235-5e08ffa4ed82" //MARK: Implement after classroom features are created
+            "classId": classId //MARK: Implement after classroom features are created
         ]
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)

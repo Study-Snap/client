@@ -13,8 +13,8 @@ class NoteSearchViewModel: ObservableObject {
     @Published var error: Bool = false
     @Published var errorMessage: String?
     
-    func getTopTrendingNotes() -> Void {
-        NeptuneApi().getTopNotesByRating() { res in
+    func getTopTrendingNotes(currentClassId: String) -> Void {
+        NeptuneApi().getTopNotesByRating(classId: currentClassId) { res in
             if res[0].message != nil {
                 // Failed (no results or other known error)
                 self.trending = []
@@ -32,8 +32,8 @@ class NoteSearchViewModel: ObservableObject {
         }
     }
     
-    func search(searchQuery: String) -> Void {
-        NeptuneApi().getNotesForQuery(query: searchQuery) { res in
+    func search(searchQuery: String, currentClassId: String) -> Void {
+        NeptuneApi().getNotesForQuery(query: searchQuery, classId: currentClassId) { res in
             if res[0].message != nil {
                 // Failed search (no results or other known error)
                 self.results = []
@@ -50,4 +50,5 @@ class NoteSearchViewModel: ObservableObject {
             }
         }
     }
+    
 }

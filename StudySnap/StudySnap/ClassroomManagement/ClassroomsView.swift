@@ -65,7 +65,7 @@ struct ClassroomsView: View {
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView()) {
+                                                    NavigationLink(destination: NoteSearchView(classID: classroomItem.id!)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
                                                     } //: LINK
                                                 } //: LOOP
