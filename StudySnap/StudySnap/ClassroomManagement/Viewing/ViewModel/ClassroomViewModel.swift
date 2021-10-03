@@ -16,7 +16,7 @@ class ClassroomViewViewModel: ObservableObject {
     func getClassroomsForUser(userId: Int) -> Void {
         NeptuneApi().getUserClassrooms(userId: userId) { res in
             if res[0].message != nil {
-                // (no results or other known error)
+                // Failed search (no results or other known error)
                 self.results = []
                 self.error.toggle()
                 self.errorMessage = res[0].message
@@ -27,7 +27,8 @@ class ClassroomViewViewModel: ObservableObject {
                 self.loading.toggle()
                 self.errorMessage = "Failed to load classrooms"
             } else {
-                // Successful in loading classrooms                self.results = res
+                // Successful in loading classrooms
+                self.results = res
                 self.loading.toggle()
             }
         }

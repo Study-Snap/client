@@ -75,6 +75,7 @@ struct ClassroomsView: View {
                                         } else {
 
                                             VStack(alignment: .center){
+                                                Spacer()
                                                 Image(systemName: "questionmark.circle.fill")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
