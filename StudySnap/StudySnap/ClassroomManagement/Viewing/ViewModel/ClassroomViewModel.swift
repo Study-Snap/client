@@ -13,40 +13,23 @@ class ClassroomViewViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var loading: Bool = true
     
-    func getClassroomsForUser(userId: Int) -> Void {
-        NeptuneApi().getUserClassrooms(userId: userId) { res in
+    func getClassroomsForUser() -> Void {
+        NeptuneApi().getUserClassrooms() { res in
             if res[0].message != nil {
                 // Failed search (no results or other known error)
                 self.results = []
+                self.loading = false
                 self.error.toggle()
                 self.errorMessage = res[0].message
             } else if res.count == 0 {
                 // Failed (error)
                 self.results = []
-                self.error.toggle()
-                self.loading.toggle()
-                self.errorMessage = "Failed to load classrooms"
+                self.loading = false
             } else {
                 // Successful in loading classrooms
                 self.results = res
-                self.loading.toggle()
+                self.loading = false
             }
         }
     }
-    func getUserId() -> Void {
-        NeptuneApi().getUser() { res in
-            if res.message != nil {
-                // Failed to find user
-         
-                self.error.toggle()
-                self.errorMessage = res.message
-            
-            } else {
-                // Successful
-                self.getClassroomsForUser(userId: res.id!)
-                
-            }
-        }
-    }
-    
 }

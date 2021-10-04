@@ -359,8 +359,8 @@ class NeptuneApi {
         }.resume()
     }
 
-    func getUserClassrooms(userId: Int, completion: @escaping ([ApiClassroomsResponse]) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/by-id/\(userId)/classrooms")
+    func getUserClassrooms(completion: @escaping ([ApiClassroomsResponse]) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/classrooms")
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "GET"

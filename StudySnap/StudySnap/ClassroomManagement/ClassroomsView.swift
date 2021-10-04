@@ -135,7 +135,7 @@ struct ClassroomsView: View {
                                         print("Update classroom view")
                                         isUpdateClassroomView = true
                                         self.viewModel.loading = true
-                                        self.viewModel.getUserId()
+                                        self.viewModel.getClassroomsForUser()
                                         //MARK: Include code for updating the classroom view
                                     }) {
                                         Image(systemName: "arrow.clockwise")
@@ -157,15 +157,11 @@ struct ClassroomsView: View {
                     }.background(Color(.systemGray6)) //: TOOLBAR
          
                     } //: NAVIGATION
-          
-
-                    
-
-                
+ 
                 }.background(Color(.systemGray6))
             }
         }.onAppear(perform: {
-            self.viewModel.getUserId()
+            self.viewModel.getClassroomsForUser()
         })
     }
 }
