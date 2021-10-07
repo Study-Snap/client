@@ -100,7 +100,6 @@ struct CloudNoteView: View {
                                     Text("DETAILS")
                                         .font(.caption)
                                         .foregroundColor(Color("Primary"))
-                                        .padding(.bottom, 0)
                                     
                                     Text(viewModel.noteObj.body!).fontWeight(.light)
                                 }.padding()
@@ -116,12 +115,16 @@ struct CloudNoteView: View {
                                 .padding(.horizontal, 45)
                                 .padding(.vertical)
                                 .background(Color("Accent"))
+                                .cornerRadius(12)
                             Button(action: {print("Cited!")}, label: {
                                 Text("Cite Note")
+                                    .cornerRadius(100)
                             })
+                            
                             .foregroundColor(Color("Secondary"))
                             .padding()
                             .background(Color("Accent"))
+                            .cornerRadius(100)
                         }.padding()
                     }.padding(.top, -125)
                 }

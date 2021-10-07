@@ -27,17 +27,15 @@ struct NoteSearchView: View {
                 }
                 VStack() {
 
-                    HStack {
-                        Text("Class ID:")
-                            .font(.caption)
-                            .frame(width: .infinity, height: 10, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .padding(.top)
+                    VStack {
+                
+
                         Text(classID)
                             .bold()
                             .font(.caption)
                             .frame(width: .infinity, height: 10, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
-                            .padding(.top)
+                            .padding(10)
+                            .background(RoundedRectangle(cornerRadius: 7).foregroundColor(Color(.systemGray5)))
                             .contextMenu {
                                 Button(action: {
                                     UIPasteboard.general.string = classID
@@ -46,6 +44,7 @@ struct NoteSearchView: View {
                                     Image(systemName: "doc.on.clipboard")
                                 }
                         }
+                        Text("Invite")
                     }
                     SearchBar(viewModel: viewModel, text: $searchText, classID: classID)
                         .padding(.horizontal)

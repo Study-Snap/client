@@ -12,7 +12,7 @@ struct StorageView: View {
 
     @ObservedObject var globalString = GlobalString()
     @State var isDeleted = false
-
+    @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     var body: some View {
       NavigationView {
         List {

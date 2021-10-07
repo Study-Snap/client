@@ -58,3 +58,5 @@ struct SecureInputField: View {
             .overlay(RoundedRectangle(cornerRadius: self.cornerRadius).stroke(self.borderColor))
     }
 }
+
+
