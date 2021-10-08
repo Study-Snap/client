@@ -36,6 +36,7 @@
 		4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7CC1C727094C24003E1ACF /* UserModel.swift */; };
 		4A7EDFE926F3EF120007D91B /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */; };
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
+		AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
 		B842E96C262B63880027E2CB /* UtilFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B842E96B262B63880027E2CB /* UtilFunctions.swift */; };
@@ -111,6 +112,7 @@
 		4A7CC1C727094C24003E1ACF /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		4A7EDFF026F3F1910007D91B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNoteView.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
 		B842E96B262B63880027E2CB /* UtilFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilFunctions.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				B833318D262A005900365D11 /* ViewModel */,
 				4A01255F260C000D009E3F6B /* NoteUploadView.swift */,
 				B833317926294CF700365D11 /* FilePickedView.swift */,
+				AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* NoteSearchView.swift in Sources */,
 				B842E96C262B63880027E2CB /* UtilFunctions.swift in Sources */,
+				AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */,
 				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
 				4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */,
 				4A72D92C26FFB23F00519D6A /* ClassroomGridItemView.swift in Sources */,
@@ -836,7 +840,7 @@
 				DEVELOPMENT_TEAM = L53TEA5UHM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudySnap/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -858,7 +862,7 @@
 				DEVELOPMENT_TEAM = L53TEA5UHM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudySnap/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

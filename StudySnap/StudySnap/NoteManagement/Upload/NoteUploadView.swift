@@ -78,9 +78,9 @@ struct NoteUploadView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundColor(Color("Secondary"))
-                                .frame(width: 80, height: 45, alignment: .center)
-                            Text("Select a PDF to Upload")
-                                .padding(.top, 10)
+                                .frame(width: 80, height: 25, alignment: .center)
+                            Text("Upload PDF from Device")
+                                .padding(.top, 2)
                                 .foregroundColor(Color("Secondary").opacity(0.6))
                         }
                     }
@@ -90,6 +90,34 @@ struct NoteUploadView: View {
                         DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
                     }
                 }
+                
+                Button(action: {
+                    self.show.toggle()
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(Color("Accent"))
+                            .cornerRadius(20)
+                            .padding(.bottom)
+                            .padding(.horizontal, 7)
+                                    
+                            VStack {
+                                Image(systemName: "icloud.and.arrow.up")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color("Secondary"))
+                                    .frame(width: 80, height: 25, alignment: .center)
+                                    Text("Upload handwritten note")
+                                        .padding(.top, 2)
+                                        .foregroundColor(Color("Secondary").opacity(0.6))
+                                    }
+                                }
+                            .aspectRatio(contentMode: .fill)
+                            .background(GeometryGetter(rect: $kGuardian.rects[3]))
+                            .sheet(isPresented: $show) {
+                                // TODO: Add reference to OCR view here
+                            }
+                        }
                 
                 if self.pickedFileName.count > 0 {
                     FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
