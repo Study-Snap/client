@@ -16,7 +16,7 @@ struct NoteUploadView: View {
     @State var title: String  = ""
     @State var shortDescription: String  = ""
     @State var keywords: String  = ""
-    @State var classId: String = ""
+    @State var classRoomId: String
     
     // File picker state
     @State var pickedFileName: String = ""
@@ -93,11 +93,12 @@ struct NoteUploadView: View {
                 
                 if self.pickedFileName.count > 0 {
                     FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
+                    
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
                     self.loading.toggle() // Start loading indication
-                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
                         
                         // Stop loading
                         self.loading.toggle()
@@ -166,6 +167,6 @@ struct DocumentPicker : UIViewControllerRepresentable {
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView()
+        NoteUploadView(classRoomId: "jjiw7793ggus8810")
     }
 }

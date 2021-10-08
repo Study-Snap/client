@@ -137,6 +137,7 @@ class NeptuneApi {
             "title": noteData.title,
             "keywords": noteData.keywords,
             "shortDescription": noteData.shortDescription,
+            "classId": noteData.classId,
             "fileUri": fileUri,
             // MARK: include bibtextCitation here once it is fixed on the serverside
         ]
@@ -466,7 +467,6 @@ class NeptuneApi {
             }
         }.resume()
     }
-
     
     func getNotesForQuery(query: String,classId: String, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/search")
