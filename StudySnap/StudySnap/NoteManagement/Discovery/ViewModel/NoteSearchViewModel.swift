@@ -10,6 +10,7 @@ import SwiftUI
 class NoteSearchViewModel: ObservableObject {
     @Published var trending: [ApiNoteResponse] = []
     @Published var results: [ApiNoteResponse] = []
+    //@Published var classResult: ApiClassroomsResponse = ApiClassroomsResponse()
     @Published var error: Bool = false
     @Published var errorMessage: String?
     

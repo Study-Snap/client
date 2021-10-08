@@ -40,7 +40,7 @@ struct StorageView: View {
                     .foregroundColor(Color("Secondary"))
             } //: BUTTON
             .sheet(isPresented: $isShowingNotes) {
-              NoteUploadView()
+              //NoteUploadView() // MARK: Implement when working on perosnal storage
             }
         )
 

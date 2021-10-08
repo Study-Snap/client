@@ -43,6 +43,11 @@ class NoteUploadViewModel: ObservableObject {
             self.errorMessage = "Invalid Upload Request. Invalid file format. We currently only accept PDF files"
             return false
         }
+        if data.classId.count < 5 || data.keywords.count == 0  {
+            self.error.toggle()
+            self.errorMessage = "Invalid Upload Request. ClassId couldnt be retrieved"
+            return false
+        }
         
         // No client validation errors
         return true
