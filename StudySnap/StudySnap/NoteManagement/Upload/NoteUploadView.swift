@@ -21,7 +21,8 @@ struct NoteUploadView: View {
     // File picker state
     @State var pickedFileName: String = ""
     @State var pickedFile: Data = Data()
-    @State var show: Bool = false
+    @State var showNotePicker: Bool = false
+    @State var showScanView: Bool = false
     @State var alert: Bool = false
     
     // Upload State
@@ -64,7 +65,7 @@ struct NoteUploadView: View {
                 
             
                 Button(action: {
-                    self.show.toggle()
+                    self.showNotePicker.toggle()
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
@@ -86,13 +87,13 @@ struct NoteUploadView: View {
                     }
                     .aspectRatio(contentMode: .fill)
                     .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                    .sheet(isPresented: $show) {
+                    .sheet(isPresented: $showNotePicker) {
                         DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
                     }
                 }
                 
                 Button(action: {
-                    self.show.toggle()
+                    self.showScanView.toggle()
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
@@ -107,21 +108,20 @@ struct NoteUploadView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Color("Secondary"))
                                     .frame(width: 80, height: 25, alignment: .center)
-                                    Text("Upload handwritten note")
+                                    Text("Upload Handwritten Note")
                                         .padding(.top, 2)
                                         .foregroundColor(Color("Secondary").opacity(0.6))
                                     }
                                 }
                             .aspectRatio(contentMode: .fill)
                             .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                            .sheet(isPresented: $show) {
-                                // TODO: Add reference to OCR view here
+                            .sheet(isPresented: $showScanView) {
+                                ScanNoteView(pickedFile: $pickedFile, pickedFileName: $pickedFileName)
                             }
                         }
                 
                 if self.pickedFileName.count > 0 {
                     FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
-                    
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {

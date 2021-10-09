@@ -837,7 +837,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"StudySnap/Preview Content\"";
-				DEVELOPMENT_TEAM = L53TEA5UHM;
+				DEVELOPMENT_TEAM = XU9D9554K2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudySnap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -845,7 +845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ca.studysnap.StudySnap;
+				PRODUCT_BUNDLE_IDENTIFIER = liamstickney.StudySnap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -859,7 +859,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"StudySnap/Preview Content\"";
-				DEVELOPMENT_TEAM = L53TEA5UHM;
+				DEVELOPMENT_TEAM = XU9D9554K2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudySnap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -867,7 +867,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ca.studysnap.StudySnap;
+				PRODUCT_BUNDLE_IDENTIFIER = liamstickney.StudySnap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
