@@ -72,7 +72,11 @@ struct ScanNoteView: UIViewControllerRepresentable {
                 for observation in observations {
                     guard let candidate = observation.topCandidates(maximumRecognitionCandidates).first else { continue }
                     
-                    currentPageText += "\(candidate.string)\n"
+                    if (candidate.string.last! == "." || candidate.string.last! == "!" || candidate.string.last! == "?") {
+                        currentPageText += "\(candidate.string)\n\n"
+                    } else {
+                        currentPageText += "\(candidate.string)"
+                    }
                 }
                 pageTexts.append(currentPageText)
             }
@@ -107,16 +111,16 @@ struct ScanNoteView: UIViewControllerRepresentable {
                     
                     let paragraphStyle = NSMutableParagraphStyle()
                                     
-                    paragraphStyle.alignment = .center
+                    paragraphStyle.alignment = .natural
                     
                     let attributes = [
-                        NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11),
                         NSAttributedString.Key.paragraphStyle: paragraphStyle
                     ]
                     
                     let text = pageText
                     
-                    let textRect = CGRect(x: 100, y: 100, width: 600, height: 500)
+                    let textRect = CGRect(x: 50, y: 75, width: 495, height: 842)
                     
                     text.draw(in: textRect, withAttributes: attributes)
                 }
