@@ -25,6 +25,10 @@ struct NoteUploadView: View {
     @State var showScanView: Bool = false
     @State var alert: Bool = false
     
+    // Scanned documents state
+    @State var didCompleteScan: Bool = false
+    @State var pagesText: [String] = []
+    
     // Upload State
     @State var loading: Bool = false
     
@@ -116,12 +120,17 @@ struct NoteUploadView: View {
                             .aspectRatio(contentMode: .fill)
                             .background(GeometryGetter(rect: $kGuardian.rects[3]))
                             .sheet(isPresented: $showScanView) {
-                                ScanNoteView(pickedFile: $pickedFile, pickedFileName: $pickedFileName)
+                                ScanNoteView(pagesText: $pagesText, didCompleteScan: $didCompleteScan)
                             }
-                        }
+                    }
                 
-                if self.pickedFileName.count > 0 {
-                    FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
+                NavigationLink(destination: NoteEditorView(pagesText: $pagesText, pickedFile: $pickedFile, pickedFileName: $pickedFileName, didCompleteScan: $didCompleteScan).navigationBarTitle("")
+                    .navigationBarHidden(true), isActive: $didCompleteScan) {
+                    EmptyView()
+                }
+                
+                if self.pickedFileName.count > 1 {
+                    FilePickedView(pickedFile: $pickedFile, pickedFileName: $pickedFileName)
                 }
                 Spacer()
                 PrimaryButtonView(title: "Upload") {

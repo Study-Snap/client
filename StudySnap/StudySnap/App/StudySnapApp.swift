@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct StudySnapApp: App {
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
-    var loggedIn: Bool = !TokenService().getToken(key: .accessToken).isEmpty
+    var loggedIn: Bool = false
     
     var body: some Scene {
         WindowGroup {

@@ -11,14 +11,13 @@ import VisionKit
 import PDFKit
 
 struct ScanNoteView: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) var presenrationMode
-
+    @Environment(\.presentationMode) var presentationMode
     
-    @Binding var pickedFile: Data
-    @Binding var pickedFileName: String
+    @Binding var pagesText: [String]
+    @Binding var didCompleteScan: Bool
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(pickedFile: $pickedFile, pickedFileName: $pickedFileName, parent: self)
+        Coordinator(pagesText: $pagesText, didCompleteScan: $didCompleteScan, parent: self)
     }
     
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
@@ -32,13 +31,13 @@ struct ScanNoteView: UIViewControllerRepresentable {
     }
     
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        var pickedFile: Binding<Data>
-        var pickedFileName: Binding<String>
+        var pagesText: Binding<[String]>
+        var didCompleteScan: Binding<Bool>
         var parent: ScanNoteView
         
-        init(pickedFile: Binding<Data>, pickedFileName: Binding<String>, parent: ScanNoteView) {
-            self.pickedFile = pickedFile
-            self.pickedFileName = pickedFileName
+        init(pagesText: Binding<[String]>, didCompleteScan: Binding<Bool>, parent: ScanNoteView) {
+            self.pagesText = pagesText
+            self.didCompleteScan = didCompleteScan
             self.parent = parent
         }
         
@@ -46,7 +45,9 @@ struct ScanNoteView: UIViewControllerRepresentable {
             let extractedImages = extractImages(from: scan)
             recognizeText(from: extractedImages)
             
-            parent.presenrationMode.wrappedValue.dismiss()
+            didCompleteScan.wrappedValue = true
+            
+            parent.presentationMode.wrappedValue.dismiss()
         }
         
         fileprivate func extractImages(from scan: VNDocumentCameraScan) -> [CGImage] {
@@ -87,48 +88,8 @@ struct ScanNoteView: UIViewControllerRepresentable {
                 
                 try? requestHandler.perform([recognizeTextRequest])
             }
-            
-            let pdfDocument = createPDF(from: pageTexts)
-            // TODO: Bind PDFDocument (and pickedFileName) to upload view (problem: PDFDocument is not compatible with Data)
-            pickedFile.wrappedValue = pdfDocument.dataRepresentation()!
-            pickedFileName.wrappedValue = "ScannedNote.pdf"
-        }
-        
-        fileprivate func createPDF(from extractedText: [String]) -> PDFDocument {
-            let format = UIGraphicsPDFRendererFormat()
-            
-            let metaData = [kCGPDFContextTitle: "PDFNote"]
-            
-            format.documentInfo = metaData as [String: Any]
-            
-            let pageRect = CGRect(x: 0, y: 0, width: 595, height: 842)
-            
-            let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
-            
-            let data = renderer.pdfData { (context) in
-                for pageText in extractedText {
-                    context.beginPage()
-                    
-                    let paragraphStyle = NSMutableParagraphStyle()
-                                    
-                    paragraphStyle.alignment = .natural
-                    
-                    let attributes = [
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11),
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle
-                    ]
-                    
-                    let text = pageText
-                    
-                    let textRect = CGRect(x: 50, y: 75, width: 495, height: 842)
-                    
-                    text.draw(in: textRect, withAttributes: attributes)
-                }
-            }
-            
-            let pdfDocument = PDFDocument(data: data)!
-                     
-            return pdfDocument
+                        
+            pagesText.wrappedValue = pageTexts
         }
         
     }

@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct FilePickedView: View {
-    @State var picked_file: String
-    @State var picked_file_data: Data
+    @Binding var pickedFile: Data
+    @Binding var pickedFileName: String
     
     var body: some View {
         HStack {
-            Text(picked_file)
+            Text(pickedFileName)
                 .font(.body)
                 .foregroundColor(Color("Secondary"))
             Button(action: {
-                self.picked_file = ""
-                self.picked_file_data = Data()
+                self.pickedFile = Data()
+                self.pickedFileName = ""
             }) {
-                if (picked_file != ""){
+                if (pickedFileName != ""){
                     Image(systemName: "xmark")
                         .resizable()
                         .frame(width:15,height:15)
@@ -34,9 +34,3 @@ struct FilePickedView: View {
     }
 }
 
-struct FilePickedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilePickedView(picked_file: "Science note", picked_file_data: Data()).previewLayout(.sizeThatFits)
-            .padding()
-    }
-}
