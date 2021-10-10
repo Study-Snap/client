@@ -20,7 +20,7 @@
 		4A04FD7A2604368900895B0D /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04FD792604368900895B0D /* OnBoardingView.swift */; };
 		4A0739B5260530A800A823DF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739B4260530A800A823DF /* MainView.swift */; };
 		4A0739BD2605340D00A823DF /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739BC2605340D00A823DF /* StorageView.swift */; };
-		4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* RecommendationView.swift */; };
+		4A0739C2260534B000A823DF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* ProfileView.swift */; };
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
 		4A5FDCCA270652A400770DA7 /* ClassroomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5FDCC9270652A400770DA7 /* ClassroomViewModel.swift */; };
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
@@ -97,7 +97,7 @@
 		4A04FD792604368900895B0D /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		4A0739B4260530A800A823DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4A0739BC2605340D00A823DF /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
-		4A0739C1260534B000A823DF /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
+		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A5FDCC9270652A400770DA7 /* ClassroomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomViewModel.swift; sourceTree = "<group>"; };
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -362,7 +362,7 @@
 			children = (
 				B8985D0D2628D88700E73093 /* ViewModel */,
 				B8E1CBA225F14C2C00493EC5 /* NoteSearchView.swift */,
-				4A0739C1260534B000A823DF /* RecommendationView.swift */,
+				4A0739C1260534B000A823DF /* ProfileView.swift */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -674,7 +674,7 @@
 				4A72D999270009C600519D6A /* CreateClassroomView.swift in Sources */,
 				B8DA2065261A80FC00EF93AB /* LoginViewModel.swift in Sources */,
 				B833317A26294CF700365D11 /* FilePickedView.swift in Sources */,
-				4A0739C2260534B000A823DF /* RecommendationView.swift in Sources */,
+				4A0739C2260534B000A823DF /* ProfileView.swift in Sources */,
 				B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */,
 				B8DA206A261A810D00EF93AB /* SignUpViewModel.swift in Sources */,
 				4A72D95726FFDD1700519D6A /* ClassroomUserModel.swift in Sources */,

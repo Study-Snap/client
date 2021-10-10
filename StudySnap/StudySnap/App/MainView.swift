@@ -25,7 +25,7 @@ struct MainView: View {
                         Text("Storage")
                       }
                     
-                    RecommendationView()
+                    ProfileView()
                       .tabItem {
                         Image(systemName: "person.crop.circle")
                         Text("Profile")
