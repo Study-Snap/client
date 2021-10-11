@@ -17,14 +17,7 @@ struct StudySnapApp: App {
             if isOnboarding {
                 OnBoardingView()
             } else {
-                // Check logged in
-                if !loggedIn {
-                    // Not logged in
-                    LoginView()
-                } else {
-                    // If Logged in
-                    MainView()
-                }
+                LoginView()
             }
         }
     }

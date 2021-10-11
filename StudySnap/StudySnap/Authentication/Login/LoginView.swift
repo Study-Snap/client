@@ -17,6 +17,7 @@ struct LoginView: View {
     @State var error: Bool = false
     @State var errorMessage: String?
     @State var showPassword: Bool = false
+    @State var loggedIn: Bool = !TokenService().getToken(key: .accessToken).isEmpty
     
     var body: some View {
         NavigationView {
@@ -82,6 +83,9 @@ struct LoginView: View {
                 }
                 NavigationLink(destination: SignUpView(), isActive: $actionSignUpView) {
                     EmptyView() // Supports: Sign in programatically
+                }
+                NavigationLink(destination: MainView(), isActive: $loggedIn) {
+                    EmptyView()
                 }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))

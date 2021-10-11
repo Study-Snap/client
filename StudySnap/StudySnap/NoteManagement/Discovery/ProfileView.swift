@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @AppStorage("isAnimated") var isAnimated: Bool = true
     
+    @StateObject var viewModel : ProfileViewViewModel = ProfileViewViewModel()
     @State var showError: Bool = false
     @State var deauthenticated: Bool = false
     
@@ -18,12 +20,9 @@ struct ProfileView: View {
             ZStack {
                 VStack {
                     PrimaryButtonView(title: "Log Out", action: {
-                        AuthApi().deauthenticate { completed, message in
-                            if !completed {
-                                self.showError = true
-                            } else {
-                                self.deauthenticated = true
-                            }
+                        self.viewModel.performLogout()
+                        if (self.viewModel.logout) {
+                            self.presentationMode.wrappedValue.dismiss()
                         }
                     }).alert("Error", isPresented: $showError) {
                         Button("Ok", role: .cancel) {
@@ -34,11 +33,6 @@ struct ProfileView: View {
                     }
                 }
             }
-            NavigationLink(destination: LoginView().navigationBarTitle("")
-                .navigationBarHidden(true), isActive: $deauthenticated) {
-                EmptyView()
-            }
-
         }
     }
 }
