@@ -107,7 +107,7 @@ struct NoteUploadView: View {
                             .padding(.horizontal, 7)
                                     
                             VStack {
-                                Image(systemName: "icloud.and.arrow.up")
+                                Image(systemName: "highlighter")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Color("Secondary"))

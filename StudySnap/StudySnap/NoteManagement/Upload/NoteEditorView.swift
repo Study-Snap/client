@@ -15,14 +15,17 @@ struct NoteEditorView: View {
     @Binding var pickedFileName: String
     @Binding var didCompleteScan: Bool
     
+    var color: Color = Color("Primary")
+    
     @State private var index = 0
     
     var body: some View {
+        Text("Note Editor: Page " + String(index + 1) + " of " + String(pagesText.count)).font(.system(size: 26, weight: .heavy, design: .default))
         VStack {
             ZStack {
                 TextEditor(text: $pagesText[index])
             }.padding()
-            
+                        
             Spacer()
             
             HStack {
@@ -33,7 +36,7 @@ struct NoteEditorView: View {
                 }
                 .padding()
                 .foregroundColor(.white)
-                .background(Capsule().fill(Color.blue))
+                .background(Capsule().fill(Color("Primary")))
                 .disabled(index + 1 >= $pagesText.count ? true : false)
                 
                 Button (action: {
@@ -46,7 +49,7 @@ struct NoteEditorView: View {
                 }
                 .padding()
                 .foregroundColor(.white)
-                .background(Capsule().fill(Color.blue))
+                .background(Capsule().fill(Color("Primary")))
             }
             .padding()
         }
