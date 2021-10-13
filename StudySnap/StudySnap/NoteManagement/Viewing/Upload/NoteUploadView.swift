@@ -21,8 +21,13 @@ struct NoteUploadView: View {
     // File picker state
     @State var pickedFileName: String = ""
     @State var pickedFile: Data = Data()
-    @State var show: Bool = false
+    @State var showNotePicker: Bool = false
+    @State var showScanView: Bool = false
     @State var alert: Bool = false
+    
+    // Scanned documents state
+    @State var didCompleteScan: Bool = false
+    @State var pagesText: [String] = []
     
     // Upload State
     @State var loading: Bool = false
@@ -38,120 +43,124 @@ struct NoteUploadView: View {
     var body: some View {
         NavigationView {
             VStack {
-                VStack {
-                    
-                    // Input section
-                    InputField(placeholder: "Title", value: $title)
-                        .padding(.top, 20)
-                        .padding(.horizontal, 5)
-                        .padding(.bottom, 10)
-                        .background(GeometryGetter(rect: $kGuardian.rects[0]))
-                    InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
-                        .padding(.horizontal, 5)
-                        .padding(.bottom, 10)
-                        .background(GeometryGetter(rect: $kGuardian.rects[1]))
-                    InputField(placeholder: "Keywords (press return to confirm)", value: $keywords)
-                        .padding(.horizontal, 5)
-                        .padding(.bottom, 10)
-                        .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                HStack (alignment: .center) {
+                    Text("Note Upload")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.top, -50)
+                }
+                
+                // Input section
+                InputField(placeholder: "Title", value: $title)
+                    .padding(.top, 20)
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 10)
+                    .background(GeometryGetter(rect: $kGuardian.rects[0]))
+                InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 10)
+                    .background(GeometryGetter(rect: $kGuardian.rects[1]))
+                InputField(placeholder: "Keywords (press return to confirm)", value: $keywords)
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 10)
+                    .background(GeometryGetter(rect: $kGuardian.rects[2]))
 
+            
                 
-                    
+            
+                Button(action: {
+                    self.showNotePicker.toggle()
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(Color("Accent"))
+                            .cornerRadius(20)
+                            .padding(.bottom)
+                            .padding(.horizontal, 7)
+                        
+                        VStack {
+                            Image(systemName: "icloud.and.arrow.up")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color("Secondary"))
+                                .frame(width: 80, height: 25, alignment: .center)
+                            Text("Upload PDF from Device")
+                                .padding(.top, 2)
+                                .foregroundColor(Color("Secondary").opacity(0.6))
+                        }
+                    }
+                    .aspectRatio(contentMode: .fill)
+                    .background(GeometryGetter(rect: $kGuardian.rects[3]))
+                    .sheet(isPresented: $showNotePicker) {
+                        DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
+                    }
+                }
                 
-                    Button(action: {
-                        self.show.toggle()
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color("Accent"))
-                                .cornerRadius(20)
-                                .padding(.bottom)
-                                .padding(.horizontal, 7)
-                            
+                Button(action: {
+                    self.showScanView.toggle()
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(Color("Accent"))
+                            .cornerRadius(20)
+                            .padding(.bottom)
+                            .padding(.horizontal, 7)
+                                    
                             VStack {
-                                Image(systemName: "icloud.and.arrow.up")
+                                Image(systemName: "highlighter")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Color("Secondary"))
                                     .frame(width: 80, height: 25, alignment: .center)
-                                Text("Upload PDF from Device")
-                                    .padding(.top, 2)
-                                    .foregroundColor(Color("Secondary").opacity(0.6))
-                            }
-                        }
-                        .aspectRatio(contentMode: .fill)
-                        .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                        .sheet(isPresented: $show) {
-                            DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
-                        }
-                    }
-                    
-                    Button(action: {
-                        self.show.toggle()
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color("Accent"))
-                                .cornerRadius(20)
-                                .padding(.bottom)
-                                .padding(.horizontal, 7)
-                                        
-                                VStack {
-                                    Image(systemName: "icloud.and.arrow.up")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .foregroundColor(Color("Secondary"))
-                                        .frame(width: 80, height: 25, alignment: .center)
-                                        Text("Upload handwritten note")
-                                            .padding(.top, 2)
-                                            .foregroundColor(Color("Secondary").opacity(0.6))
-                                        }
+                                    Text("Upload Handwritten Note")
+                                        .padding(.top, 2)
+                                        .foregroundColor(Color("Secondary").opacity(0.6))
                                     }
-                                .aspectRatio(contentMode: .fill)
-                                .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                                .sheet(isPresented: $show) {
-                                    // TODO: Add reference to OCR view here
                                 }
+                            .aspectRatio(contentMode: .fill)
+                            .background(GeometryGetter(rect: $kGuardian.rects[3]))
+                            .sheet(isPresented: $showScanView) {
+                                ScanNoteView(pagesText: $pagesText, didCompleteScan: $didCompleteScan)
                             }
-                    
-                    if self.pickedFileName.count > 0 {
-                        FilePickedView(picked_file: self.pickedFileName, picked_file_data: self.pickedFile)
-                        
                     }
-                    Spacer()
-                    PrimaryButtonView(title: "Upload") {
-                        self.loading.toggle() // Start loading indication
-                        self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
-                            
-                            // Stop loading
-                            self.loading.toggle()
-                            
-                            // If successful dismiss the upload view
-                            if !self.viewModel.error {
-                                // Successful upload
-                                // MARK: (init jiggle)
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
+                
+                NavigationLink(destination: NoteEditorView(pagesText: $pagesText, pickedFile: $pickedFile, pickedFileName: $pickedFileName, didCompleteScan: $didCompleteScan).navigationBarTitle("")
+                    .navigationBarHidden(true), isActive: $didCompleteScan) {
+                    EmptyView()
+                }
+                
+                if self.pickedFileName.count > 1 {
+                    FilePickedView(pickedFile: $pickedFile, pickedFileName: $pickedFileName)
+                }
+                Spacer()
+                PrimaryButtonView(title: "Upload") {
+                    self.loading.toggle() // Start loading indication
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
+                        
+                        // Stop loading
+                        self.loading.toggle()
+                        
+                        // If successful dismiss the upload view
+                        if !self.viewModel.error {
+                            // Successful upload
+                            // MARK: (init jiggle)
+                            self.presentationMode.wrappedValue.dismiss()
                         }
                     }
-         
                 }
-                .navigationBarTitle("Note Upload", displayMode: .inline)
-                
-                .onAppear { self.kGuardian.addObserver() }
-                .onDisappear { self.kGuardian.removeObserver() }
-                .alert(isPresented: self.$viewModel.error, content: {
-                    Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
+     
+            }
+            .onAppear { self.kGuardian.addObserver() }
+            .onDisappear { self.kGuardian.removeObserver() }
+            .alert(isPresented: self.$viewModel.error, content: {
+                Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })
-                
-            }.padding()
-            
-            
-            
 
             
         }
-  
+        .background(Color(UIColor.systemBackground))
+        .navigationViewStyle(StackNavigationViewStyle())
+        .padding()
     }
 }
 

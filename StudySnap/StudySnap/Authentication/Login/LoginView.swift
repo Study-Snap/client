@@ -91,7 +91,10 @@ struct LoginView: View {
                                , isActive: $actionSignUpView) {
                     EmptyView() // Supports: Sign in programatically
                 }
-                NavigationLink(destination: MainView(), isActive: $loggedIn) {
+                NavigationLink(destination: MainView()
+                                .navigationBarTitle("")
+                                .navigationBarHidden(true)
+                                .navigationBarBackButtonHidden(true), isActive: $loggedIn) {
                     EmptyView()
                 }
             }.alert(isPresented: $error, content: {

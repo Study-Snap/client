@@ -5,7 +5,7 @@
 	<key>API_PROTOCOL</key>
 	<string>http</string>
 	<key>AUTH_ENDPOINT</key>
-	<string>localhost:5555</string>
+	<string>192.168.86.31:5555</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NEPTUNE_ENDPOINT</key>
-	<string>localhost:7777</string>
+	<string>192.168.86.31:7777</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

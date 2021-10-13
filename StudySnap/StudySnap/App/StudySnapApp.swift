@@ -21,7 +21,8 @@ struct StudySnapApp: App {
             } else {
                 LoginView()
                     .navigationBarTitle("")
-                    .navigationViewStyle(StackNavigationViewStyle())
+                    .navigationBarHidden(true)
+                    .navigationBarBackButtonHidden(true)
             }   
         }
     }
