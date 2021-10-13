@@ -84,14 +84,14 @@ class NoteUploadViewModel: ObservableObject {
                     } else {
                         self.error.toggle()
                         self.errorMessage = res.message
+                        completion()
                     }
                 } else {
                     // Return the response (containing the note)
                     self.response = res
+                    completion()
                 }
             }
         }
-        
-        completion()
     }
 }
