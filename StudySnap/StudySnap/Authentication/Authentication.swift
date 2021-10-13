@@ -168,15 +168,14 @@ class AuthApi {
         }.resume()
     }
     
-    func deauthenticate(completion: @escaping (Bool, String?) -> ()) -> Void {
+    func deauthenticate(completion: @escaping (Bool) -> ()) -> Void {
         do {
             // Remove any stored tokens (this will prevent any future authenticated calls to the API)
             try TokenService().removeToken(key: .accessToken)
             try TokenService().removeToken(key: .refreshToken)
-        } catch let error as TokenServiceError {
-            completion(false, error.message ?? "no message")
+            completion(true)
         } catch {
-            completion(false, nil)
+            completion(false)
         }
     }
 }

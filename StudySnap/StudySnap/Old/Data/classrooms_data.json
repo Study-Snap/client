@@ -1,0 +1,41 @@
+[
+    {
+           "id": "448f7db0-e3ac-4875-9235-5e08ffa4ed82",
+           "name": "History 101",
+           "ownerId": 1,
+           "createdAt": "2021-09-22T00:04:50.368Z",
+           "updatedAt": "2021-09-25T22:52:57.388Z",
+           "ClassroomUser": {
+               "classId": "448f7db0-e3ac-4875-9235-5e08ffa4ed82",
+               "userId": 1,
+               "createdAt": "2021-09-22T00:04:50.461Z",
+               "updatedAt": "2021-09-22T00:04:50.461Z"
+           }
+       },
+       {
+           "id": "174b8a2a-28aa-4175-80b5-950780dcceca",
+           "name": "Science 2021",
+           "ownerId": 1,
+           "createdAt": "2021-09-25T18:02:21.989Z",
+           "updatedAt": "2021-09-25T18:02:21.989Z",
+           "ClassroomUser": {
+               "classId": "174b8a2a-28aa-4175-80b5-950780dcceca",
+               "userId": 1,
+               "createdAt": "2021-09-25T18:02:22.052Z",
+               "updatedAt": "2021-09-25T18:02:22.052Z"
+           }
+       },
+       {
+           "id": "802cefa6-221b-461a-9a1c-1e0c3e968b9d",
+           "name": "Business 2019",
+           "ownerId": 1,
+           "createdAt": "2021-09-25T23:07:37.398Z",
+           "updatedAt": "2021-09-25T23:07:37.398Z",
+           "ClassroomUser": {
+               "classId": "802cefa6-221b-461a-9a1c-1e0c3e968b9d",
+               "userId": 1,
+               "createdAt": "2021-09-25T23:07:37.421Z",
+               "updatedAt": "2021-09-25T23:07:37.421Z"
+           }
+       }
+]

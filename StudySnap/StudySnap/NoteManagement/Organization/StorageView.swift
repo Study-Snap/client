@@ -9,11 +9,10 @@ import SwiftUI
 
 struct StorageView: View {
     @State private var isShowingNotes: Bool = false
-    //var fruits: [Fruit] = fruitsData
-    //@State var notes: [Note] = Bundle.main.decode("notes_data.json")
+
     @ObservedObject var globalString = GlobalString()
     @State var isDeleted = false
-
+    @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     var body: some View {
       NavigationView {
         List {
@@ -36,13 +35,12 @@ struct StorageView: View {
             Button(action: {
               isShowingNotes = true
             }) {
-              Image(systemName: "plus")
-                .resizable()
-                .frame(width:30, height:30)
-                .foregroundColor(Color("Secondary"))
+                Image(systemName: "plus")
+                    .font(.title)
+                    .foregroundColor(Color("Secondary"))
             } //: BUTTON
             .sheet(isPresented: $isShowingNotes) {
-              NoteUploadView()
+              //NoteUploadView() // MARK: Implement when working on perosnal storage
             }
         )
 

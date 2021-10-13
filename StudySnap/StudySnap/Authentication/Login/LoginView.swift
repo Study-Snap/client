@@ -17,6 +17,7 @@ struct LoginView: View {
     @State var error: Bool = false
     @State var errorMessage: String?
     @State var showPassword: Bool = false
+    @State var loggedIn: Bool = !TokenService().getToken(key: .accessToken).isEmpty
     
     var body: some View {
         NavigationView {
@@ -75,23 +76,35 @@ struct LoginView: View {
                 
                 // Handle navigation logic
                 NavigationLink(
-                    destination: MainView(),
+                    destination: MainView()
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true)
+                        .navigationBarBackButtonHidden(true),
                     isActive: $actionMainView
                 ) {
                     EmptyView() // Button follows
                 }
-                NavigationLink(destination: SignUpView(), isActive: $actionSignUpView) {
+                NavigationLink(destination: SignUpView()
+                                .navigationBarTitle("")
+                                .navigationBarHidden(true)
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $actionSignUpView) {
                     EmptyView() // Supports: Sign in programatically
+                }
+                NavigationLink(destination: MainView()
+                                .navigationBarTitle("")
+                                .navigationBarHidden(true)
+                                .navigationBarBackButtonHidden(true), isActive: $loggedIn) {
+                    EmptyView()
                 }
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })
+            
         }
         .padding(.all, 1)
         .padding(.top, -110)
-        .navigationTitle("")
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
+
     }
 }
 

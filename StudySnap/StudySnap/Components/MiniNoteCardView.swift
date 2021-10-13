@@ -15,6 +15,7 @@ struct MiniNoteCardView: View {
       TabView {
        
         ForEach(notes) { item in
+
             Button(action: {onClick(item.id!)}, label: {
                 VStack {
                     VStack {
@@ -31,10 +32,10 @@ struct MiniNoteCardView: View {
                         }
                         HStack {
                             VStack{
-                                Text("Ben Sykes")
-                                    .fontWeight(.medium)
-                                    .foregroundColor(Color("Secondary"))
-                            }.padding(.horizontal, 50)
+                                
+                                Text("\((item.user!.firstName)) \((item.user!.lastName))")
+                            }
+                            .padding(.horizontal, 50)
                             .padding(.bottom)
                             
                         }

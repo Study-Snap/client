@@ -32,26 +32,6 @@ struct StartButtonView: View {
         }
     
 }
-        
-//        Button(action: {
-//        }) {
-//            HStack(spacing: 8) {
-//                Text("Get Started")
-//
-//                Image(systemName: "arrow.right.circle")
-//                    .imageScale(.large)
-//            }
-//            .padding(.horizontal, 50)
-//            .padding(.vertical, 10)
-//            .background(
-//                Color.white
-//            )
-//        } //: BUTTON
-//        .accentColor(Color("Secondary"))
-//        .cornerRadius(20)
-//    }
-
-    
 
 
 struct StartButtonView_Previews: PreviewProvider {
