@@ -11,30 +11,35 @@ var globalEventManager = GlobalString()
 struct MainView: View {
     var body: some View {
         
-                TabView{
-                    ClassroomsView()
-                      .tabItem {
+        
+        ZStack {
+            TabView{
+                ClassroomsView()
+                    .tabItem {
                         Image(systemName: "person.3.fill")
                         Text("Classrooms")
                         
-                      }
-                    
-                    StorageView()
-                      .tabItem {
+                    }
+                
+                StorageView()
+                    .tabItem {
                         Image(systemName: "photo.on.rectangle")
                         Text("Storage")
-                      }
+                    }
                     
                     ProfileView()
-                      .tabItem {
+                    .tabItem {
                         Image(systemName: "person.crop.circle")
                         Text("Profile")
-                      }
-                    
-                }
-                .accentColor(Color("Primary"))
-                .ignoresSafeArea()
-              
+                    }
+                
+            }
+            .accentColor(Color("Primary"))
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }.edgesIgnoringSafeArea([.top,.bottom])
+        
+        
         
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CloudNoteView: View {
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let noteId: Int
     
@@ -15,7 +16,7 @@ struct CloudNoteView: View {
     @StateObject var viewModel: NoteViewViewModel = NoteViewViewModel()
     
     var body: some View {
-        NavigationView {
+      
             VStack {
                 if viewModel.loading {
                     ProgressView("Loading note details...")
@@ -34,7 +35,7 @@ struct CloudNoteView: View {
                                         .foregroundColor(.white)
                                         .padding(20)
                                         .padding(.top, 25)
-                                    Text("Liam Stickney")
+                                    Text("\(viewModel.noteObj.user!.firstName) \(viewModel.noteObj.user!.lastName)")
                                         .font(.title2)
                                         .fontWeight(.light)
                                         .foregroundColor(.white)
@@ -60,10 +61,10 @@ struct CloudNoteView: View {
                                     }.padding(.top, 15)
                                 }
                             }
-                            .frame(height: 340, alignment: .center)
+                     
                             .cornerRadius(15.0)
-                        }
-                        .ignoresSafeArea()
+                        }.edgesIgnoringSafeArea([.top])
+                        
                         
                         VStack {
                             // MARK: Note Download Button
@@ -109,7 +110,7 @@ struct CloudNoteView: View {
                             .frame(width: .infinity, height: .infinity, alignment: .leading)
                             .cornerRadius(12)
                             .padding(.horizontal)
-                            
+                            Spacer()
                             // MARK: Bottom buttons
                             HStack {
                                 Text("About a \(viewModel.noteObj.timeLength!) minute read: ")
@@ -121,21 +122,43 @@ struct CloudNoteView: View {
                                 
                                 
                             }.padding()
-                        }.padding(.top, -125)
+                        }
+                    }.toolbar{
+                        ToolbarItem(placement: .navigationBarLeading){
+                            HStack(spacing: 5) {
+                                Button(action: {
+                                   self.presentationMode.wrappedValue.dismiss()
+                                }) {
+                                    Image(systemName: "chevron.backward")
+                                        .foregroundColor(.black)
+                                }
+                            
+                            }
+                        }
                     }
                 }
-            }.navigationBarHidden(true)
+            }.onAppear(perform: {
+                self.viewModel.getNoteDetailsForId(id: noteId)
+            }).edgesIgnoringSafeArea([.top,.bottom])
             
-        }.onAppear(perform: {
-            self.viewModel.getNoteDetailsForId(id: noteId)
-        })
+       
+           
+            
+            
+          
+        
+           
       
 
     }
 }
 
 struct CloudNoteView_Previews: PreviewProvider {
-    static var previews: some View {
+    @Binding var isNavigationBarHidden: Bool
+    init(isNavigationBarHidden: Binding<Bool>) {
+        _isNavigationBarHidden = .constant(false)
+    }
+    static var previews: some View{
         CloudNoteView(noteId: 9)
     }
 }

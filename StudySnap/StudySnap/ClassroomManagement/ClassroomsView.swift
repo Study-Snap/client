@@ -23,6 +23,7 @@ struct ClassroomsView: View {
     @State private var isEaseInAnimation: Animation?
     @State private var isJoiningClassroom: Bool = false
     @State private var isCreatingClassroom: Bool = false
+
     //: MARK - FUNCTIONS
     
     // View model
@@ -69,7 +70,8 @@ struct ClassroomsView: View {
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(classID: classroomItem.id!, className: classroomItem.name!)) {
+                                                    NavigationLink(destination: NoteSearchView(classID: classroomItem.id!, className: classroomItem.name!)        .navigationBarTitle("")
+                                                                    .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
                                                     } //: LINK
                                                 } //: LOOP
@@ -126,16 +128,13 @@ struct ClassroomsView: View {
                                     
                                 }.padding(.bottom,10)
                                 
-                                //Debugging code only
-                                //var check = print("This is the error message \(self.viewModel.errorMessage)")
-                                //var check2 = print("This is the correct message \(self.viewModel.results)")
-                                
-                                
+    
                             
                             .padding(.top, 1)
                             .navigationBarTitle("Classrooms", displayMode: .inline)
                             
                             .toolbar {
+
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     HStack(spacing: 16) {
                                         Button(action: {
@@ -165,11 +164,15 @@ struct ClassroomsView: View {
                         }//: NAVIGATION
                     }
                 }
+                  
             }
-        }.onAppear(perform: {
+        }
+        
+        .onAppear(perform: {
             self.viewModel.getClassroomsForUser()
             
         })
+  
            
         
         

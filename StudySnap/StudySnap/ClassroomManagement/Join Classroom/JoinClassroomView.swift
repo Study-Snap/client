@@ -10,6 +10,9 @@ import SwiftUI
 struct JoinClassroomView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: JoinClassroomViewModel = JoinClassroomViewModel()
+    //@State var error: Bool = false
+    //@State var errorMessage: String?
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -19,7 +22,16 @@ struct JoinClassroomView: View {
                     self.viewModel.joinUserClassroom(classId: viewModel.classId)
                     presentationMode.wrappedValue.dismiss()
                 }).padding()
-            }.navigationBarTitle("Join Classroom", displayMode: .inline)
+            }
+            .navigationBarTitle("Join Classroom", displayMode: .inline)
+            .alert("ERROR", isPresented: $viewModel.error) {
+                Button("OK", role:.cancel){
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }message: {
+                Text("self.viewModel.errorMessage!")
+            }
+            //86baabea-9c16-4c5e-9622-8eaa90e6dd36
         }
     }
 }

@@ -14,10 +14,10 @@ struct NoteListRowItem: View {
     var shortDescription: String
     var readTime: Int
     var rating: [Int]
-    var onClick: (Int) -> ()
+
     
     var body: some View {
-        Button(action: {onClick(self.id)}) {
+     
             ZStack(alignment: .leading) {
                         HStack {
                             ZStack {
@@ -46,18 +46,20 @@ struct NoteListRowItem: View {
                                     .foregroundColor(Color("Secondary"))
                                 Text(author)
                                     .font(.caption)
+                                    .foregroundColor(Color("TextFieldPrimary"))
                                     .padding(.bottom, 5)
                                 
                                 
-                                HStack(alignment: .center) {
+                                
                                     Text(shortDescription)
                                         .font(.footnote)
-                                }
-                                .padding(.bottom, 5)
+                                        .multilineTextAlignment(TextAlignment.leading)
+                                        .foregroundColor(Color("TextFieldPrimary"))
+                                        .padding(.bottom, 5)
                                 
-                                HStack {
+                               
                                     NoteRatingView(avgRating: calculateRating(ratings: rating))
-                                }
+                                
                                 
                             }
                             .padding(.horizontal, 20)
@@ -70,12 +72,12 @@ struct NoteListRowItem: View {
                         .cornerRadius(7)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-        }.buttonStyle(PlainButtonStyle())
+     
     }
 }
 
 struct NoteListRowItem_Previews: PreviewProvider {
     static var previews: some View {
-        NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5], onClick: {_ in print("id")})
+        NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
     }
 }

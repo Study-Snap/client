@@ -76,12 +76,19 @@ struct LoginView: View {
                 
                 // Handle navigation logic
                 NavigationLink(
-                    destination: MainView(),
+                    destination: MainView()
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true)
+                        .navigationBarBackButtonHidden(true),
                     isActive: $actionMainView
                 ) {
                     EmptyView() // Button follows
                 }
-                NavigationLink(destination: SignUpView(), isActive: $actionSignUpView) {
+                NavigationLink(destination: SignUpView()
+                                .navigationBarTitle("")
+                                .navigationBarHidden(true)
+                                .navigationBarBackButtonHidden(true)
+                               , isActive: $actionSignUpView) {
                     EmptyView() // Supports: Sign in programatically
                 }
                 NavigationLink(destination: MainView(), isActive: $loggedIn) {
@@ -90,12 +97,11 @@ struct LoginView: View {
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })
+            
         }
         .padding(.all, 1)
         .padding(.top, -110)
-        .navigationTitle("")
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
+
     }
 }
 
