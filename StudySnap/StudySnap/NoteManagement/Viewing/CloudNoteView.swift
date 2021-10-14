@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CloudNoteView: View {
-
+    @Binding var rootIsActive: Bool
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let noteId: Int
     
@@ -159,6 +160,6 @@ struct CloudNoteView_Previews: PreviewProvider {
         _isNavigationBarHidden = .constant(false)
     }
     static var previews: some View{
-        CloudNoteView(noteId: 9)
+        CloudNoteView(rootIsActive: .constant(true), noteId: 9)
     }
 }

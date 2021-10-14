@@ -9,13 +9,10 @@ import SwiftUI
 
 
 struct ClassroomsView: View {
-    
-    //var classrooms: [Classroom] = Bundle.main.decode("classrooms_data.json")
-    
+    @Binding var rootIsActive: Bool
     
     @State private var isGridViewActive: Bool = false
     @State private var isUpdateClassroomView: Bool = false
-    
     @State private var gridLayout: [GridItem] = [ GridItem(.flexible()) ]
     @State private var gridColumn: Int = 1
     @State private var toolbarIcon: String = "square.grid.2x2"
@@ -70,10 +67,12 @@ struct ClassroomsView: View {
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(classID: classroomItem.id!, className: classroomItem.name!)        .navigationBarTitle("")
+                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, classID: classroomItem.id!, className: classroomItem.name!)        .navigationBarTitle("")
                                                                     .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
-                                                    } //: LINK
+                                                    }
+                                                    .isDetailLink(false)
+                                                    //: LINK
                                                 } //: LOOP
                                             } //: GRID
                                             .animation(isEaseInAnimation)
@@ -181,7 +180,7 @@ struct ClassroomsView: View {
 
 struct ClassroomsView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassroomsView()
+        ClassroomsView(rootIsActive: .constant(true))
             .previewDevice("iPhone 11 Pro")
     }
 }

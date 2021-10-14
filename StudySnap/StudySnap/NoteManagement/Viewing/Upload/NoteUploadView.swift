@@ -9,6 +9,8 @@ import SwiftUI
 import MobileCoreServices
 
 struct NoteUploadView: View {
+    @Binding var rootIsActive: Bool
+    
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 4)
     @Environment(\.presentationMode) var presentationMode
     
@@ -138,6 +140,11 @@ struct NoteUploadView: View {
                     self.loading.toggle() // Start loading indication
                     self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
                         
+                        if self.viewModel.unauthorized {
+                            // Pop to root
+                            self.rootIsActive = false
+                        }
+                        
                         // Stop loading
                         self.loading.toggle()
                         
@@ -205,6 +212,6 @@ struct DocumentPicker : UIViewControllerRepresentable {
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView(classRoomId: "jjiw7793ggus8810")
+        NoteUploadView(rootIsActive: .constant(true), classRoomId: "jjiw7793ggus8810")
     }
 }

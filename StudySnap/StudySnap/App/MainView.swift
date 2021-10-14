@@ -9,12 +9,12 @@ import SwiftUI
 
 var globalEventManager = GlobalString()
 struct MainView: View {
+    @Binding var rootIsActive : Bool
+    
     var body: some View {
-        
-        
         ZStack {
             TabView{
-                ClassroomsView()
+                ClassroomsView(rootIsActive: self.$rootIsActive)
                     .tabItem {
                         Image(systemName: "person.3.fill")
                         Text("Classrooms")
@@ -27,25 +27,21 @@ struct MainView: View {
                         Text("Storage")
                     }
                     
-                    ProfileView()
+                ProfileView()
                     .tabItem {
                         Image(systemName: "person.crop.circle")
                         Text("Profile")
                     }
-                
             }
             .accentColor(Color("Primary"))
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }.edgesIgnoringSafeArea([.top,.bottom])
-        
-        
-        
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()      
+        MainView(rootIsActive: .constant(true))
     }
 }

@@ -56,7 +56,6 @@ struct LoginView: View {
                     } else {
                         self.viewModel.performLogin(completion: {
                             (success, message) in
-                            
                             if success {
                                 self.actionMainView.toggle() // Trigger move to MainView
                             } else {
@@ -76,14 +75,14 @@ struct LoginView: View {
                 
                 // Handle navigation logic
                 NavigationLink(
-                    destination: MainView()
+                    destination: MainView(rootIsActive: self.$actionMainView)
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .navigationBarBackButtonHidden(true),
                     isActive: $actionMainView
                 ) {
                     EmptyView() // Button follows
-                }
+                }.isDetailLink(false)
                 NavigationLink(destination: SignUpView()
                                 .navigationBarTitle("")
                                 .navigationBarHidden(true)
@@ -91,12 +90,12 @@ struct LoginView: View {
                                , isActive: $actionSignUpView) {
                     EmptyView() // Supports: Sign in programatically
                 }
-                NavigationLink(destination: MainView()
+                NavigationLink(destination: MainView(rootIsActive: self.$loggedIn)
                                 .navigationBarTitle("")
                                 .navigationBarHidden(true)
                                 .navigationBarBackButtonHidden(true), isActive: $loggedIn) {
                     EmptyView()
-                }
+                }.isDetailLink(false)
             }.alert(isPresented: $error, content: {
                 Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))
             })

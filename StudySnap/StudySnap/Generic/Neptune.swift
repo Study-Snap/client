@@ -63,7 +63,6 @@ struct ApiClassroomResponse: Codable, Identifiable{
     var statusCode: Int?
     var error: String?
     var message: String?
-    
 }
 struct ApiUserId: Codable, Identifiable{
     enum CodingKeys: String, CodingKey {
@@ -481,6 +480,7 @@ class NeptuneApi {
             guard let data = data else { return }
             
             do {
+                print(data)
                 let classrooms: [ApiClassroomResponse] = try JSONDecoder().decode([ApiClassroomResponse].self, from: data)
                 
                 DispatchQueue.main.async {
@@ -493,9 +493,9 @@ class NeptuneApi {
                     DispatchQueue.main.async {
                         completion([classrooms])
                     }
-                } catch {
+                } catch let jsonError as NSError {
                     do {
-                        print(error.localizedDescription)
+                        print(jsonError.localizedDescription)
                         let validation = try JSONDecoder().decode(ValidationError.self, from: data)
                         
                         DispatchQueue.main.async {
