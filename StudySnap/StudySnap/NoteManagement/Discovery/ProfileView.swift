@@ -19,6 +19,7 @@ struct ProfileView: View {
         NavigationView {
             ZStack {
                 VStack {
+                    Spacer()
                     PrimaryButtonView(title: "Log Out", action: {
                         self.viewModel.performLogout()
                         if (self.viewModel.logout) {

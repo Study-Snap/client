@@ -13,18 +13,13 @@ class JoinClassroomViewModel: ObservableObject{
     @Published var classId: String = ""
     func joinUserClassroom(classId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().joinClassroom(classIdData: classId) { res in
-            if res.message != nil {
+            if res.statusCode != 200 {
                 // Received message
                 print(res)
-                self.error.toggle()
+                self.error = true
                 self.errorMessage = res.message
-                completion()
-            
-            } else{
-                // Failed to receive message
-                self.errorMessage = res.message
-                completion()
             }
+            completion()
         }
     }
 }

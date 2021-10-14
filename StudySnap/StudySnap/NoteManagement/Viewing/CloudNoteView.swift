@@ -139,7 +139,7 @@ struct CloudNoteView: View {
                 }
             }.onAppear(perform: {
                 self.viewModel.getNoteDetailsForId(id: noteId)
-            }).edgesIgnoringSafeArea([.top,.bottom])
+            })
             
        
            
