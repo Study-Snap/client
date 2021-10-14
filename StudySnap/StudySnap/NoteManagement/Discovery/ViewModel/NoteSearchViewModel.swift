@@ -11,21 +11,36 @@ class NoteSearchViewModel: ObservableObject {
     @Published var trending: [ApiNoteResponse] = []
     @Published var results: [ApiNoteResponse] = []
     //@Published var classResult: ApiClassroomsResponse = ApiClassroomsResponse()
+    @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
     
-    func getTopTrendingNotes(currentClassId: String) -> Void {
+    func getTopTrendingNotes(currentClassId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().getTopNotesByRating(classId: currentClassId) { res in
             if res[0].message != nil {
                 // Failed (no results or other known error)
-                self.trending = []
-                self.error.toggle()
-                self.errorMessage = res[0].message
+                if res[0].message!.contains("Unauthorized") {
+                    // Authentication error
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.getTopTrendingNotes(currentClassId: currentClassId, completion: completion)
+                        } else {
+                            completion()
+                        }
+                    }
+                } else {
+                    // Some error occurred (unkown)
+                    self.trending = []
+                    self.error = true
+                    self.errorMessage = res[0].message
+                }
             } else if res.count == 0 {
-                // Failed (unknown error)
+                // No notes found in the classroom (this is okay)
                 self.trending = []
-                self.error.toggle()
-                self.errorMessage = "Failed to perform the search"
             } else {
                 // Success
                 self.trending = res
@@ -33,18 +48,32 @@ class NoteSearchViewModel: ObservableObject {
         }
     }
     
-    func search(searchQuery: String, currentClassId: String) -> Void {
+    func search(searchQuery: String, currentClassId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().getNotesForQuery(query: searchQuery, classId: currentClassId) { res in
             if res[0].message != nil {
                 // Failed search (no results or other known error)
-                self.results = []
-                self.error.toggle()
-                self.errorMessage = res[0].message
+                if res[0].message!.contains("Unauthorized") {
+                    // Authentication error
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.search(searchQuery: searchQuery, currentClassId: currentClassId, completion: completion)
+                        } else {
+                            completion()
+                        }
+                    }
+                } else {
+                    // Another error occurred (is authorized, but something was wrong)
+                    self.results = []
+                    self.error = true
+                    self.errorMessage = res[0].message
+                }
             } else if res.count == 0 {
-                // Failed (error)
+                // No notes found for the query
                 self.results = []
-                self.error.toggle()
-                self.errorMessage = "Failed to perform the search"
             } else {
                 // Successful search
                 self.results = res

@@ -48,13 +48,6 @@ struct NoteSearchView: View {
                             }).isDetailLink(false)
                         
                     }
-                    if deleteClassroomViewModel.loading {
-                        
-                        ProgressView("Loading classrooms")
-                            .foregroundColor(Color("Secondary"))
-                        
-                    }
-                    
                     VStack{
                             
                             HStack {
@@ -76,7 +69,7 @@ struct NoteSearchView: View {
                                     }
                                 
                             }
-                            SearchBar(viewModel: viewModel, text: $searchText, classID: classID)
+                        SearchBar(rootIsActive: self.$rootIsActive, viewModel: viewModel, text: $searchText, classID: classID)
                                 .padding(.horizontal)
                             if searchText.isEmpty
                                 {
@@ -163,7 +156,12 @@ struct NoteSearchView: View {
                     })
                     
                 }  .onAppear(perform: {
-                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID)
+                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
+                        if self.viewModel.unauthorized {
+                            // Refresh failed, return to login
+                            self.rootIsActive = false
+                        }
+                    }
                 })
                 
                     .navigationBarTitle(className, displayMode: .inline)
@@ -260,37 +258,33 @@ struct NoteSearchView: View {
                                     EmptyView() // Button follows
                                 }.isDetailLink(false)
                             }
-                            
-                            
-                            
                         } //: HSTACK
                     } //: BUTTONS
                 }
             }//: TOOLBAR
         }.onAppear(perform: {
-            
-            self.deleteClassroomViewModel.getUser()
-            self.deleteClassroomViewModel.getClassroom(classId: classID)
-            
+//            self.deleteClassroomViewModel.getUser()
+//            self.deleteClassroomViewModel.getClassroom(classId: self.classID)
         })
-        
-        
     }
 }
     
     struct SearchBar: UIViewRepresentable {
+        @Binding var rootIsActive: Bool
         @StateObject var viewModel: NoteSearchViewModel
         @Binding var text: String
         @State var classID: String
         
         class Coordinator: NSObject, UISearchBarDelegate {
             @StateObject var viewModel: NoteSearchViewModel
+            @Binding var rootIsActive: Bool
             @Binding var text: String
             @State var classID: String
-            init(text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
+            init(rootIsActive: Binding<Bool>, text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
                 _text = text
                 _viewModel = viewModel
                 _classID = classID
+                _rootIsActive = rootIsActive
             }
             
             func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -298,13 +292,19 @@ struct NoteSearchView: View {
             }
             
             func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-                self.viewModel.search(searchQuery: text, currentClassId: classID)
-                searchBar.endEditing(true)
+                self.viewModel.search(searchQuery: text, currentClassId: classID) {
+                    if self.viewModel.unauthorized {
+                        // Refresh failed, return to login
+                        self.rootIsActive = false
+                    }
+                    
+                    searchBar.endEditing(true)
+                }
             }
         }
         
         func makeCoordinator() -> SearchBar.Coordinator {
-            return Coordinator(text: $text, viewModel: _viewModel ,classID: _classID)
+            return Coordinator(rootIsActive: self.$rootIsActive, text: $text, viewModel: _viewModel ,classID: _classID)
         }
         
         func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
