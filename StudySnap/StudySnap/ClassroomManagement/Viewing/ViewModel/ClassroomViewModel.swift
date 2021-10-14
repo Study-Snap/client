@@ -15,7 +15,7 @@ class ClassroomViewViewModel: ObservableObject {
     @Published var loading: Bool = true
     @Published var classId: String = ""
     
-    func getClassroomsForUser() -> Void {
+    func getClassroomsForUser(completion: @escaping () -> ()) -> Void {
         NeptuneApi().getUserClassrooms() { res in
             if res[0].message != nil {
                 // Failed search (no results or other known error)
@@ -27,17 +27,18 @@ class ClassroomViewViewModel: ObservableObject {
                         
                         if !self.unauthorized {
                             // If a new access token was generated, retry
-                            self.getClassroomsForUser()
+                            self.getClassroomsForUser(completion: completion)
+                        } else {
+                            completion()
                         }
                     }
                 } else {
                     // Another error occurred
                     self.results = []
                     self.loading = false
-                    self.error.toggle()
+                    self.error = true
                     self.errorMessage = res[0].message
                 }
-                
             } else if res.count == 0 {
                 // No Notes (empty)
                 self.results = []

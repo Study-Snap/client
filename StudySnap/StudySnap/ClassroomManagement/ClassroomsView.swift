@@ -140,7 +140,12 @@ struct ClassroomsView: View {
                                             print("Update classroom view")
                                             isUpdateClassroomView = true
                                             self.viewModel.loading = true
-                                            self.viewModel.getClassroomsForUser()
+                                            self.viewModel.getClassroomsForUser() {
+                                                if self.viewModel.unauthorized {
+                                                    // If we cannot refresh, pop off back to login
+                                                    self.rootIsActive = false
+                                                }
+                                            }
                                             //MARK: Include code for updating the classroom view
                                         }) {
                                             Image(systemName: "arrow.clockwise")
@@ -168,13 +173,13 @@ struct ClassroomsView: View {
         }
         
         .onAppear(perform: {
-            self.viewModel.getClassroomsForUser()
-            
+            self.viewModel.getClassroomsForUser() {
+                if self.viewModel.unauthorized {
+                    // If we cannot refresh, pop off back to login
+                    self.rootIsActive = false
+                }
+            }
         })
-  
-           
-        
-        
     }
 }
 
