@@ -9,6 +9,7 @@ import SwiftUI
 
 class ClassroomViewViewModel: ObservableObject {
     @Published var results: [ApiClassroomResponse] = []
+    @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var loading: Bool = true
@@ -18,12 +19,27 @@ class ClassroomViewViewModel: ObservableObject {
         NeptuneApi().getUserClassrooms() { res in
             if res[0].message != nil {
                 // Failed search (no results or other known error)
-                self.results = []
-                self.loading = false
-                self.error.toggle()
-                self.errorMessage = res[0].message
+                if res[0].message!.contains("Unauthorized") {
+                    // Authentication error
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.getClassroomsForUser()
+                        }
+                    }
+                } else {
+                    // Another error occurred
+                    self.results = []
+                    self.loading = false
+                    self.error.toggle()
+                    self.errorMessage = res[0].message
+                }
+                
             } else if res.count == 0 {
-                // Failed (error)
+                // No Notes (empty)
                 self.results = []
                 self.loading = false
             } else {

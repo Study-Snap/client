@@ -139,18 +139,14 @@ struct CloudNoteView: View {
                     }
                 }
             }.onAppear(perform: {
-                self.viewModel.getNoteDetailsForId(id: noteId)
-            }).edgesIgnoringSafeArea([.top,.bottom])
+                self.viewModel.getNoteDetailsForId(id: noteId) {
+                    if self.viewModel.unauthorized {
+                        // If we cannot refresh, pop off back to login
+                        self.rootIsActive = false
+                    }
+                }
+            })
             
-       
-           
-            
-            
-          
-        
-           
-      
-
     }
 }
 
