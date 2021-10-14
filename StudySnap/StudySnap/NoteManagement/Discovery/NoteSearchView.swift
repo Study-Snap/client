@@ -11,6 +11,7 @@ import MobileCoreServices
 
 struct NoteSearchView: View {
     @Binding var rootIsActive: Bool
+    @Binding var isClassroomsActive: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
@@ -33,8 +34,6 @@ struct NoteSearchView: View {
     var body: some View {
         
         ZStack(alignment: .center) {
-            
-            
             NavigationView {
                 VStack {
                     
@@ -208,18 +207,23 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Delete", role: .destructive){
-                                        self.classroomViewModel.leaveClassroomResponse(classId: classID)
-                                        self.isConfirmedLeavingClassroom = true
-                                        self.classID = ""
+                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
+                                            if self.classroomViewModel.unauthorized {
+                                                // Refresh failed, return to login
+                                                self.rootIsActive = false
+                                            } else {
+                                                self.classID = ""
+//                                                self.isConfirmedLeavingClassroom = true
+//                                                self.presentationMode.wrappedValue.dismiss()
+                                                self.isClassroomsActive = false
+                                            }
+                                        }
                                     }
                                 } message:{
                                     Text("Are you sure you want to delete the classroom? All data inside will be deleted")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive)
-                                        .navigationBarTitle("")
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true),
+                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
@@ -241,18 +245,22 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Leave", role: .destructive){
-                                        self.classroomViewModel.leaveClassroomResponse(classId: classID)
-                                        self.isConfirmedLeavingClassroom = true
+                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
+                                            if self.classroomViewModel.unauthorized {
+                                                // Refresh failed, return to login
+                                                self.rootIsActive = false
+                                            } else {
+//                                                self.isConfirmedLeavingClassroom = true
+//                                                self.presentationMode.wrappedValue.dismiss()
+                                                self.presentationMode.wrappedValue.dismiss()
+                                            }
+                                        }
                                     }
                                 } message:{
                                     Text("Are you sure you want to leave the classroom?")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive)
-                                        .navigationBarTitle("")
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true)
-                                        .accentColor(.black),
+                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
@@ -320,7 +328,7 @@ struct NoteSearchView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            NoteSearchView(rootIsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+            NoteSearchView(rootIsActive: .constant(true), isClassroomsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                 .previewDevice("iPhone 11 Pro")
         }
     }

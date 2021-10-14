@@ -480,7 +480,6 @@ class NeptuneApi {
             guard let data = data else { return }
             
             do {
-                print(data)
                 let classrooms: [ApiClassroomResponse] = try JSONDecoder().decode([ApiClassroomResponse].self, from: data)
                 
                 DispatchQueue.main.async {

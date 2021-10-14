@@ -51,16 +51,31 @@ class ClassroomViewViewModel: ObservableObject {
         }
     }
     
-    func leaveClassroomResponse(classId: String) -> Void{
+    func leaveClassroomResponse(classId: String, completion: @escaping () -> ()) -> Void{
         NeptuneApi().leaveClassroom(classIdData: classId) { res in
-            if res.message != nil {
-                // Received message
-                self.error.toggle()
-                self.errorMessage = res.message
-            
-            } else{
-                // Failed to receive message
-                self.errorMessage = res.message
+            if res.statusCode != 200 && res.message != nil {
+                // Error occurred
+                if res.message!.contains("Unauthorized") {
+                    // Authentication error
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.leaveClassroomResponse(classId: classId, completion: completion)
+                        } else {
+                            completion()
+                        }
+                    }
+                } else {
+                    // Another error occurred
+                    self.error = true
+                    self.errorMessage = res.message
+                    completion()
+                }
+            } else {
+                completion()
             }
         }
     }

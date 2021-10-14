@@ -8,6 +8,7 @@
 import SwiftUI
 
 class DeleteClassroomViewModel: ObservableObject{
+    @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var classId: String = ""
@@ -15,19 +16,35 @@ class DeleteClassroomViewModel: ObservableObject{
     @Published var currentUser: Int = 0
     @Published var loading: Bool = true
     
-    func deleteCurrentClassroom(classId: String) -> Void {
+    func deleteCurrentClassroom(classId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().deleteClassroom(classIdData: classId) { res in
             if res.message != nil {
-                // Failed to find user
-                self.loading = false
-                self.error.toggle()
-                self.errorMessage = res.message
-            
+                // Error occurred when deleting the classroom
+                if res.message!.contains("Unauthorized") {
+                    // Authentication error
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.deleteCurrentClassroom(classId: classId, completion: completion)
+                        } else {
+                            completion()
+                        }
+                    }
+                } else {
+                    // Some unknown error
+                    self.loading = false
+                    self.error = false
+                    self.errorMessage = res.message
+                }
             } else {
                 // Successful search
                 self.loading = false
                 print("Classroom sucessfully deleted")
             }
+            completion()
         }
     }
     
@@ -61,12 +78,12 @@ class DeleteClassroomViewModel: ObservableObject{
             }
         }
     }
-    func confirmClassroomDelete(classId: String) -> Void{
+    func confirmClassroomDelete(classId: String, completion: @escaping () -> ()) -> Void{
         getUser()
         getClassroom(classId: classId)
         self.loading = true
         if self.currentUser == self.classroomOwner{
-            deleteCurrentClassroom(classId: classId)
+            deleteCurrentClassroom(classId: classId, completion: completion)
         }
         else{
             self.error = true

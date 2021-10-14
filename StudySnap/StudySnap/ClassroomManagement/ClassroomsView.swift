@@ -11,6 +11,7 @@ import SwiftUI
 struct ClassroomsView: View {
     @Binding var rootIsActive: Bool
     
+    @State var isClassroomsActive: Bool = true
     @State private var isGridViewActive: Bool = false
     @State private var isUpdateClassroomView: Bool = false
     @State private var gridLayout: [GridItem] = [ GridItem(.flexible()) ]
@@ -67,7 +68,8 @@ struct ClassroomsView: View {
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, classID: classroomItem.id!, className: classroomItem.name!)        .navigationBarTitle("")
+                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, isClassroomsActive: self.$isClassroomsActive, classID: classroomItem.id!, className: classroomItem.name!)
+                                                                    .navigationBarTitle("")
                                                                     .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
                                                     }
