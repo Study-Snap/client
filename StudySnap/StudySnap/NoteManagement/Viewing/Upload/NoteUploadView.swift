@@ -9,6 +9,9 @@ import SwiftUI
 import MobileCoreServices
 
 struct NoteUploadView: View {
+    @Binding var rootIsActive: Bool
+    @Binding var refreshClassroom: Bool
+    
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 4)
     @Environment(\.presentationMode) var presentationMode
     
@@ -164,6 +167,11 @@ struct NoteUploadView: View {
                     
                     self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {
                         
+                        if self.viewModel.unauthorized {
+                            // Pop to root
+                            self.rootIsActive = false
+                        }
+                        
                         // Stop loading
                         self.loading.toggle()
                         
@@ -171,6 +179,7 @@ struct NoteUploadView: View {
                         if !self.viewModel.error {
                             // Successful upload
                             // MARK: (init jiggle)
+                            self.refreshClassroom = true
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -231,6 +240,6 @@ struct DocumentPicker : UIViewControllerRepresentable {
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView(classRoomId: "jjiw7793ggus8810")
+        NoteUploadView(rootIsActive: .constant(true), refreshClassroom: .constant(false), classRoomId: "jjiw7793ggus8810")
     }
 }

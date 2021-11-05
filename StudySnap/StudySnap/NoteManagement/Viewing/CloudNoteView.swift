@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CloudNoteView: View {
-
+    @Binding var rootIsActive: Bool
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let noteId: Int
     
@@ -138,18 +139,13 @@ struct CloudNoteView: View {
                     }
                 }
             }.onAppear(perform: {
-                self.viewModel.getNoteDetailsForId(id: noteId)
+                self.viewModel.getNoteDetailsForId(id: noteId) {
+                    if self.viewModel.unauthorized {
+                        // If we cannot refresh, pop off back to login
+                        self.rootIsActive = false
+                    }
+                }
             })
-            
-       
-           
-            
-            
-          
-        
-           
-      
-
     }
 }
 
@@ -159,6 +155,6 @@ struct CloudNoteView_Previews: PreviewProvider {
         _isNavigationBarHidden = .constant(false)
     }
     static var previews: some View{
-        CloudNoteView(noteId: 9)
+        CloudNoteView(rootIsActive: .constant(true), noteId: 9)
     }
 }
