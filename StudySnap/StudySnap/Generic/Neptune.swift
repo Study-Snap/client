@@ -139,7 +139,7 @@ class NeptuneApi {
             "shortDescription": noteData.shortDescription,
             "classId": noteData.classId,
             "fileUri": fileUri,
-            // MARK: include bibtextCitation here once it is fixed on the serverside
+            "bibtextCitation": noteData.bibtextCitation!
         ]
         
         var request: URLRequest = URLRequest(url: reqUrl)

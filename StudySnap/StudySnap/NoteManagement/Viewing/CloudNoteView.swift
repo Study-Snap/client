@@ -114,8 +114,8 @@ struct CloudNoteView: View {
                             // MARK: Bottom buttons
                             HStack {
                                 Text("About a \(viewModel.noteObj.timeLength!) minute read: ")
-                                Button(action: {print("Cited!")}, label: {
-                                    Text("Cite Note")
+                                Button(action: {print("")}, label: {
+                                    Text("View Citation")
                                         .accentColor(Color("Primary"))
                                     
                                 })
