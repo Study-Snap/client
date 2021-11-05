@@ -20,6 +20,10 @@ struct NoteUploadView: View {
     @State var shortDescription: String  = ""
     @State var keywords: String  = ""
     @State var classRoomId: String
+    @State var citationAuthor: String = ""
+    @State var citationTitle: String = ""
+    @State var citationYear: String = ""
+    @State var fullCitation: String = ""
     
     // File picker state
     @State var pickedFileName: String = ""
@@ -55,8 +59,10 @@ struct NoteUploadView: View {
                 
                 ScrollView {
                     // Input section
+                    Text("Required Information")
+                        .font(.caption)
+                        .foregroundColor(Color("Primary"))
                     InputField(placeholder: "Title", value: $title)
-                        .padding(.top, 20)
                         .padding(.horizontal, 5)
                         .padding(.bottom, 10)
                         .background(GeometryGetter(rect: $kGuardian.rects[0]))
@@ -68,64 +74,79 @@ struct NoteUploadView: View {
                         .padding(.horizontal, 5)
                         .padding(.bottom, 10)
                         .background(GeometryGetter(rect: $kGuardian.rects[2]))
-                
-                
-            
-                    Button(action: {
-                        self.showNotePicker.toggle()
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color("Accent"))
-                                .cornerRadius(20)
-                                .padding(.bottom)
-                                .padding(.horizontal, 7)
-                            
-                            VStack {
-                                Image(systemName: "icloud.and.arrow.up")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color("Secondary"))
-                                    .frame(width: 80, height: 25, alignment: .center)
-                                Text("Upload PDF from Device")
-                                    .padding(.top, 2)
-                                    .foregroundColor(Color("Secondary").opacity(0.6))
-                            }
-                        }
-                        .aspectRatio(contentMode: .fill)
-                        .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                        .sheet(isPresented: $showNotePicker) {
-                            DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
-                        }
-                    }
                     
-                    Button(action: {
-                        self.showScanView.toggle()
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color("Accent"))
-                                .cornerRadius(20)
-                                .padding(.bottom)
-                                .padding(.horizontal, 7)
-                                        
+                    Text("Citation Information (Optional)")
+                        .font(.caption)
+                        .foregroundColor(Color("Primary"))
+                    InputField(placeholder: "Author being cited (Optional)", value: $citationAuthor)
+                        .padding(.horizontal, 5)
+                        .padding(.bottom, 10)
+                        .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                    InputField(placeholder: "Title of content being cited (Optional)", value: $citationTitle)
+                        .padding(.horizontal, 5)
+                        .padding(.bottom, 10)
+                        .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                    InputField(placeholder: "Year of content being cited (Optional)", value: $citationYear)
+                        .padding(.horizontal, 5)
+                        .padding(.bottom, 10)
+                        .background(GeometryGetter(rect: $kGuardian.rects[2]))
+
+                    
+                    
+                
+                    HStack {
+            
+                        Button(action: {
+                            self.showNotePicker.toggle()
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color("Accent"))
+                                    .cornerRadius(10)
+
+                                
                                 VStack {
-                                    Image(systemName: "highlighter")
+                                    Image(systemName: "icloud.and.arrow.up")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .foregroundColor(Color("Secondary"))
-                                        .frame(width: 80, height: 25, alignment: .center)
-                                        Text("Upload Handwritten Note")
-                                            .padding(.top, 2)
-                                            .foregroundColor(Color("Secondary").opacity(0.6))
-                                        }
-                                    }
-                                .aspectRatio(contentMode: .fill)
-                                .background(GeometryGetter(rect: $kGuardian.rects[3]))
-                                .sheet(isPresented: $showScanView) {
-                                    ScanNoteView(pagesText: $pagesText, didCompleteScan: $didCompleteScan)
+                                        .frame(width: 40, height: 50, alignment: .center)
+                                    Text("Upload PDF from Device")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Color("Secondary").opacity(0.6))
                                 }
+                            }
+                            .background(GeometryGetter(rect: $kGuardian.rects[3]))
+                            .sheet(isPresented: $showNotePicker) {
+                                DocumentPicker(alert: self.$alert, picked_file_name: self.$pickedFileName, picked_file_data: self.$pickedFile)
+                            }
                         }
+                        
+                        Button(action: {
+                            self.showScanView.toggle()
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color("Accent"))
+                                    .cornerRadius(10)
+                                            
+                                    VStack {
+                                        Image(systemName: "highlighter")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(Color("Secondary"))
+                                            .frame(width: 40, height: 50, alignment: .center)
+                                            Text("Upload Handwritten Note")
+                                                .font(.system(size: 12))
+                                                .foregroundColor(Color("Secondary").opacity(0.6))
+                                            }
+                                        }
+                                    .background(GeometryGetter(rect: $kGuardian.rects[3]))
+                                    .sheet(isPresented: $showScanView) {
+                                        ScanNoteView(pagesText: $pagesText, didCompleteScan: $didCompleteScan)
+                                    }
+                            }
+                    }
                 }
                 
                 NavigationLink(destination: NoteEditorView(pagesText: $pagesText, pickedFile: $pickedFile, pickedFileName: $pickedFileName, didCompleteScan: $didCompleteScan).navigationBarTitle("")
@@ -139,7 +160,12 @@ struct NoteUploadView: View {
                 Spacer()
                 PrimaryButtonView(title: "Upload") {
                     self.loading.toggle() // Start loading indication
-                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: nil)) {
+                                        
+                    if !self.citationAuthor.isEmpty && !self.citationTitle.isEmpty && !self.citationYear.isEmpty {
+                        self.fullCitation = "@article{ahu61, author={" + self.citationAuthor + "}, title={" + self.citationTitle + "}, journal={}, year=" + self.citationYear + "}"
+                    }
+                    
+                    self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {
                         
                         if self.viewModel.unauthorized {
                             // Pop to root
