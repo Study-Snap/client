@@ -10,6 +10,7 @@ import MobileCoreServices
 
 struct NoteUploadView: View {
     @Binding var rootIsActive: Bool
+    @Binding var refreshClassroom: Bool
     
     @ObservedObject private var kGuardian = KeyboardGuardian(textFieldCount: 4)
     @Environment(\.presentationMode) var presentationMode
@@ -152,6 +153,7 @@ struct NoteUploadView: View {
                         if !self.viewModel.error {
                             // Successful upload
                             // MARK: (init jiggle)
+                            self.refreshClassroom = true
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -212,6 +214,6 @@ struct DocumentPicker : UIViewControllerRepresentable {
 
 struct NoteUploadView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteUploadView(rootIsActive: .constant(true), classRoomId: "jjiw7793ggus8810")
+        NoteUploadView(rootIsActive: .constant(true), refreshClassroom: .constant(false), classRoomId: "jjiw7793ggus8810")
     }
 }

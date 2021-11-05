@@ -10,7 +10,6 @@ import SwiftUI
 class NoteSearchViewModel: ObservableObject {
     @Published var trending: [ApiNoteResponse] = []
     @Published var results: [ApiNoteResponse] = []
-    //@Published var classResult: ApiClassroomsResponse = ApiClassroomsResponse()
     @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
@@ -33,6 +32,7 @@ class NoteSearchViewModel: ObservableObject {
                         }
                     }
                 } else {
+                    print(res)
                     // Some error occurred (unkown)
                     self.trending = []
                     self.error = true
@@ -67,6 +67,7 @@ class NoteSearchViewModel: ObservableObject {
                     }
                 } else {
                     // Another error occurred (is authorized, but something was wrong)
+                    print(res)
                     self.results = []
                     self.error = true
                     self.errorMessage = res[0].message

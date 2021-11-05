@@ -11,7 +11,6 @@ import SwiftUI
 struct ClassroomsView: View {
     @Binding var rootIsActive: Bool
     
-    @State var isClassroomsActive: Bool = true
     @State private var isGridViewActive: Bool = false
     @State private var isUpdateClassroomView: Bool = false
     @State private var gridLayout: [GridItem] = [ GridItem(.flexible()) ]
@@ -60,15 +59,13 @@ struct ClassroomsView: View {
                     } else {
                         VStack{
                             var classrooms = viewModel.results
-                            
-                           
                                 Group {
                                     ScrollView(.vertical, showsIndicators: false) {
                                         
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, isClassroomsActive: self.$isClassroomsActive, classID: classroomItem.id!, className: classroomItem.name!)
+                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, classID: classroomItem.id!, className: classroomItem.name!)
                                                                     .navigationBarTitle("")
                                                                     .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
@@ -112,7 +109,7 @@ struct ClassroomsView: View {
                                         
                                     } //: BUTTON
                                     .sheet(isPresented: $isJoiningClassroom) {
-                                        JoinClassroomView()
+                                        JoinClassroomView(rootIsActive: self.$rootIsActive)
                                     }
                                     
                                     Button(action: {
@@ -124,7 +121,7 @@ struct ClassroomsView: View {
                                             .padding(.trailing, 10)
                                     } //: BUTTON
                                     .sheet(isPresented: $isCreatingClassroom) {
-                                        CreateClassroomView()
+                                        CreateClassroomView(rootIsActive: self.$rootIsActive)
                                     }
                                     
                                 }.padding(.bottom,10)

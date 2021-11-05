@@ -11,7 +11,6 @@ import MobileCoreServices
 
 struct NoteSearchView: View {
     @Binding var rootIsActive: Bool
-    @Binding var isClassroomsActive: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
@@ -28,8 +27,7 @@ struct NoteSearchView: View {
     @State var targetNoteId: Int? = 1
     @State var classID: String //Value recived as a parameter from the classroom view
     @State var className: String
-
-    
+    @State var refresh: Bool = false
 
     var body: some View {
         
@@ -154,7 +152,8 @@ struct NoteSearchView: View {
                         Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
                     })
                     
-                }  .onAppear(perform: {
+                }
+                .onAppear(perform: {
                     self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
                         if self.viewModel.unauthorized {
                             // Refresh failed, return to login
@@ -162,6 +161,19 @@ struct NoteSearchView: View {
                         }
                     }
                 })
+                .onChange(of: refresh) { value in
+                        if self.refresh {
+                            // Refresh top notes
+                            self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
+                                if self.viewModel.unauthorized {
+                                    // Refresh failed, return to login
+                                    self.rootIsActive = false
+                                }
+                            }
+                            // Reset flag
+                            self.refresh = false
+                        }
+                    }
                 
                     .navigationBarTitle(className, displayMode: .inline)
                 .toolbar {
@@ -188,7 +200,7 @@ struct NoteSearchView: View {
                                     .foregroundColor(Color("Secondary"))
                             } //: BUTTON
                             .sheet(isPresented: $isUploadingNotes) {
-                                NoteUploadView(rootIsActive: self.$rootIsActive, classRoomId: classID)
+                                NoteUploadView(rootIsActive: self.$rootIsActive, refreshClassroom: self.$refresh, classRoomId: classID)
                             }
                             
                             if self.deleteClassroomViewModel.currentUser == self.deleteClassroomViewModel.classroomOwner{
@@ -214,8 +226,8 @@ struct NoteSearchView: View {
                                             } else {
                                                 self.classID = ""
 //                                                self.isConfirmedLeavingClassroom = true
-//                                                self.presentationMode.wrappedValue.dismiss()
-                                                self.isClassroomsActive = false
+                                                
+                                                self.presentationMode.wrappedValue.dismiss()
                                             }
                                         }
                                     }
@@ -251,7 +263,6 @@ struct NoteSearchView: View {
                                                 self.rootIsActive = false
                                             } else {
 //                                                self.isConfirmedLeavingClassroom = true
-//                                                self.presentationMode.wrappedValue.dismiss()
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
                                         }
@@ -271,6 +282,7 @@ struct NoteSearchView: View {
                 }
             }//: TOOLBAR
         }.onAppear(perform: {
+            // MARK: @Sheharyaar Pls fix ... thanks :)
 //            self.deleteClassroomViewModel.getUser()
 //            self.deleteClassroomViewModel.getClassroom(classId: self.classID)
         })
@@ -328,7 +340,7 @@ struct NoteSearchView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            NoteSearchView(rootIsActive: .constant(true), isClassroomsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+            NoteSearchView(rootIsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                 .previewDevice("iPhone 11 Pro")
         }
     }
