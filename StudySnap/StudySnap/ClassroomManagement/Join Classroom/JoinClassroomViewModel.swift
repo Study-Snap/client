@@ -15,7 +15,7 @@ class JoinClassroomViewModel: ObservableObject{
     
     func joinUserClassroom(classId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().joinClassroom(classIdData: classId) { res in
-            if res.message != nil {
+            if res.statusCode != 200 {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     refreshAccessWithHandling { refreshed in
@@ -32,14 +32,14 @@ class JoinClassroomViewModel: ObservableObject{
                     }
                 } else {
                     // Received message
-                    self.error.toggle()
+                    self.error = true
                     self.errorMessage = res.message
-                    completion()
                 }
             } else{
                 // Success
                 completion()
             }
+            completion()
         }
     }
 }

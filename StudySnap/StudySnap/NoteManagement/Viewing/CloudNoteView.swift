@@ -146,7 +146,6 @@ struct CloudNoteView: View {
                     }
                 }
             })
-            
     }
 }
 
