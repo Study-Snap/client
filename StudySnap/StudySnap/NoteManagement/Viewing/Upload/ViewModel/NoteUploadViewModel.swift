@@ -9,6 +9,7 @@ import SwiftUI
 
 class NoteUploadViewModel: ObservableObject {
     @Published var error: Bool = false
+    @Published var unauthorized: Bool = false
     @Published var errorMessage: String?
     @Published var response: ApiNoteResponse? = nil
     
@@ -59,35 +60,27 @@ class NoteUploadViewModel: ObservableObject {
                 if res.message != nil || res.error != nil {
                     // Error occurred... or something
                     if res.message!.contains("Unauthorized") {
-                        AuthApi().refreshTokens() { tokens in
-                            if tokens.message != nil && tokens.message != "success" {
-                                print(tokens.message!)
-                                self.error.toggle()
-                                self.errorMessage = "Cannot refresh your session. You must login again."
-                            } else {
-                                do {
-                                    // MARK: Refresh authentication if possible, else, send user back to login
-                                    try TokenService().removeToken(key: .accessToken)
-                                    try TokenService().removeToken(key: .refreshToken)
-                                    try TokenService().addToken(token: Token(type: .accessToken, data: tokens.accessToken!))
-                                    try TokenService().addToken(token: Token(type: .refreshToken, data: tokens.refreshToken!))
-                                } catch {
-                                    print(error.localizedDescription)
-                                    self.error.toggle()
-                                    self.errorMessage = "Cannot refresh your session. You must login again."
-                                }
-                                
-                                // Call the function again to try again
+                        refreshAccessWithHandling { refreshed in
+                            print("Refreshed: \(refreshed)")
+                            self.unauthorized = !refreshed
+                            
+                            if self.unauthorized {
+                                completion()
+                            }
+                            else {
+                                // If a new access token was generated, retry note upload
                                 self.performUpload(noteData: noteData, completion: completion)
                             }
                         }
+                        completion()
                     } else {
+                        // Another error occurred
                         self.error.toggle()
                         self.errorMessage = res.message
                         completion()
                     }
                 } else {
-                    // Return the response (containing the note)
+                    // Note upload successful. Complete execution and set response
                     self.response = res
                     completion()
                 }

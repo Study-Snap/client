@@ -9,13 +9,10 @@ import SwiftUI
 
 
 struct ClassroomsView: View {
-    
-    //var classrooms: [Classroom] = Bundle.main.decode("classrooms_data.json")
-    
+    @Binding var rootIsActive: Bool
     
     @State private var isGridViewActive: Bool = false
     @State private var isUpdateClassroomView: Bool = false
-    
     @State private var gridLayout: [GridItem] = [ GridItem(.flexible()) ]
     @State private var gridColumn: Int = 1
     @State private var toolbarIcon: String = "square.grid.2x2"
@@ -62,18 +59,19 @@ struct ClassroomsView: View {
                     } else {
                         VStack{
                             var classrooms = viewModel.results
-                            
-                           
                                 Group {
                                     ScrollView(.vertical, showsIndicators: false) {
                                         
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(classID: classroomItem.id!, className: classroomItem.name!)        .navigationBarTitle("")
+                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, classID: classroomItem.id!, className: classroomItem.name!)
+                                                                    .navigationBarTitle("")
                                                                     .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
-                                                    } //: LINK
+                                                    }
+                                                    .isDetailLink(false)
+                                                    //: LINK
                                                 } //: LOOP
                                             } //: GRID
                                             .animation(isEaseInAnimation)
@@ -111,7 +109,7 @@ struct ClassroomsView: View {
                                         
                                     } //: BUTTON
                                     .sheet(isPresented: $isJoiningClassroom) {
-                                        JoinClassroomView()
+                                        JoinClassroomView(rootIsActive: self.$rootIsActive)
                                     }
                                     
                                     Button(action: {
@@ -123,7 +121,7 @@ struct ClassroomsView: View {
                                             .padding(.trailing, 10)
                                     } //: BUTTON
                                     .sheet(isPresented: $isCreatingClassroom) {
-                                        CreateClassroomView()
+                                        CreateClassroomView(rootIsActive: self.$rootIsActive)
                                     }
                                     
                                 }.padding(.bottom,10)
@@ -141,7 +139,12 @@ struct ClassroomsView: View {
                                             print("Update classroom view")
                                             isUpdateClassroomView = true
                                             self.viewModel.loading = true
-                                            self.viewModel.getClassroomsForUser()
+                                            self.viewModel.getClassroomsForUser() {
+                                                if self.viewModel.unauthorized {
+                                                    // If we cannot refresh, pop off back to login
+                                                    self.rootIsActive = false
+                                                }
+                                            }
                                             //MARK: Include code for updating the classroom view
                                         }) {
                                             Image(systemName: "arrow.clockwise")
@@ -169,19 +172,19 @@ struct ClassroomsView: View {
         }
         
         .onAppear(perform: {
-            self.viewModel.getClassroomsForUser()
-            
+            self.viewModel.getClassroomsForUser() {
+                if self.viewModel.unauthorized {
+                    // If we cannot refresh, pop off back to login
+                    self.rootIsActive = false
+                }
+            }
         })
-  
-           
-        
-        
     }
 }
 
 struct ClassroomsView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassroomsView()
+        ClassroomsView(rootIsActive: .constant(true))
             .previewDevice("iPhone 11 Pro")
     }
 }

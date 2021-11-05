@@ -10,6 +10,8 @@ import MobileCoreServices
 
 
 struct NoteSearchView: View {
+    @Binding var rootIsActive: Bool
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     @StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
@@ -25,34 +27,24 @@ struct NoteSearchView: View {
     @State var targetNoteId: Int? = 1
     @State var classID: String //Value recived as a parameter from the classroom view
     @State var className: String
-
-    
+    @State var refresh: Bool = false
 
     var body: some View {
         
         ZStack(alignment: .center) {
-            
-            
             NavigationView {
                 VStack {
                     
                     VStack {
                         NavigationLink(
-                            destination: CloudNoteView(noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                            destination: CloudNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
                             isActive: $showNoteDetails,
                             label: {
                                 EmptyView()
                                 
-                            })
+                            }).isDetailLink(false)
                         
                     }
-                    if deleteClassroomViewModel.loading {
-                        
-                        ProgressView("Loading classrooms")
-                            .foregroundColor(Color("Secondary"))
-                        
-                    }
-                    
                     VStack{
                             
                             HStack {
@@ -74,7 +66,7 @@ struct NoteSearchView: View {
                                     }
                                 
                             }
-                            SearchBar(viewModel: viewModel, text: $searchText, classID: classID)
+                        SearchBar(rootIsActive: self.$rootIsActive, viewModel: viewModel, text: $searchText, classID: classID)
                                 .padding(.horizontal)
                             if searchText.isEmpty
                                 {
@@ -160,9 +152,28 @@ struct NoteSearchView: View {
                         Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: Alert.Button.cancel(Text("Okay")))
                     })
                     
-                }  .onAppear(perform: {
-                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID)
+                }
+                .onAppear(perform: {
+                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
+                        if self.viewModel.unauthorized {
+                            // Refresh failed, return to login
+                            self.rootIsActive = false
+                        }
+                    }
                 })
+                .onChange(of: refresh) { value in
+                        if self.refresh {
+                            // Refresh top notes
+                            self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
+                                if self.viewModel.unauthorized {
+                                    // Refresh failed, return to login
+                                    self.rootIsActive = false
+                                }
+                            }
+                            // Reset flag
+                            self.refresh = false
+                        }
+                    }
                 
                     .navigationBarTitle(className, displayMode: .inline)
                 .toolbar {
@@ -189,7 +200,7 @@ struct NoteSearchView: View {
                                     .foregroundColor(Color("Secondary"))
                             } //: BUTTON
                             .sheet(isPresented: $isUploadingNotes) {
-                                NoteUploadView(classRoomId: classID)
+                                NoteUploadView(rootIsActive: self.$rootIsActive, refreshClassroom: self.$refresh, classRoomId: classID)
                             }
                             
                             if self.deleteClassroomViewModel.currentUser == self.deleteClassroomViewModel.classroomOwner{
@@ -208,23 +219,28 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Delete", role: .destructive){
-                                        self.classroomViewModel.leaveClassroomResponse(classId: classID)
-                                        self.isConfirmedLeavingClassroom = true
-                                        self.classID = ""
+                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
+                                            if self.classroomViewModel.unauthorized {
+                                                // Refresh failed, return to login
+                                                self.rootIsActive = false
+                                            } else {
+                                                self.classID = ""
+//                                                self.isConfirmedLeavingClassroom = true
+                                                
+                                                self.presentationMode.wrappedValue.dismiss()
+                                            }
+                                        }
                                     }
                                 } message:{
                                     Text("Are you sure you want to delete the classroom? All data inside will be deleted")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView()
-                                        .navigationBarTitle("")
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true),
+                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
-                                    
                                 }
+                                .isDetailLink(false)
                             }else{
                                 
                                 Button(action: {
@@ -241,55 +257,54 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Leave", role: .destructive){
-                                        self.classroomViewModel.leaveClassroomResponse(classId: classID)
-                                        self.isConfirmedLeavingClassroom = true
+                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
+                                            if self.classroomViewModel.unauthorized {
+                                                // Refresh failed, return to login
+                                                self.rootIsActive = false
+                                            } else {
+//                                                self.isConfirmedLeavingClassroom = true
+                                                self.presentationMode.wrappedValue.dismiss()
+                                            }
+                                        }
                                     }
                                 } message:{
                                     Text("Are you sure you want to leave the classroom?")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView()
-                                        .navigationBarTitle("")
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true)
-                                        .accentColor(.black),
+                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
-                                    
-                                }
+                                }.isDetailLink(false)
                             }
-                            
-                            
-                            
                         } //: HSTACK
                     } //: BUTTONS
                 }
             }//: TOOLBAR
         }.onAppear(perform: {
-            
-            self.deleteClassroomViewModel.getUser()
-            self.deleteClassroomViewModel.getClassroom(classId: classID)
-            
+            // MARK: @Sheharyaar Pls fix ... thanks :)
+//            self.deleteClassroomViewModel.getUser()
+//            self.deleteClassroomViewModel.getClassroom(classId: self.classID)
         })
-        
-        
     }
 }
     
     struct SearchBar: UIViewRepresentable {
+        @Binding var rootIsActive: Bool
         @StateObject var viewModel: NoteSearchViewModel
         @Binding var text: String
         @State var classID: String
         
         class Coordinator: NSObject, UISearchBarDelegate {
             @StateObject var viewModel: NoteSearchViewModel
+            @Binding var rootIsActive: Bool
             @Binding var text: String
             @State var classID: String
-            init(text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
+            init(rootIsActive: Binding<Bool>, text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
                 _text = text
                 _viewModel = viewModel
                 _classID = classID
+                _rootIsActive = rootIsActive
             }
             
             func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -297,13 +312,19 @@ struct NoteSearchView: View {
             }
             
             func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-                self.viewModel.search(searchQuery: text, currentClassId: classID)
-                searchBar.endEditing(true)
+                self.viewModel.search(searchQuery: text, currentClassId: classID) {
+                    if self.viewModel.unauthorized {
+                        // Refresh failed, return to login
+                        self.rootIsActive = false
+                    }
+                    
+                    searchBar.endEditing(true)
+                }
             }
         }
         
         func makeCoordinator() -> SearchBar.Coordinator {
-            return Coordinator(text: $text, viewModel: _viewModel ,classID: _classID)
+            return Coordinator(rootIsActive: self.$rootIsActive, text: $text, viewModel: _viewModel ,classID: _classID)
         }
         
         func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
@@ -319,7 +340,7 @@ struct NoteSearchView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            NoteSearchView(classID: "448f7db0-e3ac", className: "Biology 505")
+            NoteSearchView(rootIsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                 .previewDevice("iPhone 11 Pro")
         }
     }
