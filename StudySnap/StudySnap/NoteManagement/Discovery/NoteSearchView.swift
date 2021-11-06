@@ -16,6 +16,7 @@ struct NoteSearchView: View {
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
     @StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
     @StateObject var classroomViewModel: ClassroomViewViewModel = ClassroomViewViewModel()
+    @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
     @State private var searchText : String = ""
     @State var showNoteDetails: Bool = false
@@ -219,14 +220,14 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Delete", role: .destructive){
-                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
-                                            if self.classroomViewModel.unauthorized {
+                                        self.deleteClassroomViewModel.confirmClassroomDelete(classId: classID) {
+                                            if self.deleteClassroomViewModel.unauthorized {
                                                 // Refresh failed, return to login
                                                 self.rootIsActive = false
                                             } else {
                                                 self.classID = ""
 //                                                self.isConfirmedLeavingClassroom = true
-                                                
+                                                self.hasLeftClassroom = true
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
                                         }
@@ -263,6 +264,7 @@ struct NoteSearchView: View {
                                                 self.rootIsActive = false
                                             } else {
 //                                                self.isConfirmedLeavingClassroom = true
+                                                self.hasLeftClassroom = true
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
                                         }
@@ -340,7 +342,7 @@ struct NoteSearchView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            NoteSearchView(rootIsActive: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+            NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                 .previewDevice("iPhone 11 Pro")
         }
     }

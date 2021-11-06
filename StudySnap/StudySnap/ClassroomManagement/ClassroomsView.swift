@@ -65,7 +65,7 @@ struct ClassroomsView: View {
                                         if !classrooms.isEmpty {
                                             LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                                 ForEach(classrooms) { classroomItem in
-                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, classID: classroomItem.id!, className: classroomItem.name!)
+                                                    NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, hasLeftClassroom: $isUpdateClassroomView, classID: classroomItem.id!, className: classroomItem.name!)
                                                                     .navigationBarTitle("")
                                                                     .navigationBarHidden(true)) {
                                                         ClassroomGridItemView(classroom: classroomItem)
@@ -172,6 +172,7 @@ struct ClassroomsView: View {
         }
         
         .onAppear(perform: {
+            self.viewModel.loading = true
             self.viewModel.getClassroomsForUser() {
                 if self.viewModel.unauthorized {
                     // If we cannot refresh, pop off back to login
@@ -179,6 +180,20 @@ struct ClassroomsView: View {
                 }
             }
         })
+        .onChange(of: isUpdateClassroomView) { value in
+            self.viewModel.loading = true
+                if self.isUpdateClassroomView {
+                    // Refresh top notes
+                    self.viewModel.getClassroomsForUser() {
+                        if self.viewModel.unauthorized {
+                            // If we cannot refresh, pop off back to login
+                            self.rootIsActive = false
+                        }
+                    }
+                    // Reset flag
+                    self.isUpdateClassroomView = false
+                }
+            }
     }
 }
 
