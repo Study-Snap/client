@@ -27,7 +27,7 @@ struct MainView: View {
                         Text("Storage")
                     }
                     
-                ProfileView()
+                ProfileView(rootIsActive: self.$rootIsActive)
                     .tabItem {
                         Image(systemName: "person.crop.circle")
                         Text("Profile")

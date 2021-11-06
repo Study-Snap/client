@@ -11,18 +11,48 @@ class ProfileViewViewModel: ObservableObject {
     
     @Published var authenticated: Bool = true
     @Published var logout: Bool = false
-    @Published var showError: Bool = false
-    @Published var errorMessage: String = ""
+    @Published var error: Bool = false
+    @Published var errorMessage: String?
+    @Published var response: ApiUserId? = nil
+    @Published var unauthorized: Bool = false
     
     
     func performLogout() -> Void {
         AuthApi().deauthenticate { (completed) in
             if !completed {
-                self.showError = true
+                self.error = true
                 self.errorMessage = "Failed to deauthenticate."
             } else {
                 self.authenticated = false
                 self.logout = true
+            }
+        }
+    }
+    
+    func getUserInformation(completion: @escaping () -> ()) -> Void {
+        NeptuneApi().getCurrentUserId() { res in
+            if res.message != nil || res.error != nil {
+                if res.message!.contains("Unauthorized") {
+                    refreshAccessWithHandling { refreshed in
+                        print("Refreshed: \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if self.unauthorized {
+                            completion()
+                        }
+                        else {
+                            
+                        }
+                    }
+                    completion()
+                } else {
+                    self.error = true
+                    self.errorMessage = res.message
+                    completion()
+                }
+            } else {
+                self.response = res
+                completion()
             }
         }
     }
