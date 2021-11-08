@@ -14,7 +14,7 @@ struct NoteSearchView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
-    @StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
+    //@StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
     @StateObject var classroomViewModel: ClassroomViewViewModel = ClassroomViewViewModel()
     @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
@@ -185,7 +185,7 @@ struct NoteSearchView: View {
                                self.presentationMode.wrappedValue.dismiss()
                             }) {
                                 Image(systemName: "chevron.backward")
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color("PrimaryText"))
                             }
                         
                         }
@@ -204,7 +204,7 @@ struct NoteSearchView: View {
                                 NoteUploadView(rootIsActive: self.$rootIsActive, refreshClassroom: self.$refresh, classRoomId: classID)
                             }
                             
-                            if self.deleteClassroomViewModel.currentUser == self.deleteClassroomViewModel.classroomOwner{
+                            if self.classroomViewModel.currentUser == self.classroomViewModel.classroomOwner{
                                 
                                 Button(action: {
                                     isLeavingClassroom = true
@@ -220,13 +220,13 @@ struct NoteSearchView: View {
                                         self.isConfirmedLeavingClassroom = false
                                     }
                                     Button("Delete", role: .destructive){
-                                        self.deleteClassroomViewModel.confirmClassroomDelete(classId: classID) {
-                                            if self.deleteClassroomViewModel.unauthorized {
+                                        self.classroomViewModel.leaveClassroomResponse(classId: classID) {
+                                            if self.classroomViewModel.unauthorized {
                                                 // Refresh failed, return to login
                                                 self.rootIsActive = false
                                             } else {
                                                 self.classID = ""
-//                                                self.isConfirmedLeavingClassroom = true
+//
                                                 self.hasLeftClassroom = true
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
@@ -277,7 +277,7 @@ struct NoteSearchView: View {
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
-                                }.isDetailLink(false)
+                                }
                             }
                         } //: HSTACK
                     } //: BUTTONS
@@ -285,12 +285,13 @@ struct NoteSearchView: View {
             }//: TOOLBAR
         }.onAppear(perform: {
             // MARK: @Sheharyaar Pls fix ... thanks :)
-//            self.deleteClassroomViewModel.getUser()
-//            self.deleteClassroomViewModel.getClassroom(classId: self.classID)
+            // MARK: @Ben Done! :)
+            self.classroomViewModel.getUser()
+            self.classroomViewModel.getClassroom(classId: self.classID)
         })
     }
 }
-    
+
     struct SearchBar: UIViewRepresentable {
         @Binding var rootIsActive: Bool
         @StateObject var viewModel: NoteSearchViewModel
@@ -342,8 +343,15 @@ struct NoteSearchView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
-                .previewDevice("iPhone 11 Pro")
+            Group {
+                NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                    .previewDevice("iPhone 11 Pro")
+                NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                    .previewDevice("iPhone 11 Pro")
+                    .preferredColorScheme(.dark)
+                    .previewInterfaceOrientation(.portrait)
+            }
         }
+        
     }
 

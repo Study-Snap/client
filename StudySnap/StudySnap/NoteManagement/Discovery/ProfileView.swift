@@ -14,6 +14,7 @@ struct ProfileView: View {
     @StateObject var viewModel : ProfileViewViewModel = ProfileViewViewModel()
     @State var showError: Bool = false
     @State var deauthenticated: Bool = false
+    @Binding var rootIsActive: Bool
     
     var body: some View {
         NavigationView {
@@ -23,6 +24,7 @@ struct ProfileView: View {
                     PrimaryButtonView(title: "Log Out", action: {
                         self.viewModel.performLogout()
                         if (self.viewModel.logout) {
+                            self.rootIsActive = false
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }).alert("Error", isPresented: $showError) {
@@ -41,6 +43,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(rootIsActive: .constant(true))
     }
 }

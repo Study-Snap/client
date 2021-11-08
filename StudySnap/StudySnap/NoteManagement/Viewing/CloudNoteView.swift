@@ -49,7 +49,7 @@ struct CloudNoteView: View {
                                                 Text(keywords[i])
                                                     .padding(.vertical, 10)
                                                     .padding(.horizontal, 20)
-                                                    .foregroundColor(Color("Secondary"))
+                                                    .foregroundColor(.black.opacity(0.8))
                                                     .background(Color(.white))
                                                     .cornerRadius(7.0)
                                                 
@@ -58,7 +58,8 @@ struct CloudNoteView: View {
                                     }
                                     .padding(.top, 25)
                                     VStack {
-                                        NoteRatingView(avgRating: calculateRating(ratings: viewModel.noteObj.rating!), starFilledColor: .yellow, starEmptyColor: .white)
+                                        //NoteRatingView(avgRating: calculateRating(ratings: viewModel.noteObj.rating!), starFilledColor: .yellow, starEmptyColor: .white)
+                                        NoteRatingView()
                                     }.padding(.top, 15)
                                 }
                             }
@@ -155,6 +156,11 @@ struct CloudNoteView_Previews: PreviewProvider {
         _isNavigationBarHidden = .constant(false)
     }
     static var previews: some View{
-        CloudNoteView(rootIsActive: .constant(true), noteId: 9)
+        Group {
+            CloudNoteView(rootIsActive: .constant(true), noteId: 9)
+            CloudNoteView(rootIsActive: .constant(true), noteId: 9)
+                .preferredColorScheme(.dark)
+          
+        }
     }
 }

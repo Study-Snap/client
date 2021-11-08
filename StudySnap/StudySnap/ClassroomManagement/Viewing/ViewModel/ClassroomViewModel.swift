@@ -10,6 +10,8 @@ import SwiftUI
 class ClassroomViewViewModel: ObservableObject {
     @Published var results: [ApiClassroomResponse] = []
     @Published var unauthorized: Bool = false
+    @Published var currentUser: Int = 0
+    @Published var classroomOwner: Int = 0
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var loading: Bool = true
@@ -50,7 +52,36 @@ class ClassroomViewViewModel: ObservableObject {
             }
         }
     }
-    
+    func getUser() -> Void {
+        NeptuneApi().getCurrentUserId(){ res in
+            if res.message != nil {
+                // Failed to find user
+                self.error.toggle()
+                self.errorMessage = res.message
+            
+            } else {
+                // Successful search
+                self.currentUser = res.id!
+                
+            }
+        }
+    }
+    func getClassroom(classId: String) -> Void {
+        NeptuneApi().getCurrentClassroomOwner(classIdData: classId){ res in
+            if res.message != nil {
+                // Failed to find user
+                self.error.toggle()
+                self.errorMessage = res.message
+                self.loading = false
+            
+            } else {
+                // Successful search
+                self.classroomOwner = res.ownerId!
+                self.loading = false
+                
+            }
+        }
+    }
     func leaveClassroomResponse(classId: String, completion: @escaping () -> ()) -> Void{
         NeptuneApi().leaveClassroom(classIdData: classId) { res in
             if res.statusCode != 200 && res.message != nil {
