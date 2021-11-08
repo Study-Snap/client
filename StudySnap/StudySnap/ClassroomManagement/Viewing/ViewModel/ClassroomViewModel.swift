@@ -52,6 +52,11 @@ class ClassroomViewViewModel: ObservableObject {
             }
         }
     }
+    
+    /**
+        @Sheharyaar
+        These functions (getClassroom and getUser) *WILL* fail as soon as access token is revoked/expired since there is no refresh flow here... @Ben will look into this
+     */
     func getUser() -> Void {
         NeptuneApi().getCurrentUserId(){ res in
             if res.message != nil {
@@ -60,7 +65,8 @@ class ClassroomViewViewModel: ObservableObject {
                 self.errorMessage = res.message
             
             } else {
-                // Successful search
+                // Successful get user
+                print(res)
                 self.currentUser = res.id!
                 
             }

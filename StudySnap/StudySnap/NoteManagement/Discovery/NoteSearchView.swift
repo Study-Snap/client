@@ -286,6 +286,7 @@ struct NoteSearchView: View {
         }.onAppear(perform: {
             // MARK: @Sheharyaar Pls fix ... thanks :)
             // MARK: @Ben Done! :)
+	    // MARK: @Ben will look into changing refresh flow on these functions so they don't fail on access revoke/expire
             self.classroomViewModel.getUser()
             self.classroomViewModel.getClassroom(classId: self.classID)
         })

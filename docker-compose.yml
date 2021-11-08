@@ -78,7 +78,7 @@ services:
       DB_HOST: ssdb
       DB_USER_DATABASE: studysnap_db
       JWT_SECRET: dev
-      JWT_ACCESS_TOKEN_EXPIRE_TIME: 900m
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 10s
     depends_on:
       - ssdb
     ports:
