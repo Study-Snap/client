@@ -296,51 +296,6 @@ class NeptuneApi {
         }.resume()
     }
     
-    func deleteClassroom(classIdData: String,completion: @escaping (ApiClassMessageResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
-        
-        let parameters: [String: Any] = [
-            "classId": classIdData
-        ]
-        
-        var request: URLRequest = URLRequest(url: reqUrl)
-        request.httpMethod = "DELETE"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        URLSession.shared.dataTask(with: request) {(data, _, _) in
-            guard let data = data else { return }
-            
-            do {
-                let classroom: ApiClassMessageResponse = try JSONDecoder().decode(ApiClassMessageResponse.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(classroom)
-                }
-            } catch {
-                do {
-                    print(error.localizedDescription)
-                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
-                    
-                    DispatchQueue.main.async {
-                        completion(ApiClassMessageResponse(message: validation.message!.first!))
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        completion(ApiClassMessageResponse(message: "Oops! We don't know what happened there"))
-                    }
-                }
-            }
-        }.resume()
-    }
-    
     func getCurrentUserId(completion: @escaping (ApiUserId) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users")
         

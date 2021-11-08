@@ -9,22 +9,29 @@ import SwiftUI
 
 struct ClassroomGridItemView: View {
     // MARK: - PROPERTIES
-    
+    @Environment(\.colorScheme) var colorScheme
     var classroom: ApiClassroomResponse
     
     // MARK: - BODY
 
     var body: some View {
-        VStack(alignment:.center){
+        
+        VStack(alignment:.leading){
             Image("classroomImage")
-              .resizable()
-              .scaledToFit()
-              .cornerRadius(12)
-            
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(12)
             Text(classroom.name ?? "ERROR")
                 .font(.subheadline)
                 .bold()
+                .padding(.horizontal,5)
+                .padding(.bottom, 10)
+                .lineLimit(1)
+
         }
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)
+        .strokeStyle()
 
     }
 }
