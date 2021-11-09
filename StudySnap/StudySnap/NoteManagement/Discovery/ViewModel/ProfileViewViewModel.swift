@@ -13,7 +13,7 @@ class ProfileViewViewModel: ObservableObject {
     @Published var logout: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
-    @Published var response: ApiUserId? = nil
+    @Published var response: ApiUserId?
     @Published var unauthorized: Bool = false
     
     
@@ -41,7 +41,7 @@ class ProfileViewViewModel: ObservableObject {
                             completion()
                         }
                         else {
-                            
+                            self.getUserInformation(completion: completion)
                         }
                     }
                     completion()

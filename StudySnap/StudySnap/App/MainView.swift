@@ -12,31 +12,35 @@ struct MainView: View {
     @Binding var rootIsActive : Bool
     
     var body: some View {
-        ZStack {
-            TabView{
-                ClassroomsView(rootIsActive: self.$rootIsActive)
-                    .tabItem {
-                        Image(systemName: "person.3.fill")
-                        Text("Classrooms")
-                        
-                    }
-                
-                StorageView()
-                    .tabItem {
-                        Image(systemName: "photo.on.rectangle")
-                        Text("Storage")
-                    }
+        
+        
+        TabView{
+            ClassroomsView(rootIsActive: self.$rootIsActive)
+                .tabItem {
+                    Image(systemName: "person.3.fill")
+                    Text("Classrooms")
                     
-                ProfileView(rootIsActive: self.$rootIsActive)
-                    .tabItem {
-                        Image(systemName: "person.crop.circle")
-                        Text("Profile")
-                    }
-            }
-            .accentColor(Color("Primary"))
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
-        }.edgesIgnoringSafeArea([.top,.bottom])
+                }
+            
+            StorageView()
+                .tabItem {
+                    Image(systemName: "photo.on.rectangle")
+                    Text("Storage")
+                }
+            
+            ProfileView(rootIsActive: self.$rootIsActive)
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                }
+        }
+        .ignoresSafeArea()
+        .accentColor(.primary)
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
+        
+        
+        
     }
 }
 

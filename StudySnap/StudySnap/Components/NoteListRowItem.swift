@@ -30,11 +30,11 @@ struct NoteListRowItem: View {
                                 VStack {
                                     Text("\(readTime)")
                                         .font(.system(size: 20, weight: .bold))
-                                        .foregroundColor(Color("TextFieldPrimary"))
+                                        .foregroundColor(.black.opacity(0.8))
                                     
                                     Text("min")
                                         .font(.caption)
-                                        .foregroundColor(Color("TextFieldPrimary"))
+                                        .foregroundColor(.black.opacity(0.8))
                                 }
                             }
                             .frame(width: 70, height: 70, alignment: .center)
@@ -43,10 +43,10 @@ struct NoteListRowItem: View {
                                     .font(.headline)
                                     .fontWeight(.bold)
                                     .lineLimit(2)
-                                    .foregroundColor(Color("Secondary"))
+                                    .foregroundColor(Color("PrimaryText"))
                                 Text(author)
                                     .font(.caption)
-                                    .foregroundColor(Color("TextFieldPrimary"))
+                                    .foregroundColor(Color("Secondary"))
                                     .padding(.bottom, 5)
                                 
                                 
@@ -54,14 +54,18 @@ struct NoteListRowItem: View {
                                     Text(shortDescription)
                                         .font(.footnote)
                                         .multilineTextAlignment(TextAlignment.leading)
-                                        .foregroundColor(Color("TextFieldPrimary"))
+                                        .foregroundColor(Color("Secondary"))
                                         .padding(.bottom, 5)
                                 
                                
-                                    NoteRatingView(avgRating: calculateRating(ratings: rating))
+                                    //NoteRatingView(avgRating: calculateRating(ratings: rating))
+                                    NoteRatingView()
+                                    .accentColor(.yellow)
+                                    
                                 
                                 
                             }
+                            .foregroundColor(.yellow)
                             .padding(.horizontal, 20)
                             
                             Spacer()
@@ -78,6 +82,12 @@ struct NoteListRowItem: View {
 
 struct NoteListRowItem_Previews: PreviewProvider {
     static var previews: some View {
-        NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
+        Group {
+            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
+            
+            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
+                .preferredColorScheme(.dark)
+                .previewInterfaceOrientation(.portrait)
+        }
     }
 }

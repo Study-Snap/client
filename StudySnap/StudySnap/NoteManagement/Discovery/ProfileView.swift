@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ProfileView: View {
+    // Global
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @AppStorage("isAnimated") var isAnimated: Bool = true
+    @Binding var rootIsActive: Bool
     
+    // State info
     @StateObject var viewModel : ProfileViewViewModel = ProfileViewViewModel()
     @State var error: Bool = false
     @State var deauthenticated: Bool = false
-    @Binding var rootIsActive: Bool
     
     var body: some View {
         NavigationView {
@@ -27,32 +28,38 @@ struct ProfileView: View {
                             .padding(.top, -50)
                     }
                     
-                    VStack(alignment: .leading){
-                        VStack(alignment: .leading) {
-                            Text("Full Name")
-                                .font(.caption)
-                                .foregroundColor(Color("Primary"))
+                    if viewModel.response == nil {
+                        // Loading still
+                        ProgressView("Loading user profile")
+                            .foregroundColor(Color("Secondary"))
+                    } else {
+                        VStack(alignment: .leading){
+                            VStack(alignment: .leading) {
+                                Text("Full Name")
+                                    .font(.caption)
+                                    .foregroundColor(Color("Primary"))
+                                
+                                Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
+                            }
+                            .padding()
                             
-                            Text((viewModel.response?.firstName)! + " " +    (viewModel.response?.lastName)!).fontWeight(.light)
+                            VStack(alignment: .leading) {
+                                Text("Email")
+                                    .font(.caption)
+                                    .foregroundColor(Color("Primary"))
+                                
+                                Text((viewModel.response?.email)!).fontWeight(.light)
+                            }.padding()
+                            
+                            VStack(alignment: .leading) {
+                                Text("Unique ID")
+                                    .font(.caption)
+                                    .foregroundColor(Color("Primary"))
+                                let idString = String((viewModel.response?.id)!)
+                                Text(idString).fontWeight(.light)
+                            }.padding()
+                            
                         }
-                        .padding()
-                        
-                        VStack(alignment: .leading) {
-                            Text("Email")
-                                .font(.caption)
-                                .foregroundColor(Color("Primary"))
-                            
-                            Text((viewModel.response?.email)!).fontWeight(.light)
-                        }.padding()
-                        
-                        VStack(alignment: .leading) {
-                            Text("Unique ID")
-                                .font(.caption)
-                                .foregroundColor(Color("Primary"))
-                            let idString = String((viewModel.response?.id)!)
-                            Text(idString).fontWeight(.light)
-                        }.padding()
-                        
                     }
                     
                     Spacer()
@@ -62,6 +69,7 @@ struct ProfileView: View {
                     PrimaryButtonView(title: "Log Out", action: {
                         self.viewModel.performLogout()
                         if (self.viewModel.logout) {
+                            self.rootIsActive = false
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }).alert("Error", isPresented: $error) {
@@ -78,6 +86,14 @@ struct ProfileView: View {
                 if self.viewModel.unauthorized {
                     // If we cannot refresh, pop off back to login
                     self.rootIsActive = false
+                }
+                if self.viewModel.error {
+                    // Unknown erro getting user data -- logout user
+                    self.viewModel.performLogout()
+                    if (self.viewModel.logout) {
+                        self.rootIsActive = false
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
             }
         })

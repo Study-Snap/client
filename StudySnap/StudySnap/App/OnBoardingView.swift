@@ -10,7 +10,7 @@ import SwiftUI
 struct OnBoardingView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     var body: some View {
-        NavigationView{
+       
             ZStack {
                     //image 1
                     Image("LandingPageBkg")
@@ -33,7 +33,7 @@ struct OnBoardingView: View {
                     }
 
                 }
-        }.navigationViewStyle(StackNavigationViewStyle())
+      
     }
 }
 
