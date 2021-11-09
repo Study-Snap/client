@@ -347,7 +347,7 @@ class NeptuneApi {
         }.resume()
     }
     func uploadNoteFile(fileName: String, fileData: Data, completion: @escaping (ApiFileResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files")
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files/note")
         let reqFileParamName: String = "file"
         let boundary: String = UUID().uuidString
         
