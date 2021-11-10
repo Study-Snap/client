@@ -58,7 +58,7 @@ struct ApiClassroomResponse: Codable, Identifiable{
     var id: String?
     var name: String?
     var ownerId: Int?
-    
+    var thumbnailUri: String?
     // For errors or other messages
     var statusCode: Int?
     var error: String?
@@ -251,7 +251,53 @@ class NeptuneApi {
         }.resume()
     }
     
-    func createClassroom(classNameData: String,completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
+    func createClassroomWithThumbnail(classNameData: String, classThumbnail: String, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
+        
+        let parameters: [String: Any] = [
+            "name": classNameData,
+            "thumbnail": classThumbnail
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let classroom: ApiClassroomResponse = try JSONDecoder().decode(ApiClassroomResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(classroom)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiClassroomResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiClassroomResponse(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+        }.resume()
+    }
+    
+    func createClassroomWithoutThumbnail(classNameData: String, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
         
         let parameters: [String: Any] = [
