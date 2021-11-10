@@ -11,3 +11,11 @@ SPACES_SECRET=XXXXXXXXXXXXXXXXXXXXX
 ```
 
 After this save it. Run `docker-compose up -d`. This will inject the credentials into the running neptune instance in the container and allow it to authenticate with the Spaces S3 API and ensure working functionality of upload, download, streaming features for the client.
+
+If you are having trouble run the following:
+```bash
+docker-compose down
+docker image rm studysnap/neptune:develop.0.3.x
+docker volume rm client_ssdb_data
+docker-compose up -d
+```
