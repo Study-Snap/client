@@ -28,43 +28,63 @@ struct ProfileView: View {
                             .padding(.top, -50)
                     }
                     
-                    if viewModel.response == nil {
+                    if viewModel.response == nil || viewModel.userClassroomResponse == nil {
                         // Loading still
                         ProgressView("Loading user profile")
                             .foregroundColor(Color("Secondary"))
                     } else {
-                        VStack(alignment: .leading){
+                        VStack(alignment: .leading) {
                             VStack(alignment: .leading) {
                                 Text("Full Name")
-                                    .font(.caption)
                                     .foregroundColor(Color("Primary"))
-                                
+                                    .font(.system(size: 18))
                                 Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
-                            }
-                            .padding()
+                                    .font(.system(size: 25))
+                            }.padding()
                             
                             VStack(alignment: .leading) {
                                 Text("Email")
-                                    .font(.caption)
                                     .foregroundColor(Color("Primary"))
-                                
+                                    .font(.system(size: 18))
                                 Text((viewModel.response?.email)!).fontWeight(.light)
+                                    .font(.system(size: 25))
                             }.padding()
                             
                             VStack(alignment: .leading) {
                                 Text("Unique ID")
-                                    .font(.caption)
                                     .foregroundColor(Color("Primary"))
+                                    .font(.system(size: 18))
                                 let idString = String((viewModel.response?.id)!)
                                 Text(idString).fontWeight(.light)
+                                    .font(.system(size: 25))
                             }.padding()
                             
-                        }
+                            VStack(alignment: .leading) {
+                                Text("Number of Classrooms")
+                                    .foregroundColor(Color("Primary"))
+                                    .font(.system(size: 18))
+                                Text(String((viewModel.userClassroomResponse?.count)!)).fontWeight(.light)
+                                    .font(.system(size: 25))
+                            }.padding()
+                        }.frame(
+                            maxWidth: .infinity,
+                            maxHeight: .infinity,
+                            alignment: .topLeading
+                        )
                     }
                     
                     Spacer()
                     
-                    // TODO: Insert change password button and add functionality
+                    // TODO: Add functionality to change password button
+                    PrimaryButtonView(title: "Change Password", action: {
+                        print("Implement change password")
+                    }).alert("Error", isPresented: $error) {
+                        Button("Ok", role: .cancel) {
+                            self.error = false
+                        }
+                    } message: {
+                        Text("Error changing password.")
+                    }
                     
                     PrimaryButtonView(title: "Log Out", action: {
                         self.viewModel.performLogout()
@@ -88,7 +108,7 @@ struct ProfileView: View {
                     self.rootIsActive = false
                 }
                 if self.viewModel.error {
-                    // Unknown erro getting user data -- logout user
+                    // Unknown error getting user data -- logout user
                     self.viewModel.performLogout()
                     if (self.viewModel.logout) {
                         self.rootIsActive = false
@@ -96,6 +116,21 @@ struct ProfileView: View {
                     }
                 }
             }
+            self.viewModel.getUserClassrooms() {
+                if self.viewModel.unauthorized {
+                    // If we cannot refresh, pop off back to login
+                    self.rootIsActive = false
+                }
+                if self.viewModel.error {
+                    // Unknown error getting user data -- logout user
+                    self.viewModel.performLogout()
+                    if (self.viewModel.logout) {
+                        self.rootIsActive = false
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            }
+
         })
     }
 }
