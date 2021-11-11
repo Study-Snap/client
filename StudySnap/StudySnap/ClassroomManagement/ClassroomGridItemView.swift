@@ -15,12 +15,18 @@ struct ClassroomGridItemView: View {
     // MARK: - BODY
 
     var body: some View {
-        
+       
         VStack(alignment:.leading){
-            Image("classroomImage")
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(12)
+            AsyncImage(url: URL(string:  classroom.thumbnailUri ?? "https://media.slidesgo.com/storage/10363323/conversions/14-school-backgrounds-for-virtual-classroom-thumb.jpg")) { image in
+                image.resizable()
+
+            } placeholder: {
+                ProgressView()
+            }
+            //.frame(width: 150, height: 150)
+            .scaledToFit()
+            .cornerRadius(12)
+
             Text(classroom.name ?? "ERROR")
                 .font(.subheadline)
                 .bold()
