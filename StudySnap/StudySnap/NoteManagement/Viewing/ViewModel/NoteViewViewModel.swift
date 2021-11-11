@@ -34,7 +34,6 @@ class NoteViewViewModel: ObservableObject {
                     }
                 } else {
                     // Another error occurred
-                    print(res.message!)
                     self.loading = false
                     self.error = true
                     self.errorMessage = res.message

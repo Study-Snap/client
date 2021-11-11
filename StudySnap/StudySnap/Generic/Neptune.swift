@@ -116,13 +116,11 @@ class NeptuneApi {
                     if result.message == nil {
                         completion(result)
                     } else {
-                        print("[ERROR] \(result.message!)")
                         completion(ApiNoteResponse(error: "Error", message: result.message!))
                     }
                 }
             } else {
                 // Failed file upload
-                print("[ERROR] \(res.message!)")
                 completion(ApiNoteResponse(message: "Failed to upload file. \(res.message ?? "No reason specified"). Try again..."))
             }
         }
