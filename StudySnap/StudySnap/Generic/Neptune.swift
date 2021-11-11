@@ -51,7 +51,7 @@ struct ApiClassMessageResponse: Codable {
 }
 struct ApiClassroomResponse: Codable, Identifiable{
     enum CodingKeys: String, CodingKey {
-        case name, ownerId, message
+        case name, ownerId, thumbnailUri, message
         
         case id = "id"
     }
