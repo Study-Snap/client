@@ -142,7 +142,6 @@ struct ClassroomsView: View {
                                         HStack(spacing: 16) {
                                             Button(action: {
                                                 print("Update classroom view")
-                                                isUpdateClassroomView = true
                                                 self.viewModel.loading = true
                                                 self.viewModel.getClassroomsForUser() {
                                                     if self.viewModel.unauthorized {

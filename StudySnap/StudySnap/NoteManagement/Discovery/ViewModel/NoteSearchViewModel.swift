@@ -32,7 +32,6 @@ class NoteSearchViewModel: ObservableObject {
                         }
                     }
                 } else {
-                    print(res)
                     // Some error occurred (unkown)
                     self.trending = []
                     self.error = true
@@ -67,7 +66,6 @@ class NoteSearchViewModel: ObservableObject {
                     }
                 } else {
                     // Another error occurred (is authorized, but something was wrong)
-                    print(res)
                     self.results = []
                     self.error = true
                     self.errorMessage = res[0].message

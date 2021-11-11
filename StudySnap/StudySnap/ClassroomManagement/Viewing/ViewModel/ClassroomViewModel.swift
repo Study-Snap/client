@@ -66,7 +66,6 @@ class ClassroomViewViewModel: ObservableObject {
             
             } else {
                 // Successful get user
-                print(res)
                 self.currentUser = res.id!
                 
             }

@@ -72,7 +72,6 @@ class NoteUploadViewModel: ObservableObject {
                                 self.performUpload(noteData: noteData, completion: completion)
                             }
                         }
-                        completion()
                     } else {
                         // Another error occurred
                         self.error.toggle()
