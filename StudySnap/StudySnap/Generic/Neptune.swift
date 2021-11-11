@@ -83,7 +83,7 @@ struct ApiUserId: Codable, Identifiable{
 }
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
-        case title, classId, keywords, shortDescription, body, fileUri, authorId, rating, timeLength,  bibtextCitation, user, message
+        case title, classId, keywords, shortDescription, noteAbstract, fileUri, authorId, timeLength, bibtextCitation, user, message
         
         case id = "id"
     }
@@ -93,10 +93,9 @@ struct ApiNoteResponse : Codable, Identifiable {
     var classId: String?
     var keywords: [String]?
     var shortDescription: String?
-    var body: String?
+    var noteAbstract: String?
     var fileUri: String?
     var authorId: Int?
-    var rating: [Int]?
     var timeLength: Int?
     var bibtextCitation: String?
     var user: UserModel?
@@ -117,13 +116,11 @@ class NeptuneApi {
                     if result.message == nil {
                         completion(result)
                     } else {
-                        print("[ERROR] \(result.message!)")
                         completion(ApiNoteResponse(error: "Error", message: result.message!))
                     }
                 }
             } else {
                 // Failed file upload
-                print("[ERROR] \(res.message!)")
                 completion(ApiNoteResponse(message: "Failed to upload file. \(res.message ?? "No reason specified"). Try again..."))
             }
         }
@@ -348,7 +345,7 @@ class NeptuneApi {
         }.resume()
     }
     func uploadNoteFile(fileName: String, fileData: Data, completion: @escaping (ApiFileResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files")
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files/note")
         let reqFileParamName: String = "file"
         let boundary: String = UUID().uuidString
         

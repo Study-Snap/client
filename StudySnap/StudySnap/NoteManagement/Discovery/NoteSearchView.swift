@@ -79,7 +79,7 @@ struct NoteSearchView: View {
                                                 VStack {
                                                     ForEach(viewModel.trending) { item in
                                                         
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: item.rating!)
+                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
                                                             .onTapGesture {
                                                                 self.targetNoteId = item.id!
                                                                 self.showNoteDetails.toggle()
@@ -117,7 +117,7 @@ struct NoteSearchView: View {
                                                 VStack {
                                                     ForEach(viewModel.results) { item in
                                                         
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: item.rating!)
+                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
                                                             .onTapGesture {
                                                                 self.showNoteDetails.toggle()
                                                                 self.targetNoteId = item.id!
