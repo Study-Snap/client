@@ -108,6 +108,10 @@ struct ApiNoteResponse : Codable, Identifiable {
 class NeptuneApi {
     let neptuneBaseUrl: String = "\(InfoPlistParser.getStringValue(forKey: Constants.PROTOCOL_KEY))://\(InfoPlistParser.getStringValue(forKey: Constants.NEPTUNE_KEY))"
     
+    // MARK: Error here with refresh
+    /**
+            For some reason, the upload note file will trigger error to be thrown on line 129/130. Afterwards the refresh is completed on the NoteUploadViewModel. After that, the function is retried. The upload note file is successful and the createNoteWithFile fails for some reason (unauthorized again) and then since the refresh did not finish storing the new token fast enough (this is a guess), the refresh fails on the retry and the user is sent backto the login screen. The only reason this works after a couple refresh tokens are created in the database is because when it quickly tries to refresh again, using the old token it will still resolve to an existing duplicate refresh token that shouldn't be there in the first place
+     */
     func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
         self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
             if res.statusCode == 201 && res.fileUri != nil {

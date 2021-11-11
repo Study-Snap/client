@@ -67,7 +67,7 @@ services:
     networks:
       - client-dev-network
   authentication:
-    image: studysnap/authentication:develop.1.x
+    image: studysnap/authentication:1.0.3
     container_name: authentication
     restart: on-failure
     environment:
@@ -77,7 +77,7 @@ services:
       DB_HOST: ssdb
       DB_USER_DATABASE: studysnap_db
       JWT_SECRET: dev
-      JWT_ACCESS_TOKEN_EXPIRE_TIME: 1m
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 10s
     depends_on:
       - ssdb
     ports:
