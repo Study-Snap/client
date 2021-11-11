@@ -23,7 +23,6 @@ struct ClassroomGridItemView: View {
             } placeholder: {
                 ProgressView()
             }
-            //.frame(width: 150, height: 150)
             .scaledToFit()
             .cornerRadius(12)
 

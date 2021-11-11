@@ -15,7 +15,7 @@ struct CreateClassroomView: View {
     // State
     @StateObject var viewModel: CreateClassroomViewModel = CreateClassroomViewModel()
     @State private var isShowingPhotoPicker = false
-    @State private var defaultClassThumbnail = UIImage(named: "classroomImage")!
+    @State private var classThumbnailImage = UIImage(named: "classroomImage")!
     
     var body: some View {
         NavigationView {
@@ -23,7 +23,7 @@ struct CreateClassroomView: View {
                 InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter a classroom name", value: $viewModel.name).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
                 VStack {
                     VStack {
-                        Image(uiImage: defaultClassThumbnail)
+                        Image(uiImage: classThumbnailImage)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 300, height: 300)
@@ -42,7 +42,7 @@ struct CreateClassroomView: View {
                     }
                 }
                 .sheet(isPresented: $isShowingPhotoPicker, content: {
-                    PhotoPicker(classThumbnailImage: $defaultClassThumbnail)
+                    PhotoPicker(classThumbnailImage: $classThumbnailImage)
                 })
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)
@@ -51,9 +51,7 @@ struct CreateClassroomView: View {
 
                 Spacer()
                 PrimaryButtonView(title:"Create", action: {
-                    //let imageStr: String = defaultClassThumbnail.jpegData(compressionQuality: 0.1)?.base64EncodedString() ?? "https://media.slidesgo.com/storage/10363323/conversions/14-school-backgrounds-for-virtual-classroom-thumb.jpg"
-                    //self.viewModel.thumbnail = imageStr
-                    self.viewModel.postUserClassroom(className: viewModel.name, classThumbnail: viewModel.thumbnail) {
+                    self.viewModel.createClassroom(classCreateData: CreateClassroomData(name: viewModel.name, thumbnailData: classThumbnailImage.pngData())) {
                         if self.viewModel.unauthorized {
                             // Refresh failed, return to login
                             self.rootIsActive = false

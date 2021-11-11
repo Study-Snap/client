@@ -45,7 +45,7 @@ services:
     networks:
       - client-dev-network
   neptune:
-    image: studysnap/neptune:develop.0.3.x
+    image: studysnap/neptune:SSPP-294.0.3.x
     container_name: neptune
     restart: on-failure
     environment: 
@@ -67,7 +67,7 @@ services:
     networks:
       - client-dev-network
   authentication:
-    image: studysnap/authentication:develop.1.x
+    image: studysnap/authentication:1.0.3
     container_name: authentication
     restart: on-failure
     environment:

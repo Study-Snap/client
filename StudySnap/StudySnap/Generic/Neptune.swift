@@ -21,18 +21,14 @@ struct CreateNoteData: Codable {
     var bibtextCitation: String?
 }
 
-struct CreateClassroom: Codable {
+struct CreateClassroomData: Codable {
     enum CodingKeys: String, CodingKey {
-        case title, classId, keywords, shortDescription, fileName, fileData, bibtextCitation
+        case name, thumbnailData, thumbnailUri
     }
     
-    var title: String
-    var classId: String
-    var keywords: [String]
-    var shortDescription: String
-    var fileName: String
-    var fileData: Data
-    var bibtextCitation: String?
+    var name: String
+    var thumbnailData: Data?
+    var thumbnailUri: String?
 }
 
 struct ApiFileResponse: Codable {
@@ -106,11 +102,16 @@ struct ApiNoteResponse : Codable, Identifiable {
     var message: String?
 }
 
+struct UFileType {
+    static let IMAGE = "image"
+    static let NOTE  = "note"
+}
+
 class NeptuneApi {
     let neptuneBaseUrl: String = "\(InfoPlistParser.getStringValue(forKey: Constants.PROTOCOL_KEY))://\(InfoPlistParser.getStringValue(forKey: Constants.NEPTUNE_KEY))"
     
     func createNote(noteData: CreateNoteData, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
-        self.uploadNoteFile(fileName: noteData.fileName, fileData: noteData.fileData) { res in
+        self.uploadFile(fileName: noteData.fileName, fileData: noteData.fileData, fileType: UFileType.NOTE) { res in
             if res.statusCode == 201 && res.fileUri != nil {
                 // Successful file upload
                 self.createNoteWithFile(noteData: noteData, fileUri: res.fileUri!) { result in
@@ -251,58 +252,43 @@ class NeptuneApi {
         }.resume()
     }
     
-    func createClassroomWithThumbnail(classNameData: String, classThumbnail: String, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
-        
-        let parameters: [String: Any] = [
-            "name": classNameData,
-            "thumbnail": classThumbnail
-        ]
-        
-        var request: URLRequest = URLRequest(url: reqUrl)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        URLSession.shared.dataTask(with: request) {(data, _, _) in
-            guard let data = data else { return }
-            
-            do {
-                let classroom: ApiClassroomResponse = try JSONDecoder().decode(ApiClassroomResponse.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(classroom)
-                }
-            } catch {
-                do {
-                    print(error.localizedDescription)
-                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
-                    
-                    DispatchQueue.main.async {
-                        completion(ApiClassroomResponse(message: validation.message!.first!))
+    func createClassroom(data: CreateClassroomData, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
+        if (data.thumbnailData != nil) {
+            self.uploadFile(fileName: "image.png", fileData: data.thumbnailData!, fileType: UFileType.IMAGE) { res in
+                if res.statusCode == 201 && res.fileUri != nil {
+                    // Successful file upload
+                    self.createClassroomPostData(data: CreateClassroomData(name: data.name, thumbnailUri: res.fileUri!)) { result in
+                        if result.message == nil {
+                            completion(result)
+                        } else {
+                            completion(ApiClassroomResponse(error: "Error", message: result.message!))
+                        }
                     }
-                } catch {
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        completion(ApiClassroomResponse(message: "Oops! We don't know what happened there"))
-                    }
+                } else {
+                    // Failed file upload
+                    completion(ApiClassroomResponse(message: "Failed to upload file. \(res.message ?? "No reason specified"). Try again..."))
                 }
             }
-        }.resume()
+        } else {
+            self.createClassroomPostData(data: CreateClassroomData(name: data.name)) { result in
+                if result.message == nil {
+                    completion(result)
+                } else {
+                    completion(ApiClassroomResponse(error: "Error", message: result.message!))
+                }
+            }
+        }
     }
     
-    func createClassroomWithoutThumbnail(classNameData: String, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
+    func createClassroomPostData(data: CreateClassroomData, completion: @escaping (ApiClassroomResponse) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/classrooms")
+        print(data)
+        let parameters: [String: Any] = data.thumbnailUri != nil ? [
+            "name": data.name,
+            "thumbnailUri": data.thumbnailUri!
+        ] : ["name": data.name]
         
-        let parameters: [String: Any] = [
-            "name": classNameData
-        ]
+        print(parameters)
         
         var request: URLRequest = URLRequest(url: reqUrl)
         request.httpMethod = "POST"
@@ -393,8 +379,9 @@ class NeptuneApi {
             }
         }.resume()
     }
-    func uploadNoteFile(fileName: String, fileData: Data, completion: @escaping (ApiFileResponse) -> ()) -> Void {
-        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files")
+    
+    func uploadFile(fileName: String, fileData: Data, fileType: String, completion: @escaping (ApiFileResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/files/\(fileType)")
         let reqFileParamName: String = "file"
         let boundary: String = UUID().uuidString
         
