@@ -91,3 +91,4 @@ iOSInjectionProject/
 
 # File storage for development purposes
 temp-file-store/*
+.prod.env

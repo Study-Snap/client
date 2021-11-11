@@ -37,35 +37,56 @@ struct ProfileView: View {
                             VStack(alignment: .leading) {
                                 Text("Full Name")
                                     .foregroundColor(Color("Primary"))
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 15))
                                 Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
-                                    .font(.system(size: 25))
-                            }.padding()
+                                    .font(.system(size: 20))
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
                             
                             VStack(alignment: .leading) {
                                 Text("Email")
                                     .foregroundColor(Color("Primary"))
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 15))
                                 Text((viewModel.response?.email)!).fontWeight(.light)
-                                    .font(.system(size: 25))
-                            }.padding()
+                                    .font(.system(size: 20))
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
                             
                             VStack(alignment: .leading) {
                                 Text("Unique ID")
                                     .foregroundColor(Color("Primary"))
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 15))
                                 let idString = String((viewModel.response?.id)!)
                                 Text(idString).fontWeight(.light)
-                                    .font(.system(size: 25))
-                            }.padding()
+                                    .font(.system(size: 20))
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
                             
                             VStack(alignment: .leading) {
                                 Text("Number of Classrooms")
                                     .foregroundColor(Color("Primary"))
-                                    .font(.system(size: 18))
-                                Text(String((viewModel.userClassroomResponse?.count)!)).fontWeight(.light)
-                                    .font(.system(size: 25))
-                            }.padding()
+                                    .font(.system(size: 15))
+                                Text(String((viewModel.userClassroomResponse?.count) ?? 0)).fontWeight(.light)
+                                    .font(.system(size: 20))
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Number of Uploaded Notes")
+                                    .foregroundColor(Color("Primary"))
+                                    .font(.system(size: 15))
+                                Text(String((viewModel.userNoteResponse?.count) ?? 0)).fontWeight(.light)
+                                    .font(.system(size: 20))
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Most Recent Upload")
+                                    .foregroundColor(Color("Primary"))
+                                    .font(.system(size: 15))
+                                NoteListRowItem(id: viewModel.userNoteResponse?[0].id ?? 0, title: viewModel.userNoteResponse?[0].title ?? "No note found.", author: "\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)", shortDescription: viewModel.userNoteResponse?[0].shortDescription ?? "No note found.", readTime: viewModel.userNoteResponse?[0].timeLength ?? 0, rating: viewModel.userNoteResponse?[0].rating ?? [0,0,0,0,0])
+                            }.padding(.vertical, 3)
+                                .padding(.leading, 5)
                         }.frame(
                             maxWidth: .infinity,
                             maxHeight: .infinity,
@@ -99,6 +120,8 @@ struct ProfileView: View {
                     } message: {
                         Text("Error signing out.")
                     }
+                    
+                    Spacer()
                 }
             }
         }.onAppear(perform: {
@@ -128,6 +151,18 @@ struct ProfileView: View {
                         self.rootIsActive = false
                         self.presentationMode.wrappedValue.dismiss()
                     }
+                }
+            }
+            
+            self.viewModel.getUserNotes() {
+                
+                if self.viewModel.unauthorized {
+                    // If we cannot refresh, pop off back to login
+                    self.rootIsActive = false
+                }
+                if self.viewModel.error {
+                    // No notes or some other error
+                    print("\(self.viewModel.error), \(self.viewModel.errorMessage ?? "No message.")")
                 }
             }
 

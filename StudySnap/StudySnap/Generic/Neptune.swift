@@ -515,7 +515,7 @@ class NeptuneApi {
         
         
         var request: URLRequest = URLRequest(url: reqUrl)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
         
