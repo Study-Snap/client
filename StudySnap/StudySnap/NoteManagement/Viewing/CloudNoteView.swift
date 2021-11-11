@@ -100,11 +100,11 @@ struct CloudNoteView: View {
                                     .padding()
                                     
                                     VStack(alignment: .leading) {
-                                        Text("DETAILS") // MARK: Spacing between title and content exists due to extra new line characters within the note body variable
+                                        Text("ABSTRACT") // MARK: Spacing between title and content exists due to extra new line characters within the note body variable
                                             .font(.caption)
                                             .foregroundColor(Color("Primary"))
                                         
-                                        Text(viewModel.noteObj.body!).fontWeight(.light)
+                                        Text(viewModel.noteObj.noteAbstract!).fontWeight(.light)
                                     }.padding()
                                     
                                 }
