@@ -15,7 +15,7 @@ struct CreateClassroomView: View {
     // State
     @StateObject var viewModel: CreateClassroomViewModel = CreateClassroomViewModel()
     @State private var isShowingPhotoPicker = false
-    @State private var classThumbnailImage = UIImage(named: "classroomImage")!
+    @State private var classThumbnailImage = UIImage(named: "classthumbnail")!
     
     var body: some View {
         NavigationView {

@@ -3,7 +3,7 @@
 //  StudySnap
 //
 //  Created by Malik Sheharyaar Talhat on 2021-09-25.
-//
+//  Custom Rounded Corners referenced from https://stackoverflow.com/questions/56760335/round-specific-corners-swiftui/60512484#60512484
 
 import SwiftUI
 
@@ -17,14 +17,15 @@ struct ClassroomGridItemView: View {
     var body: some View {
        
         VStack(alignment:.leading){
-            AsyncImage(url: URL(string:  classroom.thumbnailUri ?? "https://media.slidesgo.com/storage/10363323/conversions/14-school-backgrounds-for-virtual-classroom-thumb.jpg")) { image in
+            AsyncImage(url: URL(string:  classroom.thumbnailUri!)) { image in
                 image.resizable()
 
             } placeholder: {
                 ProgressView()
             }
+            .frame(width: .infinity, height: 180.0)
             .scaledToFit()
-            .cornerRadius(12)
+            .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
 
             Text(classroom.name ?? "ERROR")
                 .font(.subheadline)
