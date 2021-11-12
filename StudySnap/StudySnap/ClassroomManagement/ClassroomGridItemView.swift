@@ -16,14 +16,26 @@ struct ClassroomGridItemView: View {
 
     var body: some View {
        
-        VStack(alignment:.leading){
-            AsyncImage(url: URL(string:  classroom.thumbnailUri!)) { image in
-                image.resizable()
+        VStack(alignment:.center){
+            AsyncImage(url: URL(string: classroom.thumbnailUri!)) {
+                phase in
 
-            } placeholder: {
-                ProgressView()
+                if let image = phase.image{
+                    image.resizable()
+                }else if phase.error != nil{
+                    VStack {
+                        Image(systemName: "exclamationmark.circle")
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        Text("Error: Could not load thumbnail")
+                            .font(.subheadline)
+                    }
+     
+                }else{
+                    ProgressView()
+                }
+
             }
-            .frame(width: .infinity, height: 180.0)
+            .frame(minWidth: 170.0,maxWidth: .infinity, minHeight: 170.0, maxHeight: 300)
             .scaledToFit()
             .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
 

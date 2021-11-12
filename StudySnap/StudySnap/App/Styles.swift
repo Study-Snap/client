@@ -17,7 +17,9 @@ struct StrokeStyle: ViewModifier {
                     .linearGradient(
                         colors: [
                             .white.opacity(colorScheme == .dark ? 0.6 : 0.3),
-                            .black.opacity(colorScheme == .dark ? 0.3 : 0.1)
+                            .black.opacity(colorScheme == .dark ? 0.3 : 0.1),
+                            .white.opacity(colorScheme == .light ? 0.4 : 0.2),
+                            .black.opacity(colorScheme == .light ? 0.9 : 0.6)
                         ], startPoint: .top, endPoint: .bottom
                     )
                 )
