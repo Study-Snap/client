@@ -79,7 +79,7 @@ struct NoteSearchView: View {
                                                 VStack {
                                                     ForEach(viewModel.trending) { item in
                                                         
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: item.rating!)
+                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
                                                             .onTapGesture {
                                                                 self.targetNoteId = item.id!
                                                                 self.showNoteDetails.toggle()
@@ -98,7 +98,7 @@ struct NoteSearchView: View {
                                                 .foregroundColor(Color("AccentDark"))
                                                 .frame(width: 100, height: 100, alignment: .center)
                                                 .padding()
-                                            Text("No notes to show. Try searching for some!")
+                                            Text("No notes to show. Be the first to upload one!")
                                                 .font(.headline)
                                                 .fontWeight(.medium)
                                                 .foregroundColor(Color("AccentDark"))
@@ -117,7 +117,7 @@ struct NoteSearchView: View {
                                                 VStack {
                                                     ForEach(viewModel.results) { item in
                                                         
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: item.rating!)
+                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
                                                             .onTapGesture {
                                                                 self.showNoteDetails.toggle()
                                                                 self.targetNoteId = item.id!
@@ -136,7 +136,7 @@ struct NoteSearchView: View {
                                                 .foregroundColor(Color("AccentDark"))
                                                 .frame(width: 100, height: 100, alignment: .center)
                                                 .padding()
-                                            Text("No notes to show. Try searching for some!")
+                                            Text("Couldn't find anything. Try another query!")
                                                 .font(.headline)
                                                 .fontWeight(.medium)
                                                 .foregroundColor(Color("AccentDark"))

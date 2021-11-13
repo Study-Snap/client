@@ -69,6 +69,7 @@ struct ClassroomsView: View {
                                                 NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, hasLeftClassroom: $isUpdateClassroomView, classID: classroomItem.id!, className: classroomItem.name!)
                                                                 .navigationBarTitle("")
                                                                 .navigationBarHidden(true)) {
+                                                    let check = print(classroomItem.thumbnailUri)
                                                     ClassroomGridItemView(classroom: classroomItem)
                                           
                                                     
@@ -141,7 +142,6 @@ struct ClassroomsView: View {
                                         HStack(spacing: 16) {
                                             Button(action: {
                                                 print("Update classroom view")
-                                                isUpdateClassroomView = true
                                                 self.viewModel.loading = true
                                                 self.viewModel.getClassroomsForUser() {
                                                     if self.viewModel.unauthorized {

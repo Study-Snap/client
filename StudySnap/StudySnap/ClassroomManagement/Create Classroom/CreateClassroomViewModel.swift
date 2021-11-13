@@ -11,32 +11,36 @@ class CreateClassroomViewModel: ObservableObject{
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var name: String = ""
+    @Published var thumbnail: String = ""
     @Published var unauthorized: Bool = false
     
-    func postUserClassroom(className: String, completion: @escaping () -> ()) -> Void {
-        NeptuneApi().createClassroom(classNameData: className) { res in
-            if res.message != nil {
-                // Failed (no results or other known error)
+    func createClassroom(classCreateData: CreateClassroomData, completion: @escaping () -> ()) -> Void {
+        print(classCreateData)
+        NeptuneApi().createClassroom(data: classCreateData) { res in
+            if res.message != nil || res.error != nil {
+                // Error occurred... or something
                 if res.message!.contains("Unauthorized") {
-                    // Authentication error
                     refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         
-                        if !self.unauthorized {
-                            // If a new access token was generated, retry
-                            self.postUserClassroom(className: className, completion: completion)
-                        } else {
+                        if self.unauthorized {
                             completion()
                         }
+                        else {
+                            // If a new access token was generated, retry note upload
+                            self.createClassroom(classCreateData: classCreateData, completion: completion)
+                        }
                     }
+                    completion()
                 } else {
-                    // Other Error
-                    self.error.toggle()
+                    // Another error occurred
+                    self.error = true
                     self.errorMessage = res.message
+                    completion()
                 }
             } else {
-                // No problems Mr. Sheharyaar
+                // Class create successful. Complete execution
                 completion()
             }
         }

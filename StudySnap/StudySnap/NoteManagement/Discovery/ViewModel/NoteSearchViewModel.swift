@@ -31,16 +31,15 @@ class NoteSearchViewModel: ObservableObject {
                             completion()
                         }
                     }
+                } else if res[0].message!.contains("No notes were found") {
+                    // No notes exist for classroom (no need for error message)
+                    self.trending = []
                 } else {
-                    print(res)
                     // Some error occurred (unkown)
                     self.trending = []
                     self.error = true
                     self.errorMessage = res[0].message
                 }
-            } else if res.count == 0 {
-                // No notes found in the classroom (this is okay)
-                self.trending = []
             } else {
                 // Success
                 self.trending = res
@@ -67,7 +66,6 @@ class NoteSearchViewModel: ObservableObject {
                     }
                 } else {
                     // Another error occurred (is authorized, but something was wrong)
-                    print(res)
                     self.results = []
                     self.error = true
                     self.errorMessage = res[0].message

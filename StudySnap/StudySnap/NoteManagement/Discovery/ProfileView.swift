@@ -84,7 +84,7 @@ struct ProfileView: View {
                                 Text("Most Recent Upload")
                                     .foregroundColor(Color("Primary"))
                                     .font(.system(size: 15))
-                                NoteListRowItem(id: viewModel.userNoteResponse?[0].id ?? 0, title: viewModel.userNoteResponse?[0].title ?? "No note found.", author: "\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)", shortDescription: viewModel.userNoteResponse?[0].shortDescription ?? "No note found.", readTime: viewModel.userNoteResponse?[0].timeLength ?? 0, rating: viewModel.userNoteResponse?[0].rating ?? [0,0,0,0,0])
+                                NoteListRowItem(id: viewModel.userNoteResponse?[0].id ?? 0, title: viewModel.userNoteResponse?[0].title ?? "No note found.", author: "\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)", shortDescription: viewModel.userNoteResponse?[0].shortDescription ?? "No note found.", readTime: viewModel.userNoteResponse?[0].timeLength ?? 0, rating: [0,0,0,0])
                             }.padding(.vertical, 3)
                                 .padding(.leading, 5)
                         }.frame(
