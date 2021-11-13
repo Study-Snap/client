@@ -16,6 +16,7 @@ struct CreateClassroomView: View {
     @StateObject var viewModel: CreateClassroomViewModel = CreateClassroomViewModel()
     @State private var isShowingPhotoPicker = false
     @State private var classThumbnailImage = UIImage(named: "classthumbnail")!
+    @State private var incompleteEntry = false
     
     var body: some View {
         NavigationView {
@@ -51,15 +52,27 @@ struct CreateClassroomView: View {
 
                 Spacer()
                 PrimaryButtonView(title:"Create", action: {
+                    if !viewModel.name.isEmpty{
                     self.viewModel.createClassroom(classCreateData: CreateClassroomData(name: viewModel.name, thumbnailData: classThumbnailImage.pngData())) {
                         if self.viewModel.unauthorized {
                             // Refresh failed, return to login
                             self.rootIsActive = false
                         }
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    presentationMode.wrappedValue.dismiss()
+                    }else{
+                        self.incompleteEntry = true
+                    }
+                    
                 })
                 .padding()
+                .alert("Error: Missing information", isPresented: $incompleteEntry) {
+                    Button("Ok", role: .cancel){
+                        self.incompleteEntry = false
+                    }
+                } message:{
+                    Text("Please enter a class name")
+                }
             }.navigationBarTitle("Create Classroom", displayMode: .inline)
         }
     }
