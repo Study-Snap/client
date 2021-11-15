@@ -14,8 +14,6 @@ class ProfileViewViewModel: ObservableObject {
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var response: ApiUserId?
-    @Published var userClassroomResponse: [ApiClassroomResponse]?
-    @Published var userNoteResponse: [ApiNoteResponse]?
     @Published var unauthorized: Bool = false
     
     
@@ -46,7 +44,6 @@ class ProfileViewViewModel: ObservableObject {
                             self.getUserInformation(completion: completion)
                         }
                     }
-                    completion()
                 } else {
                     self.error = true
                     self.errorMessage = res.message
@@ -54,62 +51,6 @@ class ProfileViewViewModel: ObservableObject {
                 }
             } else {
                 self.response = res
-                completion()
-            }
-        }
-    }
-    
-    func getUserClassrooms(completion: @escaping () -> ()) -> Void {
-        NeptuneApi().getUserClassrooms() { res in
-            if res[0].message != nil || res[0].error != nil {
-                if res[0].message!.contains("Unauthorized") {
-                    refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
-                        self.unauthorized = !refreshed
-                        
-                        if self.unauthorized {
-                            completion()
-                        }
-                        else {
-                            self.getUserClassrooms(completion: completion)
-                        }
-                    }
-                    completion()
-                } else {
-                    self.error = true
-                    self.errorMessage = res[0].message
-                    completion()
-                }
-            } else {
-                self.userClassroomResponse = res
-                completion()
-            }
-        }
-    }
-    
-    func getUserNotes(completion: @escaping () -> ()) -> Void {
-        NeptuneApi().getUserNotes() { res in
-            if res[0].message != nil || res[0].error != nil {
-                if res[0].message!.contains("Unauthorized") {
-                    refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
-                        self.unauthorized = !refreshed
-                        
-                        if self.unauthorized {
-                            completion()
-                        }
-                        else {
-                            self.getUserNotes(completion: completion)
-                        }
-                    }
-                    completion()
-                } else {
-                    self.error = true
-                    self.errorMessage = res[0].message
-                    completion()
-                }
-            } else {
-                self.userNoteResponse = res
                 completion()
             }
         }
