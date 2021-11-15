@@ -20,7 +20,7 @@ class CreateClassroomViewModel: ObservableObject{
             if res.message != nil || res.error != nil {
                 // Error occurred... or something
                 if res.message!.contains("Unauthorized") {
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         

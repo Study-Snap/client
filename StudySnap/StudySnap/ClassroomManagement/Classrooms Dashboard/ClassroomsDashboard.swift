@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ClassroomsView: View {
+struct ClassroomsDashboard: View {
     @Binding var rootIsActive: Bool
     
     @State private var isGridViewActive: Bool = false
@@ -24,7 +24,7 @@ struct ClassroomsView: View {
     //: MARK - FUNCTIONS
     
     // View model
-    @StateObject var viewModel: ClassroomViewViewModel = ClassroomViewViewModel()
+    @StateObject var viewModel: ClassroomDashboardViewModel = ClassroomDashboardViewModel()
     
     func gridSwitch() {
         gridLayout = Array(repeating: .init(.flexible()), count: gridLayout.count % 2 + 1)
@@ -66,7 +66,7 @@ struct ClassroomsView: View {
                                     if !classrooms.isEmpty {
                                         LazyVGrid(columns: gridLayout, alignment: .center, spacing: 10) {
                                             ForEach(classrooms) { classroomItem in
-                                                NavigationLink(destination: NoteSearchView(rootIsActive: self.$rootIsActive, hasLeftClassroom: $isUpdateClassroomView, classID: classroomItem.id!, className: classroomItem.name!)
+                                                NavigationLink(destination: ClassroomDetailView(rootIsActive: self.$rootIsActive, hasLeftClassroom: $isUpdateClassroomView, classID: classroomItem.id!, className: classroomItem.name!)
                                                                 .navigationBarTitle("")
                                                                 .navigationBarHidden(true)) {
                                                     ClassroomGridItemView(classroom: classroomItem)
@@ -203,7 +203,7 @@ struct ClassroomsView: View {
 
 struct ClassroomsView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassroomsView(rootIsActive: .constant(true))
+        ClassroomsDashboard(rootIsActive: .constant(true))
             .previewDevice("iPhone 11 Pro")
     }
 }

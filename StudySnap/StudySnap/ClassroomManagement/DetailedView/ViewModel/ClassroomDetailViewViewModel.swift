@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class NoteSearchViewModel: ObservableObject {
+class ClassroomDetailViewViewModel: ObservableObject {
     @Published var trending: [ApiNoteResponse] = []
     @Published var results: [ApiNoteResponse] = []
     @Published var unauthorized: Bool = false
@@ -20,7 +20,7 @@ class NoteSearchViewModel: ObservableObject {
                 // Failed (no results or other known error)
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         
@@ -53,7 +53,7 @@ class NoteSearchViewModel: ObservableObject {
                 // Failed search (no results or other known error)
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         

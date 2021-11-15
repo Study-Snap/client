@@ -15,14 +15,14 @@ struct MainView: View {
         
         
         TabView{
-            ClassroomsView(rootIsActive: self.$rootIsActive)
+            ClassroomsDashboard(rootIsActive: self.$rootIsActive)
                 .tabItem {
                     Image(systemName: "person.3.fill")
                     Text("Classrooms")
                     
                 }
             
-            StorageView()
+            PersonalNotesView()
                 .tabItem {
                     Image(systemName: "photo.on.rectangle")
                     Text("Storage")

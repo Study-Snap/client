@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class NoteViewViewModel: ObservableObject {
+class DetailedNoteViewViewModel: ObservableObject {
     @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
@@ -21,7 +21,7 @@ class NoteViewViewModel: ObservableObject {
             if res.message != nil {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         
@@ -42,7 +42,6 @@ class NoteViewViewModel: ObservableObject {
                 self.noteObj = res
                 self.loading = false
             }
-            
             completion()
         }
     }

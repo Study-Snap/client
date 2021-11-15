@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: To be removed
 struct LocalNoteView: View {
     let note: Note
     

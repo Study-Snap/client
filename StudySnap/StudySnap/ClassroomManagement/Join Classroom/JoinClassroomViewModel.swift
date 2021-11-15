@@ -18,7 +18,7 @@ class JoinClassroomViewModel: ObservableObject{
             if res.statusCode != 200 {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct CloudNoteView: View {
+struct DetailedNoteView: View {
     @Binding var rootIsActive: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let noteId: Int
     
     // View model
-    @StateObject var viewModel: NoteViewViewModel = NoteViewViewModel()
+    @StateObject var viewModel: DetailedNoteViewViewModel = DetailedNoteViewViewModel()
     
     var body: some View {
       
@@ -157,8 +157,8 @@ struct CloudNoteView_Previews: PreviewProvider {
     }
     static var previews: some View{
         Group {
-            CloudNoteView(rootIsActive: .constant(true), noteId: 9)
-            CloudNoteView(rootIsActive: .constant(true), noteId: 9)
+            DetailedNoteView(rootIsActive: .constant(true), noteId: 9)
+            DetailedNoteView(rootIsActive: .constant(true), noteId: 9)
                 .preferredColorScheme(.dark)
           
         }

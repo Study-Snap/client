@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ClassroomViewViewModel: ObservableObject {
+class ClassroomDashboardViewModel: ObservableObject {
     @Published var results: [ApiClassroomResponse] = []
     @Published var unauthorized: Bool = false
     @Published var currentUser: Int = 0
@@ -23,7 +23,7 @@ class ClassroomViewViewModel: ObservableObject {
                 // Failed search (no results or other known error)
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         
@@ -93,7 +93,7 @@ class ClassroomViewViewModel: ObservableObject {
                 // Error occurred
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
-                    refreshAccessWithHandling { refreshed in
+                    AuthApi().refreshAccessWithHandling { refreshed in
                         print("Refreshed: \(refreshed)")
                         self.unauthorized = !refreshed
                         

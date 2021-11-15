@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct StorageView: View {
+struct PersonalNotesView: View {
     @State private var isShowingNotes: Bool = false
 
     @ObservedObject var globalString = GlobalString()
     @State var isDeleted = false
-    @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
+    @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
     var body: some View {
       NavigationView {
         List {
@@ -58,6 +58,6 @@ struct StorageView: View {
 
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {
-        StorageView()
+        PersonalNotesView()
     }
 }

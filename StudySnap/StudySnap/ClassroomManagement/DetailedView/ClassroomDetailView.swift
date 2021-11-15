@@ -9,13 +9,13 @@ import SwiftUI
 import MobileCoreServices
 
 
-struct NoteSearchView: View {
+struct ClassroomDetailView: View {
     @Binding var rootIsActive: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject var viewModel : NoteSearchViewModel = NoteSearchViewModel()
+    @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
     //@StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
-    @StateObject var classroomViewModel: ClassroomViewViewModel = ClassroomViewViewModel()
+    @StateObject var classroomViewModel: ClassroomDashboardViewModel = ClassroomDashboardViewModel()
     @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
     @State private var searchText : String = ""
@@ -38,7 +38,7 @@ struct NoteSearchView: View {
                     
                     VStack {
                         NavigationLink(
-                            destination: CloudNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                            destination: DetailedNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
                             isActive: $showNoteDetails,
                             label: {
                                 EmptyView()
@@ -236,7 +236,7 @@ struct NoteSearchView: View {
                                     Text("Are you sure you want to delete the classroom? All data inside will be deleted")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
+                                    destination: ClassroomsDashboard(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
@@ -273,7 +273,7 @@ struct NoteSearchView: View {
                                     Text("Are you sure you want to leave the classroom?")
                                 }
                                 NavigationLink(
-                                    destination: ClassroomsView(rootIsActive: self.$rootIsActive),
+                                    destination: ClassroomsDashboard(rootIsActive: self.$rootIsActive),
                                     isActive: $isConfirmedLeavingClassroom
                                 ) {
                                     EmptyView() // Button follows
@@ -295,16 +295,16 @@ struct NoteSearchView: View {
 
     struct SearchBar: UIViewRepresentable {
         @Binding var rootIsActive: Bool
-        @StateObject var viewModel: NoteSearchViewModel
+        @StateObject var viewModel: ClassroomDetailViewViewModel
         @Binding var text: String
         @State var classID: String
         
         class Coordinator: NSObject, UISearchBarDelegate {
-            @StateObject var viewModel: NoteSearchViewModel
+            @StateObject var viewModel: ClassroomDetailViewViewModel
             @Binding var rootIsActive: Bool
             @Binding var text: String
             @State var classID: String
-            init(rootIsActive: Binding<Bool>, text: Binding<String>, viewModel: StateObject<NoteSearchViewModel>, classID: State<String>) {
+            init(rootIsActive: Binding<Bool>, text: Binding<String>, viewModel: StateObject<ClassroomDetailViewViewModel>, classID: State<String>) {
                 _text = text
                 _viewModel = viewModel
                 _classID = classID
@@ -345,9 +345,9 @@ struct NoteSearchView: View {
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             Group {
-                NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                     .previewDevice("iPhone 11 Pro")
-                NoteSearchView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                     .previewDevice("iPhone 11 Pro")
                     .preferredColorScheme(.dark)
                     .previewInterfaceOrientation(.portrait)
