@@ -45,7 +45,7 @@ services:
     networks:
       - client-dev-network
   neptune:
-    image: studysnap/neptune:SSPP-193.0.x
+    image: studysnap/neptune:SSPP-294.0.3.x
     container_name: neptune
     restart: on-failure
     environment: 
@@ -57,9 +57,8 @@ services:
       ES_PORT: 9200
       DB_DATABASE_NAME: studysnap_db
       JWT_SECRET: dev
-      FILE_STORE: /files
     volumes:
-      - "./temp-file-store:/files"
+      - ./.prod.env:/app/.prod.env
     depends_on: 
       - ssdb
       - authentication
@@ -68,7 +67,7 @@ services:
     networks:
       - client-dev-network
   authentication:
-    image: studysnap/authentication:develop.1.x
+    image: studysnap/authentication:1.0.3
     container_name: authentication
     restart: on-failure
     environment:
@@ -78,7 +77,7 @@ services:
       DB_HOST: ssdb
       DB_USER_DATABASE: studysnap_db
       JWT_SECRET: dev
-      JWT_ACCESS_TOKEN_EXPIRE_TIME: 999m
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 10s
     depends_on:
       - ssdb
     ports:

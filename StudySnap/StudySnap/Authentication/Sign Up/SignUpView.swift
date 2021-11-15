@@ -38,11 +38,13 @@ struct SignUpContent: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .center) {
-                Text("Sign Up").font(.largeTitle).padding()
+            ScrollView {
+                HStack(alignment: .center) {
+                    Text("Sign Up").font(.largeTitle).padding()
+                }
+                
+                SignUpInput(viewModel: viewModel)
             }
-            
-            SignUpInput(viewModel: viewModel)
             Spacer()
             SignUpButton(presentationMode: self.presentationMode, viewModel: viewModel)
             

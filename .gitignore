@@ -91,3 +91,9 @@ iOSInjectionProject/
 
 # File storage for development purposes
 temp-file-store/*
+
+# Environment files (.env, .dev.env, .test.env, .prod.env)
+.env
+.dev.env
+.test.env
+.prod.env
