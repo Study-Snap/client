@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftyBibtex
 
 struct DetailedNoteView: View {
     @Binding var rootIsActive: Bool
@@ -15,6 +16,13 @@ struct DetailedNoteView: View {
     
     // View model
     @StateObject var viewModel: DetailedNoteViewViewModel = DetailedNoteViewViewModel()
+    
+    // Alert value
+    @State private var showCitation = false
+    // Setup citation
+    @State private var citationAuthor = ""
+    @State private var citationTitle = ""
+    @State private var citationYear = ""
     
     var body: some View {
       
@@ -116,13 +124,27 @@ struct DetailedNoteView: View {
                             // MARK: Bottom buttons
                             HStack {
                                 Text("About a \(viewModel.noteObj.timeLength!) minute read: ")
-                                Button(action: {print("")}, label: {
+                                Button(action: {
+                                    if (viewModel.noteObj.bibtextCitation! != "") {
+                                        do {
+                                            let result = try SwiftyBibtex.parse(viewModel.noteObj.bibtextCitation!)
+                                            citationAuthor = result.publications[0].fields["author"]!
+                                            citationTitle = result.publications[0].fields["title"]!
+                                            citationYear = result.publications[0].fields["year"]!
+                                        } catch {
+                                            print("Error parsing citation: \(error)")
+                                        }
+                                    }
+                                    showCitation = true
+                                }, label: {
                                     Text("View Citation")
                                         .accentColor(Color("Primary"))
                                     
-                                })
-                                
-                                
+                                }).alert(isPresented: $showCitation) {
+                                    Alert(
+                                        title: citationAuthor != "" ? Text("Citation Information") : Text("No citation information."),
+                                        message: citationAuthor != "" ? Text("Author: \(citationAuthor)" + "\n Title: \(citationTitle)" + "\n Year: \(citationYear)") : Text("User did not provide citation information."))
+                                }
                             }.padding()
                         }
                     }.toolbar{

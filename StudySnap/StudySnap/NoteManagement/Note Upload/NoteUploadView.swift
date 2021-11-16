@@ -162,7 +162,7 @@ struct NoteUploadView: View {
                     self.loading.toggle() // Start loading indication
                                         
                     if !self.citationAuthor.isEmpty && !self.citationTitle.isEmpty && !self.citationYear.isEmpty {
-                        self.fullCitation = "@article{ahu61, author={" + self.citationAuthor + "}, title={" + self.citationTitle + "}, journal={}, year=" + self.citationYear + "}"
+                        self.fullCitation = "@article{ahu61, author={" + self.citationAuthor + "}, title={" + self.citationTitle + "}, year=" + self.citationYear + "}"
                     }
                     
                     self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {
