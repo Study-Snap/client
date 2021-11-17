@@ -131,19 +131,17 @@ struct DetailedNoteView: View {
                                             citationAuthor = result.publications[0].fields["author"]!
                                             citationTitle = result.publications[0].fields["title"]!
                                             citationYear = result.publications[0].fields["year"]!
+                                            showCitation = true
                                         } catch {
                                             print("Error parsing citation: \(error)")
                                         }
                                     }
-                                    showCitation = true
                                 }, label: {
                                     Text("View Citation")
                                         .accentColor(Color("Primary"))
                                     
-                                }).alert(isPresented: $showCitation) {
-                                    Alert(
-                                        title: citationAuthor != "" ? Text("Citation Information") : Text("No citation information."),
-                                        message: citationAuthor != "" ? Text("Author: \(citationAuthor)" + "\n Title: \(citationTitle)" + "\n Year: \(citationYear)") : Text("User did not provide citation information."))
+                                }).sheet(isPresented: $showCitation) {
+                                    CitationView(citationAuthor: $citationAuthor, citationTitle: $citationTitle, citationYear: $citationYear)
                                 }
                             }.padding()
                         }
