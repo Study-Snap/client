@@ -114,7 +114,7 @@ struct ClassroomsDashboard: View {
                                     
                                 } //: BUTTON
                                 .sheet(isPresented: $isJoiningClassroom) {
-                                    JoinClassroomView(rootIsActive: self.$rootIsActive)
+                                    JoinClassroomView(rootIsActive: self.$rootIsActive, isClassroomsUpdated: self.$isUpdateClassroomView)
                                 }
                                 
                                 Button(action: {
@@ -128,7 +128,7 @@ struct ClassroomsDashboard: View {
                                         .padding(.trailing, 10)
                                 } //: BUTTON
                                 .sheet(isPresented: $isCreatingClassroom) {
-                                    CreateClassroomView(rootIsActive: self.$rootIsActive)
+                                    CreateClassroomView(rootIsActive: self.$rootIsActive, isClassroomsUpdated: self.$isUpdateClassroomView)
                                 }
                                 
                             }.padding(.bottom,10)
@@ -174,7 +174,6 @@ struct ClassroomsDashboard: View {
             }
             Spacer()
         }
-        
         .onAppear(perform: {
             self.viewModel.loading = true
             self.viewModel.getClassroomsForUser() {

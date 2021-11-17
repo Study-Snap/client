@@ -24,7 +24,7 @@ class ClassroomDashboardViewModel: ObservableObject {
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getClassroomsForUser): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {
@@ -40,50 +40,78 @@ class ClassroomDashboardViewModel: ObservableObject {
                     self.loading = false
                     self.error = true
                     self.errorMessage = res[0].message
+                    completion()
                 }
             } else if res.count == 0 {
                 // No Notes (empty)
                 self.results = []
                 self.loading = false
+                completion()
             } else {
                 // Successful in loading classrooms
                 self.results = res
                 self.loading = false
+                completion()
             }
         }
     }
     
-    /**
-        @Sheharyaar
-        These functions (getClassroom and getUser) *WILL* fail as soon as access token is revoked/expired since there is no refresh flow here... @Ben will look into this
-     */
-    func getUser() -> Void {
+    func getUser(completion: @escaping () -> ()) -> Void {
         NeptuneApi().getCurrentUserId(){ res in
-            if res.message != nil {
-                // Failed to find user
-                self.error.toggle()
-                self.errorMessage = res.message
-            
+            if res.message != nil || res.error != nil {
+                if res.message!.contains("Unauthorized") {
+                    // Authentication error
+                    AuthApi().refreshAccessWithHandling { refreshed in
+                        print("Refreshed (getUser): \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.getUser(completion: completion)
+                        }
+                        completion()
+                    }
+                } else {
+                    // Another error occurred
+                    self.error = true
+                    self.errorMessage = res.message
+                    self.loading = false
+                    completion()
+                }
             } else {
                 // Successful get user
                 self.currentUser = res.id!
-                
+                completion()
             }
         }
     }
-    func getClassroom(classId: String) -> Void {
+    func getClassroom(classId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().getCurrentClassroomOwner(classIdData: classId){ res in
-            if res.message != nil {
-                // Failed to find user
-                self.error.toggle()
-                self.errorMessage = res.message
-                self.loading = false
-            
+            if res.message != nil || res.error != nil {
+                if res.message!.contains("Unauthorized") {
+                    // Authentication error
+                    AuthApi().refreshAccessWithHandling { refreshed in
+                        print("Refreshed (GetClassroom): \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if !self.unauthorized {
+                            // If a new access token was generated, retry
+                            self.getClassroom(classId: classId, completion: completion)
+                        }
+                        completion()
+                    }
+                } else {
+                    // Failed to find user
+                    self.error = true
+                    self.errorMessage = res.message
+                    self.loading = false
+                    completion()
+                }
             } else {
                 // Successful search
                 self.classroomOwner = res.ownerId!
                 self.loading = false
-                
+                completion()
             }
         }
     }
@@ -94,7 +122,7 @@ class ClassroomDashboardViewModel: ObservableObject {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (leaveClassroomResponse): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {

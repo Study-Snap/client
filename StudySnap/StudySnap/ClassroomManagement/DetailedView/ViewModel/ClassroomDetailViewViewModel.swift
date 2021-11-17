@@ -21,28 +21,31 @@ class ClassroomDetailViewViewModel: ObservableObject {
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getTopTrendingNotes): \(refreshed)")
                         self.unauthorized = !refreshed
                         
-                        if !self.unauthorized {
+                        if self.unauthorized {
+                            completion()
+                        } else {
                             // If a new access token was generated, retry
                             self.getTopTrendingNotes(currentClassId: currentClassId, completion: completion)
-                        } else {
-                            completion()
                         }
                     }
                 } else if res[0].message!.contains("No notes were found") {
                     // No notes exist for classroom (no need for error message)
                     self.trending = []
+                    completion()
                 } else {
                     // Some error occurred (unkown)
                     self.trending = []
                     self.error = true
                     self.errorMessage = res[0].message
+                    completion()
                 }
             } else {
                 // Success
                 self.trending = res
+                completion()
             }
         }
     }
@@ -54,7 +57,7 @@ class ClassroomDetailViewViewModel: ObservableObject {
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (search): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {

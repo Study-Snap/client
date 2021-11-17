@@ -21,7 +21,7 @@ class CreateClassroomViewModel: ObservableObject{
                 // Error occurred... or something
                 if res.message!.contains("Unauthorized") {
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (createClassroom): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if self.unauthorized {
@@ -32,7 +32,6 @@ class CreateClassroomViewModel: ObservableObject{
                             self.createClassroom(classCreateData: classCreateData, completion: completion)
                         }
                     }
-                    completion()
                 } else {
                     // Another error occurred
                     self.error = true
