@@ -22,6 +22,7 @@
 		4A0739BD2605340D00A823DF /* PersonalNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739BC2605340D00A823DF /* PersonalNotesView.swift */; };
 		4A0739C2260534B000A823DF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* ProfileView.swift */; };
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
+		4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */; };
 		4A5FDCCA270652A400770DA7 /* ClassroomDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5FDCC9270652A400770DA7 /* ClassroomDashboardViewModel.swift */; };
 		4A6523722712996F004BD0C7 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6523712712996F004BD0C7 /* NavigationBarModifier.swift */; };
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
@@ -100,6 +101,7 @@
 		4A0739BC2605340D00A823DF /* PersonalNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesView.swift; sourceTree = "<group>"; };
 		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
+		4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesViewModel.swift; sourceTree = "<group>"; };
 		4A5FDCC9270652A400770DA7 /* ClassroomDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomDashboardViewModel.swift; sourceTree = "<group>"; };
 		4A6523712712996F004BD0C7 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		B87FCDB42742E0060023F58B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				4A72D9A32700144000519D6A /* CreateClassroomViewModel.swift in Sources */,
 				4A012570260C1AE1009E3F6B /* DetailedNoteView.swift in Sources */,
 				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
+				4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,

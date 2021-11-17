@@ -79,7 +79,7 @@ struct ApiUserId: Codable, Identifiable{
 }
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
-        case title, classId, keywords, shortDescription, noteAbstract, fileUri, authorId, timeLength, bibtextCitation, user, message
+        case title, classId, keywords, shortDescription, noteAbstract, noteCDN, fileUri, authorId, timeLength, bibtextCitation, user, message
         
         case id = "id"
     }
@@ -90,6 +90,7 @@ struct ApiNoteResponse : Codable, Identifiable {
     var keywords: [String]?
     var shortDescription: String?
     var noteAbstract: String?
+    var noteCDN: String?
     var fileUri: String?
     var authorId: Int?
     var timeLength: Int?
