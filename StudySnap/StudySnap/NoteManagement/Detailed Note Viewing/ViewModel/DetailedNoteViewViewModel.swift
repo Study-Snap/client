@@ -22,7 +22,7 @@ class DetailedNoteViewViewModel: ObservableObject {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getNoteDetailsForId): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {

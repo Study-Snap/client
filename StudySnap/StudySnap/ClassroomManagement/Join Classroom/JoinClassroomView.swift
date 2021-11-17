@@ -15,6 +15,8 @@ struct JoinClassroomView: View {
     // State
     @StateObject var viewModel: JoinClassroomViewModel = JoinClassroomViewModel()
     
+    @Binding var isClassroomsUpdated: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -25,8 +27,9 @@ struct JoinClassroomView: View {
                         if self.viewModel.unauthorized {
                             // Refresh failed, return to login
                             self.rootIsActive = false
+                        } else {
+                            self.isClassroomsUpdated = true
                         }
-                        
                         // No issues... dismiss the view
                         self.presentationMode.wrappedValue.dismiss()
                     }
@@ -39,6 +42,6 @@ struct JoinClassroomView: View {
 
 struct JoinClassroomView_Previews: PreviewProvider {
     static var previews: some View {
-        JoinClassroomView(rootIsActive: .constant(true))
+        JoinClassroomView(rootIsActive: .constant(true), isClassroomsUpdated: .constant(false))
     }
 }

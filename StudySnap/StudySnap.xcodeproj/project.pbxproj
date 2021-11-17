@@ -261,8 +261,8 @@
 		4A72D9A0270013E700519D6A /* Join Classroom */ = {
 			isa = PBXGroup;
 			children = (
+				B86FFC2A274570940088CB0F /* ViewModel */,
 				4A72D97026FFF4D700519D6A /* JoinClassroomView.swift */,
-				4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */,
 			);
 			path = "Join Classroom";
 			sourceTree = "<group>";
@@ -270,8 +270,8 @@
 		4A72D9A12700140400519D6A /* Create Classroom */ = {
 			isa = PBXGroup;
 			children = (
+				B86FFC29274570890088CB0F /* ViewModel */,
 				4A72D998270009C600519D6A /* CreateClassroomView.swift */,
-				4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */,
 			);
 			path = "Create Classroom";
 			sourceTree = "<group>";
@@ -306,6 +306,22 @@
 			isa = PBXGroup;
 			children = (
 				B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B86FFC29274570890088CB0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B86FFC2A274570940088CB0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

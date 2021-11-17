@@ -34,7 +34,7 @@ class ProfileViewViewModel: ObservableObject {
             if res.message != nil || res.error != nil {
                 if res.message!.contains("Unauthorized") {
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getUserInformation): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if self.unauthorized {
