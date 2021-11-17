@@ -27,23 +27,22 @@ struct DetailedNoteView: View {
     var body: some View {
       
             VStack {
-                if viewModel.loading {
+                if false {
                     ProgressView("Loading note details...")
                         .foregroundColor(Color("Secondary"))
                 } else {
                     VStack {
+                        // MARK: Top (title, author, rating and keywords)
                         VStack {
                             ZStack {
                                 Color("Primary")
                                 VStack {
-                                   
                                     Text(viewModel.noteObj.title!)
                                         .font(.title)
                                         .bold()
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
-                                        .padding(20)
-                                        .padding(.top, 25)
+                                        .padding(.bottom, 10)
                                     Text("\(viewModel.noteObj.user!.firstName) \(viewModel.noteObj.user!.lastName)")
                                         .font(.title2)
                                         .fontWeight(.light)
@@ -60,23 +59,20 @@ struct DetailedNoteView: View {
                                                     .foregroundColor(.black.opacity(0.8))
                                                     .background(Color(.white))
                                                     .cornerRadius(7.0)
-                                                
                                             }
                                         }
                                     }
-                                    .padding(.top, 25)
+                                    .padding(.top, 5)
                                     VStack {
-                                        //NoteRatingView(avgRating: calculateRating(ratings: viewModel.noteObj.rating!), starFilledColor: .yellow, starEmptyColor: .white)
                                         NoteRatingView()
-                                    }.padding(.top, 15)
+                                    }.padding(.top, 5.0)
                                 }
                             }
-                     
                             .cornerRadius(15.0)
                         }.edgesIgnoringSafeArea([.top])
                         
                         
-                        VStack {
+                        VStack(alignment: .leading) {
                             // MARK: Note Download Button
                             HStack {
                                 Button(action: {print("Test")}, label: {
@@ -92,7 +88,7 @@ struct DetailedNoteView: View {
                             .background(Color("Accent"))
                             .cornerRadius(7.0)
                             .padding(.horizontal)
-                            .padding(.bottom, 15)
+                            .padding(.vertical, 5)
                             
                             // MARK: Main Content
                             ScrollView {
@@ -103,7 +99,7 @@ struct DetailedNoteView: View {
                                             .foregroundColor(Color("Primary"))
                                             .padding(.bottom, 0)
                                         
-                                        Text(viewModel.noteObj.shortDescription!).fontWeight(.light)
+                                        Text(viewModel.noteObj.shortDescription!).font(.caption).fontWeight(.light)
                                     }
                                     .padding()
                                     
@@ -112,7 +108,7 @@ struct DetailedNoteView: View {
                                             .font(.caption)
                                             .foregroundColor(Color("Primary"))
                                         
-                                        Text(viewModel.noteObj.noteAbstract!).fontWeight(.light)
+                                        Text(viewModel.noteObj.noteAbstract!).font(.caption).fontWeight(.light).multilineTextAlignment(.leading)
                                     }.padding()
                                     
                                 }
@@ -123,27 +119,42 @@ struct DetailedNoteView: View {
                             Spacer()
                             // MARK: Bottom buttons
                             HStack {
-                                Text("About a \(viewModel.noteObj.timeLength!) minute read: ")
-                                Button(action: {
-                                    if (viewModel.noteObj.bibtextCitation! != "") {
-                                        do {
-                                            let result = try SwiftyBibtex.parse(viewModel.noteObj.bibtextCitation!)
-                                            citationAuthor = result.publications[0].fields["author"]!
-                                            citationTitle = result.publications[0].fields["title"]!
-                                            citationYear = result.publications[0].fields["year"]!
-                                            showCitation = true
-                                        } catch {
-                                            print("Error parsing citation: \(error)")
-                                        }
-                                    }
-                                }, label: {
-                                    Text("View Citation")
-                                        .accentColor(Color("Primary"))
-                                    
-                                }).sheet(isPresented: $showCitation) {
-                                    CitationView(citationAuthor: $citationAuthor, citationTitle: $citationTitle, citationYear: $citationYear)
+                                HStack {
+                                    Text("\(viewModel.noteObj.timeLength!) Minute Read").foregroundColor(Color("Secondary")).padding(.vertical, 10).padding(.horizontal, 25)
                                 }
-                            }.padding()
+                                .padding(.horizontal, 10)
+                                .background(Color("Accent"))
+                                .cornerRadius(7.0)
+                                .padding(.horizontal)
+                                
+                                HStack {
+                                    Button(action: {
+                                        if (viewModel.noteObj.bibtextCitation! != "") {
+                                            do {
+                                                let result = try SwiftyBibtex.parse(viewModel.noteObj.bibtextCitation!)
+                                                citationAuthor = result.publications[0].fields["author"]!
+                                                citationTitle = result.publications[0].fields["title"]!
+                                                citationYear = result.publications[0].fields["year"]!
+                                            } catch {
+                                                print("Error parsing citation: \(error)")
+                                            }
+                                        } else {
+                                            citationAuthor = ""
+                                            citationTitle = ""
+                                            citationYear = ""
+                                        }
+                                        showCitation = true
+                                    }, label: {
+                                        Text("Cite Me").accentColor(Color("Secondary")).padding(.vertical, 10).padding(.horizontal, 20)
+                                    }).sheet(isPresented: $showCitation) {
+                                        CitationView(citationAuthor: $citationAuthor, citationTitle: $citationTitle, citationYear: $citationYear)
+                                    }
+                                }
+                                .padding(.horizontal, 10)
+                                .background(Color("Accent"))
+                                .cornerRadius(7.0)
+                                .padding(.horizontal)
+                            }
                         }
                     }.toolbar{
                         ToolbarItem(placement: .navigationBarLeading){
