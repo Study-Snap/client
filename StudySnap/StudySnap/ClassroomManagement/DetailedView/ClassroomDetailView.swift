@@ -14,7 +14,6 @@ struct ClassroomDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
-    //@StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
     @StateObject var classroomViewModel: ClassroomDashboardViewModel = ClassroomDashboardViewModel()
     @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
@@ -30,8 +29,9 @@ struct ClassroomDetailView: View {
     @State var className: String
     @State var refresh: Bool = false
 
+
     var body: some View {
-        
+    
         ZStack(alignment: .center) {
             NavigationView {
                 VStack {
@@ -74,9 +74,10 @@ struct ClassroomDetailView: View {
                                     if viewModel.trending.count > 0 {
                                         Text("Top Rated Notes").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
                                             .padding(.top, 3)
-                                        ScrollView{
-                                            LazyVStack {
-                                                VStack {
+                                        
+                                        //ScrollView{
+                                            //LazyVStack {
+                                                List {
                                                     ForEach(viewModel.trending) { item in
                                                         
                                                         NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
@@ -87,8 +88,11 @@ struct ClassroomDetailView: View {
                                                         
                                                     }
                                                 }
-                                            }
-                                        }
+                                                .listStyle(.insetGrouped)
+                                                .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
+                                               
+                                            //}
+                                        //}
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
@@ -112,9 +116,9 @@ struct ClassroomDetailView: View {
                                     if viewModel.results.count > 0 {
                                         Text("We found these").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
                                             .padding(.top, 3)
-                                        ScrollView{
-                                            LazyVStack {
-                                                VStack {
+                                        //ScrollView{
+                                            //LazyVStack {
+                                                List {
                                                     ForEach(viewModel.results) { item in
                                                         
                                                         NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
@@ -124,9 +128,11 @@ struct ClassroomDetailView: View {
                                                             }
                                                         
                                                     }
-                                                }
-                                            }
-                                        }
+                                                }.listStyle(.insetGrouped)
+                                            
+                                          
+                                            //}
+                                       // }
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
@@ -289,6 +295,7 @@ struct ClassroomDetailView: View {
 	    // MARK: @Ben will look into changing refresh flow on these functions so they don't fail on access revoke/expire
             self.classroomViewModel.getUser()
             self.classroomViewModel.getClassroom(classId: self.classID)
+            
         })
     }
 }

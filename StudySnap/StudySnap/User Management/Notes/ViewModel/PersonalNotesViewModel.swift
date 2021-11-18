@@ -46,4 +46,34 @@ class PersonalNotesViewModel: ObservableObject{
         }
     }
     
+    func deleteUserNote(userNoteId: Int, completion: @escaping () -> ()) -> Void {
+        NeptuneApi().deleteNote(noteId: userNoteId) { res in
+            if res.statusCode != 200 {
+                if res.message!.contains("Unauthorized") {
+                    // Authentication error
+                    AuthApi().refreshAccessWithHandling { refreshed in
+                        print("Refreshed (joinUserClassroom): \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if self.unauthorized {
+                            completion()
+                        } else {
+                            // If a new access token was generated, retry
+                            self.deleteUserNote(userNoteId: userNoteId, completion: completion)
+                        }
+                    }
+                } else {
+                    // Received message
+                    self.error = true
+                    self.errorMessage = res.message
+                    completion()
+                }
+            } else{
+                // Success
+                completion()
+            }
+        }
+    }
+    
+    
 }

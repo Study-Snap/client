@@ -15,70 +15,81 @@ struct PersonalNotesView: View {
     @StateObject var viewModel : PersonalNotesViewModel = PersonalNotesViewModel()
     @State var targetNoteId: Int? = 1
     @State var showNoteDetails = false
+    @State var refresh: Bool = false
+    
     var body: some View {
         VStack {
             NavigationView {
-              
-            /*List {
-                ForEach(globalString.notesData) { item in
-                    NavigationLink(destination:{
-                        VStack{
-                            LocalNoteView(note: item)
-                        }
-                    }()) {
-                        NoteRowView(note: item)
-                            .padding(.vertical, 4)
-                        
-                    }
-                }
-                .onDelete(perform: delete)
-            }
-             */
-                VStack {
-                   
+                
+                if viewModel.results.count > 0 {
                     VStack {
-                        NavigationLink(
-                            destination: DetailedNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
-                            isActive: $showNoteDetails,
-                            label: {
-                                EmptyView()
+                        
+                        VStack {
+                            NavigationLink(
+                                destination: DetailedNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                                isActive: $showNoteDetails,
+                                label: {
+                                    EmptyView()
+                                    
+                                }).isDetailLink(false)
+                            
+                        }
+                        
+                        List{
+                            
+                            ForEach(viewModel.results) { item in
                                 
-                            }).isDetailLink(false)
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
+                                    .swipeActions() {
+                                        Button(action: {
+                                            self.viewModel.deleteUserNote(userNoteId: item.id!) {
+                                                self.isDeleted = true
+                                                self.refresh = true
+                                            }
+                                            
+                                        }) {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                        .tint(.red)
+                                        
+                                    }
+                                    .onTapGesture {
+                                        self.targetNoteId = item.id!
+                                        self.showNoteDetails.toggle()
+                                    }
+                                
+                                
+                            }
+                            
+                            
+                            
+                            
+                            
+                        }.listStyle(.insetGrouped)
                         
+                    }.navigationBarTitle("Personal Notes",displayMode: .inline)
+                } else {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Image(systemName: "questionmark.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color("AccentDark"))
+                            .frame(width: 100, height: 100, alignment: .center)
+                            .padding()
+                        Text("No Personal Notes In Storage, Have to upload a note first")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .foregroundColor(Color("AccentDark"))
+                            .padding(.horizontal)
+                        Spacer()
+                        Spacer()
                     }
-                          
-                    ScrollView{
-                        ForEach(viewModel.results) { item in
-                                      
-                                      NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
-                                          .onTapGesture {
-                                              self.targetNoteId = item.id!
-                                              self.showNoteDetails.toggle()
-                                          }
-                                      
-                                  }
-                              
-                          
-                      
-                        
-                    }
-                /*.navigationBarItems(
-                  trailing:
-                    Button(action: {
-                      isShowingNotes = true
-                    }) {
-                        Image(systemName: "plus")
-                            .font(.title)
-                            .foregroundColor(Color("Secondary"))
-                    } //: BUTTON
-                    .sheet(isPresented: $isShowingNotes) {
-                      //NoteUploadView() // MARK: Implement when working on perosnal storage
-                    }
-            )*/
-                }.navigationBarTitle("Storage", displayMode: .inline)
-
-          } //: NAVIGATION
-           
+                    .cornerRadius(12)
+                }
+                
+            } //: NAVIGATION
+            
         }.onAppear(perform: {
             self.viewModel.getPersonalUserNotes(){
                 if self.viewModel.unauthorized {
@@ -87,14 +98,21 @@ struct PersonalNotesView: View {
                 }
             }
         })
+            .onChange(of: refresh) { value in
+                if self.refresh {
+                    // Refresh top notes
+                    self.viewModel.getPersonalUserNotes() {
+                        if self.viewModel.unauthorized {
+                            // Refresh failed, return to login
+                            self.rootIsActive = false
+                        }
+                    }
+                    // Reset flag
+                    self.refresh = false
+                }
+            }
     }
     
-    // DEPRICATED CODE
-    private func delete(at offSet: IndexSet){
-        globalString.notesData.remove(atOffsets: offSet)
-        isDeleted = true
-        
-    }
 }
 
 
