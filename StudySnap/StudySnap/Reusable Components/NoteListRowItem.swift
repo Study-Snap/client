@@ -55,12 +55,8 @@ struct NoteListRowItem: View {
                 
                 
                 
-            }
-            //.foregroundColor(.yellow)
-            
+            }.padding(.leading, 6)
         }
-        
-        
     }
 }
 

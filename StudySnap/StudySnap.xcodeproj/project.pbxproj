@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,10 +39,13 @@
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
 		4AB9997A2738B76400675FE7 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB999792738B76400675FE7 /* Styles.swift */; };
 		AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */; };
+		AE187AD527435BAD00BA38B0 /* SwiftyBibtex in Frameworks */ = {isa = PBXBuildFile; productRef = AE187AD427435BAD00BA38B0 /* SwiftyBibtex */; };
 		AE280A232714CCCB00809D7E /* ProfileViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */; };
+		AE8349C127448E68001DFA35 /* CitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8349C027448E68001DFA35 /* CitationView.swift */; };
 		AEB239922712452300F1C02F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB239912712452300F1C02F /* NoteEditorView.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
+		B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F6A71274835370022A4C1 /* CitationModel.swift */; };
 		B864A7C5262BAABB0058493F /* ValidationOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7C4262BAABB0058493F /* ValidationOverride.swift */; };
 		B866B1FE262A4B44004C2681 /* DetailedNoteViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */; };
 		B898743B2626999100C25B23 /* ClassroomDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B898743A2626999100C25B23 /* ClassroomDetailViewViewModel.swift */; };
@@ -119,9 +122,11 @@
 		4AB999792738B76400675FE7 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNoteView.swift; sourceTree = "<group>"; };
 		AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewViewModel.swift; sourceTree = "<group>"; };
+		AE8349C027448E68001DFA35 /* CitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationView.swift; sourceTree = "<group>"; };
 		AEB239912712452300F1C02F /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
+		B85F6A71274835370022A4C1 /* CitationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationModel.swift; sourceTree = "<group>"; };
 		B864A7C4262BAABB0058493F /* ValidationOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationOverride.swift; sourceTree = "<group>"; };
 		B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteViewViewModel.swift; sourceTree = "<group>"; };
 		B898743A2626999100C25B23 /* ClassroomDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomDetailViewViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE187AD527435BAD00BA38B0 /* SwiftyBibtex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				4A012574260C1E9A009E3F6B /* NoteModel.swift */,
+				B85F6A71274835370022A4C1 /* CitationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,8 +270,8 @@
 		4A72D9A0270013E700519D6A /* Join Classroom */ = {
 			isa = PBXGroup;
 			children = (
+				B86FFC2A274570940088CB0F /* ViewModel */,
 				4A72D97026FFF4D700519D6A /* JoinClassroomView.swift */,
-				4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */,
 			);
 			path = "Join Classroom";
 			sourceTree = "<group>";
@@ -272,8 +279,8 @@
 		4A72D9A12700140400519D6A /* Create Classroom */ = {
 			isa = PBXGroup;
 			children = (
+				B86FFC29274570890088CB0F /* ViewModel */,
 				4A72D998270009C600519D6A /* CreateClassroomView.swift */,
-				4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */,
 			);
 			path = "Create Classroom";
 			sourceTree = "<group>";
@@ -308,6 +315,22 @@
 			isa = PBXGroup;
 			children = (
 				B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B86FFC29274570890088CB0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D9A22700144000519D6A /* CreateClassroomViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B86FFC2A274570940088CB0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A72D9AA2700145800519D6A /* JoinClassroomViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -408,6 +431,7 @@
 				B866B1FC262A4B04004C2681 /* ViewModel */,
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* DetailedNoteView.swift */,
+				AE8349C027448E68001DFA35 /* CitationView.swift */,
 			);
 			path = "Detailed Note Viewing";
 			sourceTree = "<group>";
@@ -561,6 +585,9 @@
 			dependencies = (
 			);
 			name = StudySnap;
+			packageProductDependencies = (
+				AE187AD427435BAD00BA38B0 /* SwiftyBibtex */,
+			);
 			productName = StudySnap;
 			productReference = B8E1CB9D25F14C2C00493EC5 /* StudySnap.app */;
 			productType = "com.apple.product-type.application";
@@ -632,6 +659,9 @@
 				Base,
 			);
 			mainGroup = B8E1CB9425F14C2C00493EC5;
+			packageReferences = (
+				AE187AD327435BAD00BA38B0 /* XCRemoteSwiftPackageReference "SwiftyBibtex" */,
+			);
 			productRefGroup = B8E1CB9E25F14C2C00493EC5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -680,12 +710,14 @@
 				4A012530260BE58B009E3F6B /* NoteRowView.swift in Sources */,
 				4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */,
 				B8D1413B261BE8AD00D3822E /* KeyboardGuardian.swift in Sources */,
+				AE8349C127448E68001DFA35 /* CitationView.swift in Sources */,
 				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
 				B8C5CD232628EBFC00C9FC74 /* NoteListRowItem.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* ClassroomDetailView.swift in Sources */,
 				AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */,
+				B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */,
 				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
 				4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */,
 				4AB9997A2738B76400675FE7 /* Styles.swift in Sources */,
@@ -1050,6 +1082,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AE187AD327435BAD00BA38B0 /* XCRemoteSwiftPackageReference "SwiftyBibtex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MaxHaertwig/SwiftyBibtex.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AE187AD427435BAD00BA38B0 /* SwiftyBibtex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE187AD327435BAD00BA38B0 /* XCRemoteSwiftPackageReference "SwiftyBibtex" */;
+			productName = SwiftyBibtex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B8E1CB9525F14C2C00493EC5 /* Project object */;
 }
