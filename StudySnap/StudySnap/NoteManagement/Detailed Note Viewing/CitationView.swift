@@ -9,13 +9,10 @@ import SwiftUI
 
 
 struct CitationView: View {
-    @Binding var citationAuthor: String
-    @Binding var citationTitle: String
-    @Binding var citationYear: String
+    var citation: Citation
     var body: some View {
-        let fullNameArray = citationAuthor.components(separatedBy: " ")
         NavigationView {
-            if (self.citationYear.count == 0 || self.citationTitle.count == 0 || self.citationAuthor.count == 0) {
+            if self.citation.authorFirstName.count == 0 || self.citation.authorLastName.count == 0 || self.citation.publishTitle.count == 0 || (self.citation.publishYear / 1000) < 1 {
                 VStack(alignment: .center) {
                     Spacer()
                     Image(systemName: "questionmark.circle.fill")
@@ -38,17 +35,16 @@ struct CitationView: View {
                         .font(.headline)
                         .foregroundColor(Color("Primary"))
                         .padding(.top, 20)
-                    var apaCitation = "\(fullNameArray[1]), \(fullNameArray[0]). (\(citationYear)). \(citationTitle)."
+                    let apaCitation = "\(self.citation.authorLastName), \(self.citation.authorFirstName). (\(self.citation.publishYear)). \(self.citation.publishTitle)."
                     VStack(alignment: .leading) {
-                        Text(apaCitation).contextMenu {
+                        Text(apaCitation).multilineTextAlignment(.leading).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).contextMenu {
                             Button(action: {
                                 UIPasteboard.general.string = apaCitation
                             }) {
                                 Text("Copy to clipboard")
                                 Image(systemName: "doc.on.clipboard")
                             }
-                        }.multilineTextAlignment(.leading)
-                            .padding(20)
+                        }.padding(20)
                     }
                     .frame(width: 300)
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
@@ -59,17 +55,16 @@ struct CitationView: View {
                         .font(.headline)
                         .foregroundColor(Color("Primary"))
                         .padding(.top, 20)
-                    var ieeeCitation = "\(fullNameArray[1]), \(fullNameArray[0]), '\(citationTitle),' \(citationYear)."
+                    let ieeeCitation = "\(self.citation.authorLastName), \(self.citation.authorFirstName), '\(self.citation.publishTitle),' \(self.citation.publishYear)."
                     VStack(alignment: .leading) {
-                        Text(ieeeCitation).contextMenu {
+                        Text(ieeeCitation).multilineTextAlignment(.leading).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).contextMenu {
                             Button(action: {
                                 UIPasteboard.general.string = ieeeCitation
                             }) {
                                 Text("Copy to clipboard")
                                 Image(systemName: "doc.on.clipboard")
                             }
-                        }.multilineTextAlignment(.leading)
-                            .padding(20)
+                        }.padding(20)
                     }
                     .frame(width: 300).background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                         .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)
@@ -78,17 +73,16 @@ struct CitationView: View {
                         .font(.headline)
                         .foregroundColor(Color("Primary"))
                         .padding(.top, 20)
-                    var mlaCitation = "\(fullNameArray[1]). '\(citationTitle),' \(citationYear)."
+                    let mlaCitation = "\(self.citation.authorLastName). '\(self.citation.publishTitle),' \(self.citation.publishYear)."
                     VStack(alignment: .leading) {
-                        Text(mlaCitation).contextMenu {
+                        Text(mlaCitation).multilineTextAlignment(.leading).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).contextMenu {
                             Button(action: {
                                 UIPasteboard.general.string = mlaCitation
                             }) {
                                 Text("Copy to clipboard")
                                 Image(systemName: "doc.on.clipboard")
                             }
-                        }.multilineTextAlignment(.leading)
-                            .padding(20)
+                        }.padding(20)
                     }
                     .frame(width: 300).background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                         .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)

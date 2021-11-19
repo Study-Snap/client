@@ -21,6 +21,8 @@ struct DetailedNoteView: View {
     @State private var showCitation = false
     // Setup citation
     @State private var citationAuthor = ""
+    @State var firstName: String = ""
+    @State var lastName: String = ""
     @State private var citationTitle = ""
     @State private var citationYear = ""
     
@@ -131,6 +133,14 @@ struct DetailedNoteView: View {
                                                 citationAuthor = result.publications[0].fields["author"]!
                                                 citationTitle = result.publications[0].fields["title"]!
                                                 citationYear = result.publications[0].fields["year"]!
+                                                let aBreakdown = citationAuthor.components(separatedBy: " and ")
+                                                if aBreakdown.count != 2 {
+                                                    firstName = ""
+                                                    lastName = ""
+                                                } else {
+                                                    firstName = aBreakdown[0]
+                                                    lastName = aBreakdown[1]
+                                                }
                                             } catch {
                                                 print("Error parsing citation: \(error)")
                                             }
@@ -143,7 +153,7 @@ struct DetailedNoteView: View {
                                     }, label: {
                                         Text("Cite Me").accentColor(Color("Secondary")).padding(.horizontal, 20).padding(.vertical, 15)
                                     }).sheet(isPresented: $showCitation) {
-                                        CitationView(citationAuthor: $citationAuthor, citationTitle: $citationTitle, citationYear: $citationYear)
+                                        CitationView(citation: Citation(authorFirstName: firstName, authorLastName: lastName, publishYear: Int(citationYear) ?? 1998, publishTitle: citationTitle))
                                     }
                                 }
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)

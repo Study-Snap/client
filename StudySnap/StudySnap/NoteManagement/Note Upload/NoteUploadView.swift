@@ -20,7 +20,8 @@ struct NoteUploadView: View {
     @State var shortDescription: String  = ""
     @State var keywords: String  = ""
     @State var classRoomId: String
-    @State var citationAuthor: String = ""
+    @State var citationAuthorFirstName: String = ""
+    @State var citationAuthorLastName: String = ""
     @State var citationTitle: String = ""
     @State var citationYear: String = ""
     @State var fullCitation: String = ""
@@ -78,10 +79,15 @@ struct NoteUploadView: View {
                     Text("Citation Information (Optional)")
                         .font(.caption)
                         .foregroundColor(Color("Primary"))
-                    InputField(placeholder: "Author being cited (Optional)", value: $citationAuthor)
-                        .padding(.horizontal, 5)
-                        .padding(.bottom, 10)
-                        .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                    HStack {
+                        InputField(placeholder: "Author First Name (optional)", value: $citationAuthorFirstName)
+                            .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                        Spacer()
+                        InputField(placeholder: "Author Last Name (optional)", value: $citationAuthorLastName)
+                            .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 10)
                     InputField(placeholder: "Title of content being cited (Optional)", value: $citationTitle)
                         .padding(.horizontal, 5)
                         .padding(.bottom, 10)
@@ -91,9 +97,6 @@ struct NoteUploadView: View {
                         .padding(.bottom, 10)
                         .background(GeometryGetter(rect: $kGuardian.rects[2]))
 
-                    
-                    
-                
                     HStack {
             
                         Button(action: {
@@ -161,8 +164,8 @@ struct NoteUploadView: View {
                 PrimaryButtonView(title: "Upload") {
                     self.loading.toggle() // Start loading indication
                                         
-                    if !self.citationAuthor.isEmpty && !self.citationTitle.isEmpty && !self.citationYear.isEmpty {
-                        self.fullCitation = "@article{ahu61, author={" + self.citationAuthor + "}, title={" + self.citationTitle + "}, year=" + self.citationYear + "}"
+                    if !self.citationAuthorFirstName.isEmpty && !self.citationAuthorFirstName.isEmpty && !self.citationTitle.isEmpty && !self.citationYear.isEmpty {
+                        self.fullCitation = "@article{ahu61, author={" + self.citationAuthorFirstName + " and " + self.citationAuthorLastName + "}, title={" + self.citationTitle + "}, year=" + self.citationYear + "}"
                     }
                     
                     self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {

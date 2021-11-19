@@ -22,6 +22,7 @@
 		4A0739BD2605340D00A823DF /* PersonalNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739BC2605340D00A823DF /* PersonalNotesView.swift */; };
 		4A0739C2260534B000A823DF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0739C1260534B000A823DF /* ProfileView.swift */; };
 		4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */; };
+		4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */; };
 		4A5FDCCA270652A400770DA7 /* ClassroomDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5FDCC9270652A400770DA7 /* ClassroomDashboardViewModel.swift */; };
 		4A6523722712996F004BD0C7 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6523712712996F004BD0C7 /* NavigationBarModifier.swift */; };
 		4A65D062260D324A00B0F58B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A65D061260D324A00B0F58B /* Launch Screen.storyboard */; };
@@ -44,6 +45,7 @@
 		AEB239922712452300F1C02F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB239912712452300F1C02F /* NoteEditorView.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
+		B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F6A71274835370022A4C1 /* CitationModel.swift */; };
 		B864A7C5262BAABB0058493F /* ValidationOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864A7C4262BAABB0058493F /* ValidationOverride.swift */; };
 		B866B1FE262A4B44004C2681 /* DetailedNoteViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */; };
 		B898743B2626999100C25B23 /* ClassroomDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B898743A2626999100C25B23 /* ClassroomDetailViewViewModel.swift */; };
@@ -102,6 +104,7 @@
 		4A0739BC2605340D00A823DF /* PersonalNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesView.swift; sourceTree = "<group>"; };
 		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
+		4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesViewModel.swift; sourceTree = "<group>"; };
 		4A5FDCC9270652A400770DA7 /* ClassroomDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomDashboardViewModel.swift; sourceTree = "<group>"; };
 		4A6523712712996F004BD0C7 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		4A65D061260D324A00B0F58B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 		AEB239912712452300F1C02F /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
+		B85F6A71274835370022A4C1 /* CitationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationModel.swift; sourceTree = "<group>"; };
 		B864A7C4262BAABB0058493F /* ValidationOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationOverride.swift; sourceTree = "<group>"; };
 		B866B1FD262A4B44004C2681 /* DetailedNoteViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteViewViewModel.swift; sourceTree = "<group>"; };
 		B898743A2626999100C25B23 /* ClassroomDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomDetailViewViewModel.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				4A012574260C1E9A009E3F6B /* NoteModel.swift */,
+				B85F6A71274835370022A4C1 /* CitationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 		B87FCDB42742E0060023F58B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -711,6 +717,7 @@
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
 				B8E1CBA325F14C2C00493EC5 /* ClassroomDetailView.swift in Sources */,
 				AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */,
+				B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */,
 				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
 				4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */,
 				4AB9997A2738B76400675FE7 /* Styles.swift in Sources */,
@@ -722,6 +729,7 @@
 				4A72D9A32700144000519D6A /* CreateClassroomViewModel.swift in Sources */,
 				4A012570260C1AE1009E3F6B /* DetailedNoteView.swift in Sources */,
 				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
+				4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,

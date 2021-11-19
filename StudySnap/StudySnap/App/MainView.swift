@@ -22,7 +22,7 @@ struct MainView: View {
                     
                 }
             
-            PersonalNotesView()
+            PersonalNotesView(rootIsActive: self.$rootIsActive)
                 .tabItem {
                     Image(systemName: "photo.on.rectangle")
                     Text("Storage")

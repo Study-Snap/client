@@ -67,6 +67,9 @@ class ClassroomDetailViewViewModel: ObservableObject {
                             completion()
                         }
                     }
+                } else if res[0].message!.contains("Could not find") {
+                    // No notes found (clear message)
+                    self.results = []
                 } else {
                     // Another error occurred (is authorized, but something was wrong)
                     self.results = []
@@ -74,7 +77,7 @@ class ClassroomDetailViewViewModel: ObservableObject {
                     self.errorMessage = res[0].message
                 }
             } else if res.count == 0 {
-                // No notes found for the query
+                // No notes found for the query (with no message)
                 self.results = []
             } else {
                 // Successful search

@@ -14,69 +14,49 @@ struct NoteListRowItem: View {
     var shortDescription: String
     var readTime: Int
     var rating: [Int]
-
+    
     
     var body: some View {
-     
-            ZStack(alignment: .leading) {
-                        HStack {
-                            ZStack {
-                                Rectangle()
-                                    .fill(
-                                        Color("AccentDark")
-                                    )
-                                    .cornerRadius(7.0)
-                                
-                                VStack {
-                                    Text("\(readTime)")
-                                        .font(.system(size: 20, weight: .bold))
-                                        .foregroundColor(.black.opacity(0.8))
-                                    
-                                    Text("min")
-                                        .font(.caption)
-                                        .foregroundColor(.black.opacity(0.8))
-                                }
-                            }
-                            .frame(width: 70, height: 70, alignment: .center)
-                            VStack(alignment: .leading) {
-                                Text(title)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .lineLimit(2)
-                                    .foregroundColor(Color("PrimaryText"))
-                                Text(author)
-                                    .font(.caption)
-                                    .foregroundColor(Color("Secondary"))
-                                    .padding(.bottom, 5)
-                                
-                                
-                                
-                                    Text(shortDescription)
-                                        .font(.footnote)
-                                        .multilineTextAlignment(TextAlignment.leading)
-                                        .foregroundColor(Color("Secondary"))
-                                        .padding(.bottom, 5)
-                                
-                               
-                                    //NoteRatingView(avgRating: calculateRating(ratings: rating))
-                                    NoteRatingView()
-                                    .accentColor(.yellow)
-                                    
-                                
-                                
-                            }
-                            .foregroundColor(.yellow)
-                            .padding(.horizontal, 20)
-                            
-                            Spacer()
-                        }
-                        .padding(15)
-                        .padding(.horizontal, 17)
-                        .background(Color("Accent"))
-                        .cornerRadius(7)
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-     
+        
+        
+        HStack {
+            ZStack {
+                Rectangle()
+                    .fill(
+                        Color("AccentDark")
+                    )
+                    .cornerRadius(radius: 12, corners: [.bottomLeft,.topRight])
+                
+                
+                VStack {
+                    Text("\(readTime)")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.black.opacity(0.8))
+                    
+                    Text("min")
+                        .font(.caption)
+                        .foregroundColor(.black.opacity(0.8))
+                }
+            }
+            .frame(width: 70, height: 70, alignment: .center)
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .lineLimit(2)
+                    .foregroundColor(Color("PrimaryText"))
+                Text(author)
+                    .font(.caption)
+                    .foregroundColor(Color("Secondary"))
+                
+                NoteRatingView()
+                    .accentColor(.yellow)
+                
+                
+                
+            }.padding(.leading, 6)
+        }
     }
 }
 
