@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NOTE_SPACES_EP</key>
+	<string>https://notesdata.nyc3.digitaloceanspaces.com</string>
 	<key>API_PROTOCOL</key>
 	<string>http</string>
 	<key>AUTH_ENDPOINT</key>

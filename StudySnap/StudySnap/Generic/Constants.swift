@@ -11,4 +11,5 @@ struct Constants {
     static let PROTOCOL_KEY = "API_PROTOCOL"
     static let NEPTUNE_KEY = "NEPTUNE_ENDPOINT"
     static let AUTH_KEY = "AUTH_ENDPOINT"
+    static let NOTE_SPACES_EP_KEY = "NOTE_SPACES_EP"
 }
