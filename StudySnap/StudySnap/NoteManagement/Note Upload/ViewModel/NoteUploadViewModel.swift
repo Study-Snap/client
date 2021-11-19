@@ -61,7 +61,7 @@ class NoteUploadViewModel: ObservableObject {
                     // Error occurred... or something
                     if res.message!.contains("Unauthorized") {
                         AuthApi().refreshAccessWithHandling { refreshed in
-                            print("Refreshed: \(refreshed)")
+                            print("Refreshed (performUpload): \(refreshed)")
                             self.unauthorized = !refreshed
                             
                             if self.unauthorized {

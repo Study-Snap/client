@@ -18,6 +18,8 @@ struct CreateClassroomView: View {
     @State private var classThumbnailImage = UIImage(named: "classthumbnail")!
     @State private var incompleteEntry = false
     
+    @Binding var isClassroomsUpdated: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -53,13 +55,15 @@ struct CreateClassroomView: View {
                 Spacer()
                 PrimaryButtonView(title:"Create", action: {
                     if !viewModel.name.isEmpty{
-                    self.viewModel.createClassroom(classCreateData: CreateClassroomData(name: viewModel.name, thumbnailData: classThumbnailImage.pngData())) {
-                        if self.viewModel.unauthorized {
-                            // Refresh failed, return to login
-                            self.rootIsActive = false
+                        self.viewModel.createClassroom(classCreateData: CreateClassroomData(name: viewModel.name, thumbnailData: classThumbnailImage.pngData())) {
+                            if self.viewModel.unauthorized {
+                                // Refresh failed, return to login
+                                self.rootIsActive = false
+                            } else {
+                                self.isClassroomsUpdated = true // Force refresh on classroom dashboard when classroom is created
+                            }
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        presentationMode.wrappedValue.dismiss()
-                    }
                     }else{
                         self.incompleteEntry = true
                     }
@@ -80,6 +84,6 @@ struct CreateClassroomView: View {
 
 struct CreateClassroomView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateClassroomView(rootIsActive: .constant(true))
+        CreateClassroomView(rootIsActive: .constant(true), isClassroomsUpdated: .constant(false))
     }
 }

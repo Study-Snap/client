@@ -10,6 +10,9 @@ import SwiftUI
 @main
 struct StudySnapApp: App {
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    init(){
+        //UITableView.appearance().backgroundColor = .clear
+    }
     var body: some Scene {
         WindowGroup {
             if isOnboarding {

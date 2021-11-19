@@ -14,7 +14,6 @@ struct ClassroomDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
-    //@StateObject var deleteClassroomViewModel: DeleteClassroomViewModel = DeleteClassroomViewModel()
     @StateObject var classroomViewModel: ClassroomDashboardViewModel = ClassroomDashboardViewModel()
     @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
@@ -30,8 +29,9 @@ struct ClassroomDetailView: View {
     @State var className: String
     @State var refresh: Bool = false
 
+
     var body: some View {
-        
+    
         ZStack(alignment: .center) {
             NavigationView {
                 VStack {
@@ -74,21 +74,19 @@ struct ClassroomDetailView: View {
                                     if viewModel.trending.count > 0 {
                                         Text("Top Rated Notes").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
                                             .padding(.top, 3)
-                                        ScrollView{
-                                            LazyVStack {
-                                                VStack {
-                                                    ForEach(viewModel.trending) { item in
-                                                        
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
-                                                            .onTapGesture {
-                                                                self.targetNoteId = item.id!
-                                                                self.showNoteDetails.toggle()
-                                                            }
-                                                        
-                                                    }
-                                                }
+                                        List {
+                                            ForEach(viewModel.trending) { item in
+                                                
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
+                                                    .onTapGesture {
+                                                        self.targetNoteId = item.id!
+                                                        self.showNoteDetails.toggle()
+                                                    }.padding(.vertical, 15)
+                                                
                                             }
                                         }
+                                        .listStyle(.insetGrouped)
+                                        .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
@@ -112,21 +110,16 @@ struct ClassroomDetailView: View {
                                     if viewModel.results.count > 0 {
                                         Text("We found these").font(.title2).fontWeight(.medium).foregroundColor(Color("Secondary"))
                                             .padding(.top, 3)
-                                        ScrollView{
-                                            LazyVStack {
-                                                VStack {
-                                                    ForEach(viewModel.results) { item in
-                                                        
-                                                        NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
-                                                            .onTapGesture {
-                                                                self.showNoteDetails.toggle()
-                                                                self.targetNoteId = item.id!
-                                                            }
-                                                        
-                                                    }
-                                                }
+                                        List {
+                                            ForEach(viewModel.results) { item in
+                                                
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
+                                                    .onTapGesture {
+                                                        self.showNoteDetails.toggle()
+                                                        self.targetNoteId = item.id!
+                                                    }.padding(.vertical, 15)
                                             }
-                                        }
+                                        }.listStyle(.insetGrouped)
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
@@ -154,14 +147,6 @@ struct ClassroomDetailView: View {
                     })
                     
                 }
-                .onAppear(perform: {
-                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
-                        if self.viewModel.unauthorized {
-                            // Refresh failed, return to login
-                            self.rootIsActive = false
-                        }
-                    }
-                })
                 .onChange(of: refresh) { value in
                         if self.refresh {
                             // Refresh top notes
@@ -226,7 +211,6 @@ struct ClassroomDetailView: View {
                                                 self.rootIsActive = false
                                             } else {
                                                 self.classID = ""
-//
                                                 self.hasLeftClassroom = true
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
@@ -263,7 +247,6 @@ struct ClassroomDetailView: View {
                                                 // Refresh failed, return to login
                                                 self.rootIsActive = false
                                             } else {
-//                                                self.isConfirmedLeavingClassroom = true
                                                 self.hasLeftClassroom = true
                                                 self.presentationMode.wrappedValue.dismiss()
                                             }
@@ -284,11 +267,26 @@ struct ClassroomDetailView: View {
                 }
             }//: TOOLBAR
         }.onAppear(perform: {
-            // MARK: @Sheharyaar Pls fix ... thanks :)
-            // MARK: @Ben Done! :)
-	    // MARK: @Ben will look into changing refresh flow on these functions so they don't fail on access revoke/expire
-            self.classroomViewModel.getUser()
-            self.classroomViewModel.getClassroom(classId: self.classID)
+            self.classroomViewModel.getUser() {
+                if self.viewModel.unauthorized {
+                    // Refresh failed, return to login
+                    self.rootIsActive = false
+                }
+                
+                self.classroomViewModel.getClassroom(classId: self.classID) {
+                    if self.viewModel.unauthorized {
+                        // Refresh failed, return to login
+                        self.rootIsActive = false
+                    }
+                    
+                    self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
+                        if self.viewModel.unauthorized {
+                            // Refresh failed, return to login
+                            self.rootIsActive = false
+                        }
+                    }
+                }
+            }
         })
     }
 }
@@ -344,7 +342,7 @@ struct ClassroomDetailView: View {
     }
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            Group {
+            VStack {
                 ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
                     .previewDevice("iPhone 11 Pro")
                 ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
