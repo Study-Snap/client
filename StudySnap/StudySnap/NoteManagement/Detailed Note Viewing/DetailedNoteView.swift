@@ -27,7 +27,7 @@ struct DetailedNoteView: View {
     var body: some View {
       
             VStack {
-                if false {
+                if viewModel.loading {
                     ProgressView("Loading note details...")
                         .foregroundColor(Color("Secondary"))
                 } else {
@@ -35,41 +35,40 @@ struct DetailedNoteView: View {
                         // MARK: Top (title, author, rating and keywords)
                         VStack {
                             ZStack {
-                                Color("Primary")
+                                Color("Primary").frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 240)
                                 VStack {
                                     Text(viewModel.noteObj.title!)
-                                        .font(.title)
+                                        .font(.title2)
                                         .bold()
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
-                                        .padding(.bottom, 10)
+                                        .frame(minWidth: 0, maxWidth: 300)
+                                        .padding(.top, 25)
                                     Text("\(viewModel.noteObj.user!.firstName) \(viewModel.noteObj.user!.lastName)")
-                                        .font(.title2)
+                                        .font(.headline)
                                         .fontWeight(.light)
                                         .foregroundColor(.white)
-                                        .padding(.top, -20)
+                                    VStack {
+                                        NoteRatingView()
+                                    }.padding(.vertical, 10)
                                     HStack(alignment: .center) {
                                         ForEach(0..<3) { i in
                                             let keywords = viewModel.noteObj.keywords!
                                             if keywords.count > i {
                                                 
                                                 Text(keywords[i])
-                                                    .padding(.vertical, 10)
-                                                    .padding(.horizontal, 20)
+                                                    .padding(.vertical, 5)
+                                                    .padding(.horizontal, 10)
                                                     .foregroundColor(.black.opacity(0.8))
                                                     .background(Color(.white))
                                                     .cornerRadius(7.0)
                                             }
                                         }
                                     }
-                                    .padding(.top, 5)
-                                    VStack {
-                                        NoteRatingView()
-                                    }.padding(.top, 5.0)
-                                }
+                                }.padding(.top)
                             }
-                            .cornerRadius(15.0)
-                        }.edgesIgnoringSafeArea([.top])
+                            .edgesIgnoringSafeArea(.top)
+                        }.edgesIgnoringSafeArea(.top)
                         
                         
                         VStack(alignment: .leading) {
@@ -84,11 +83,8 @@ struct DetailedNoteView: View {
                                     .foregroundColor(Color("Secondary"))
                                     .padding(.horizontal)
                             }
-                            .padding(.horizontal, 10)
                             .background(Color("Accent"))
-                            .cornerRadius(7.0)
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
+                            .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
                             
                             // MARK: Main Content
                             ScrollView {
@@ -97,7 +93,6 @@ struct DetailedNoteView: View {
                                         Text("DESCRIPTION")
                                             .font(.caption)
                                             .foregroundColor(Color("Primary"))
-                                            .padding(.bottom, 0)
                                         
                                         Text(viewModel.noteObj.shortDescription!).font(.caption).fontWeight(.light)
                                     }
@@ -113,19 +108,20 @@ struct DetailedNoteView: View {
                                     
                                 }
                             }
-                            .frame(width: .infinity, height: .infinity, alignment: .leading)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .cornerRadius(12)
-                            .padding(.horizontal)
+                            
                             Spacer()
+                            
                             // MARK: Bottom buttons
                             HStack {
                                 HStack {
-                                    Text("\(viewModel.noteObj.timeLength!) Minute Read").foregroundColor(Color("Secondary")).padding(.vertical, 10).padding(.horizontal, 25)
+                                    Text("\(viewModel.noteObj.timeLength!) Minute Read").foregroundColor(Color("Secondary")).padding(.horizontal, 25).padding(.vertical, 15)
                                 }
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                 .padding(.horizontal, 10)
                                 .background(Color("Accent"))
                                 .cornerRadius(7.0)
-                                .padding(.horizontal)
                                 
                                 HStack {
                                     Button(action: {
@@ -145,18 +141,18 @@ struct DetailedNoteView: View {
                                         }
                                         showCitation = true
                                     }, label: {
-                                        Text("Cite Me").accentColor(Color("Secondary")).padding(.vertical, 10).padding(.horizontal, 20)
+                                        Text("Cite Me").accentColor(Color("Secondary")).padding(.horizontal, 20).padding(.vertical, 15)
                                     }).sheet(isPresented: $showCitation) {
                                         CitationView(citationAuthor: $citationAuthor, citationTitle: $citationTitle, citationYear: $citationYear)
                                     }
                                 }
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                 .padding(.horizontal, 10)
                                 .background(Color("Accent"))
                                 .cornerRadius(7.0)
-                                .padding(.horizontal)
                             }
-                        }
-                    }.toolbar{
+                        }.offset(x: 0, y: -5)
+                    }.edgesIgnoringSafeArea(.top).toolbar{
                         ToolbarItem(placement: .navigationBarLeading){
                             HStack(spacing: 5) {
                                 Button(action: {
