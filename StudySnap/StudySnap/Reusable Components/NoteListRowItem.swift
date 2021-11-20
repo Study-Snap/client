@@ -14,7 +14,7 @@ struct NoteListRowItem: View {
     var shortDescription: String
     var readTime: Int
     var rating: [Int]
-    
+    @Binding var isRatingDisabled: Bool
     
     var body: some View {
         
@@ -50,7 +50,7 @@ struct NoteListRowItem: View {
                     .font(.caption)
                     .foregroundColor(Color("Secondary"))
                 
-                NoteRatingView()
+                NoteRatingView(isDisabled: $isRatingDisabled)
                     .accentColor(.yellow)
                 
                 
@@ -63,9 +63,9 @@ struct NoteListRowItem: View {
 struct NoteListRowItem_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
+            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5], isRatingDisabled: .constant(true))
             
-            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5])
+            NoteListRowItem(id: 1, title: "Science Lecture 7", author: "Liam Stickney", shortDescription: "This is a note all about science and chemestry and stuff related to sheharyaars", readTime: 5, rating: [0,2,3,20,5], isRatingDisabled: .constant(true))
                 .preferredColorScheme(.dark)
                 .previewInterfaceOrientation(.portrait)
         }

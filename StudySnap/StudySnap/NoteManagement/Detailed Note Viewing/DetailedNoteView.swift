@@ -25,6 +25,7 @@ struct DetailedNoteView: View {
     @State var lastName: String = ""
     @State private var citationTitle = ""
     @State private var citationYear = ""
+    @State var isRatingDsiabled = false
     
     var body: some View {
       
@@ -51,7 +52,7 @@ struct DetailedNoteView: View {
                                         .fontWeight(.light)
                                         .foregroundColor(.white)
                                     VStack {
-                                        NoteRatingView()
+                                        NoteRatingView(isDisabled: $isRatingDsiabled)
                                     }.padding(.vertical, 10)
                                     HStack(alignment: .center) {
                                         ForEach(0..<3) { i in

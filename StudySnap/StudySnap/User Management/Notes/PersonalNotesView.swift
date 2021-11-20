@@ -16,6 +16,7 @@ struct PersonalNotesView: View {
     @State var targetNoteId: Int? = 1
     @State var showNoteDetails = false
     @State var refresh: Bool = false
+    @State var isRatingDisabled: Bool = true
     
     var body: some View {
         VStack {
@@ -39,7 +40,7 @@ struct PersonalNotesView: View {
                             
                             ForEach(viewModel.results) { item in
                                 
-                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0], isRatingDisabled: $isRatingDisabled)
                                     .swipeActions() {
                                         Button(action: {
                                             self.viewModel.deleteUserNote(userNoteId: item.id!) {

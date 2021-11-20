@@ -47,6 +47,7 @@ struct SignUpContent: View {
             }
             Spacer()
             SignUpButton(presentationMode: self.presentationMode, viewModel: viewModel)
+                .padding(.horizontal)
             
             // Navigate back to login
             Button(action: {
