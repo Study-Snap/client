@@ -81,6 +81,9 @@ struct DetailedNoteView: View {
                             HStack {
                                 Button(action: {
                                     self.showFullNote = true
+                                    self.viewModel.getNoteFileFromCDN(fileId: self.viewModel.noteObj.fileUri!) {
+                                        print("Got file...")
+                                    }
                                 }, label: {
                                     Text("Get Full Note").foregroundColor(Color("Secondary")).padding()
                                 })
@@ -89,9 +92,25 @@ struct DetailedNoteView: View {
                                     .font(.title3)
                                     .foregroundColor(Color("Secondary"))
                                     .padding(.horizontal)
-                            }
+                            }.padding(.horizontal)
                             .sheet(isPresented: self.$showFullNote) {
-                                PDFKitView(data: self.viewModel.pdfFile!)
+                                if self.viewModel.pdfFile == nil {
+                                    ProgressView("Loading Data")
+                                        .foregroundColor(Color("Secondary"))
+                                } else {
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            Button(action: {
+                                                // Close the note view (PDF view)
+                                                self.showFullNote = false
+                                            }, label: {
+                                                Text("Done").foregroundColor(Color("Secondary")).padding()
+                                            })
+                                        }
+                                        PDFKitView(data: self.viewModel.pdfFile!)
+                                    }
+                                }
                             }
                             .background(Color("Accent"))
                             .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
@@ -213,6 +232,11 @@ struct PDFKitRepresentedView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
         let pdfView = PDFView()
         pdfView.document = PDFDocument(data: data)
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        pdfView.displaysAsBook = true
+        pdfView.displayDirection = .vertical
+        pdfView.autoScales = true
         return pdfView
     }
 

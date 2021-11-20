@@ -48,7 +48,6 @@ class DetailedNoteViewViewModel: ObservableObject {
     }
     
     func getNoteFileFromCDN(fileId: String, completion: @escaping () -> ()) -> Void {
-        self.loading = true
         Spaces().getNoteDataFromCDN(fileId: fileId) { data in
             if data == nil {
                 // Error getting note file data
@@ -57,8 +56,6 @@ class DetailedNoteViewViewModel: ObservableObject {
             } else {
                 self.pdfFile = data
             }
-            
-            self.loading = false
             completion()
         }
     }
