@@ -66,7 +66,7 @@ struct LoginView: View {
                                 }
                             })
                         }
-                    })
+                    }).padding(.horizontal)
                     
                     // Create new account
                     Button(action: {
@@ -75,16 +75,6 @@ struct LoginView: View {
                         Text("No Account? Create one!").foregroundColor(Color("Secondary")).padding(.top, 5)
                     }
                     
-                    // Handle navigation logic
-                    /*NavigationLink(
-                     destination: MainView(rootIsActive: self.$actionMainView)
-                     .navigationBarTitle("")
-                     .navigationBarHidden(true)
-                     .navigationBarBackButtonHidden(true),
-                     isActive: $actionMainView
-                     ) {
-                     EmptyView() // Button follows
-                     }*/
                     NavigationLink(destination: SignUpView()
                                     .navigationBarTitle("")
                                     .navigationBarHidden(true)
@@ -93,12 +83,6 @@ struct LoginView: View {
                         EmptyView() // Supports: Sign in programatically
                     }
                     
-                    /*NavigationLink(destination: MainView(rootIsActive: self.$loggedIn)
-                     .navigationBarTitle("")
-                     .navigationBarHidden(true)
-                     .navigationBarBackButtonHidden(true), isActive: $loggedIn) {
-                     EmptyView()
-                     }.isDetailLink(false)*/
                 }.navigationBarHidden(true)
                     .alert(isPresented: $error, content: {
                         Alert(title: Text("Login Failed"), message: Text(self.errorMessage ?? "Unknown Reason"), dismissButton: Alert.Button.cancel(Text("Okay")))

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/*
 struct NoteRowView: View {
     
     //var fruit: Fruit
@@ -42,3 +42,4 @@ struct NoteRowView_Previews: PreviewProvider {
           .padding()
     }
 }
+*/
