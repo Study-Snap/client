@@ -13,9 +13,9 @@ struct NoteListRowItem: View {
     var author: String
     var shortDescription: String
     var readTime: Int
-    //var rating: [Int]
     
-    @Binding var selectedRating: Int
+    @Binding var rootIsActive: Bool
+    
     @Binding var isRatingDisabled: Bool
     
     var body: some View {
@@ -52,7 +52,7 @@ struct NoteListRowItem: View {
                     .font(.caption)
                     .foregroundColor(Color("Secondary"))
                 
-                NoteRatingView(isDisabled: $isRatingDisabled,selected: $selectedRating, currentNote: id)
+                NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, currentNote: id)
                     .accentColor(.yellow)
                 
                 

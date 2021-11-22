@@ -10,7 +10,8 @@ import SwiftUI
 struct NoteRatingView: View {
     
     @Binding var isDisabled: Bool
-    @Binding var selected: Int
+    @Binding var rootIsActive: Bool
+    @State var selected: Int = 0
     @State var isLoading: Bool = true
     var currentNote: Int
     @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
@@ -37,8 +38,8 @@ struct NoteRatingView: View {
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                                .foregroundColor(self.selected - 1   >= i ? .yellow : .gray).onTapGesture {
-                                    self.selected = i+1
+                                .foregroundColor(self.selected >= i ? .yellow : .gray).onTapGesture {
+                                    self.selected = i
                                 }
                         }
                     }
@@ -53,6 +54,14 @@ struct NoteRatingView: View {
                 
             }
         }
+        .onChange(of: self.selected) { value in
+            self.ratingViewModel.putRating(ratingValue: self.selected + 1, currentNoteId: currentNote){
+                if self.ratingViewModel.unauthorized {
+                    // Refresh failed, return to login
+                    self.rootIsActive = false
+                }
+            }
+        }
         
     }
 }
@@ -61,7 +70,7 @@ struct NoteRatingView_Previews: PreviewProvider {
     
    
     static var previews: some View {
-        NoteRatingView(isDisabled: .constant(true), selected: .constant(1), currentNote: 1)
+        NoteRatingView(isDisabled: .constant(true), rootIsActive: .constant(false), selected: 1, currentNote: 1)
             .previewLayout(.fixed(width: 200, height: 80))
         
     }

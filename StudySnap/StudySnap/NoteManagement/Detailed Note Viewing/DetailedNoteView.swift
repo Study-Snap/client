@@ -27,8 +27,7 @@ struct DetailedNoteView: View {
     @State private var citationTitle = ""
     @State private var citationYear = ""
     @State var isRatingDsiabled = false
-    @State var selectedNoteRating = -1
-    @State var currentNote: Int = 1
+
     
     var body: some View {
       
@@ -55,15 +54,8 @@ struct DetailedNoteView: View {
                                         .fontWeight(.light)
                                         .foregroundColor(.white)
                                     VStack {
-                                        NoteRatingView(isDisabled: $isRatingDsiabled, selected: $selectedNoteRating, currentNote: self.viewModel.noteObj.id!)
-                                            .onChange(of: self.selectedNoteRating) { value in
-                                                self.ratingViewModel.putRating(ratingValue: self.selectedNoteRating, currentNoteId: viewModel.noteObj.id!){
-                                                    if self.ratingViewModel.unauthorized {
-                                                        // Refresh failed, return to login
-                                                        self.rootIsActive = false
-                                                    }
-                                                }
-                                            }
+                                        NoteRatingView(isDisabled: $isRatingDsiabled, rootIsActive: self.$rootIsActive, currentNote: self.viewModel.noteObj.id!)
+                                         
 
                                                 //self.viewModel.loading = true
                   
