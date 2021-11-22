@@ -48,14 +48,13 @@ struct NoteRatingView: View {
 
         }
         .onAppear {
-            self.ratingViewModel.getAverageRating(currentNoteId: self.currentNote){
+            self.ratingViewModel.getAverageRating(currentNoteId: self.currentNote) {
                 self.selected = self.ratingViewModel.ratingValue - 1
                 self.isLoading = false
-                
             }
         }
         .onChange(of: self.selected) { value in
-            self.ratingViewModel.putRating(ratingValue: self.selected + 1, currentNoteId: currentNote){
+            self.ratingViewModel.putRating(ratingValue: self.selected + 1, currentNoteId: currentNote) {
                 if self.ratingViewModel.unauthorized {
                     // Refresh failed, return to login
                     self.rootIsActive = false

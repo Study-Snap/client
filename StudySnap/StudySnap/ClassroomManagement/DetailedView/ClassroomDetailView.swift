@@ -78,18 +78,11 @@ struct ClassroomDetailView: View {
                                             .padding(.top, 3)
                                         List {
                                             ForEach(viewModel.trending) { item in
-                                                
-
                                                 NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
                                                     .onTapGesture {
                                                         self.targetNoteId = item.id!
                                                         self.showNoteDetails.toggle()
                                                     }.padding(.vertical, 15)
-
-  
-                                                    
-
-                                                
                                             }
                                         }
                                         .listStyle(.insetGrouped)

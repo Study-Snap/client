@@ -671,7 +671,7 @@ class NeptuneApi {
             }
         }.resume()
     }
-    func putNoteRating(value: Int, noteId: Int, completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
+    func putNoteRating(value: Int, noteId: Int, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/by-id/\(noteId)/rate")
         
         let parameters: [String: Any] = [
@@ -693,32 +693,15 @@ class NeptuneApi {
             guard let data = data else { return }
             
             do {
-                let note: [ApiNoteResponse] = try JSONDecoder().decode([ApiNoteResponse].self, from: data)
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
                 
                 DispatchQueue.main.async {
                     completion(note)
                 }
             } catch {
-                do {
-                    let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
-                    
-                    DispatchQueue.main.async {
-                        completion([note])
-                    }
-                } catch {
-                    do {
-                        print(error.localizedDescription)
-                        let validation = try JSONDecoder().decode(ValidationError.self, from: data)
-                        
-                        DispatchQueue.main.async {
-                            completion([ApiNoteResponse(message: validation.message!.first!)])
-                        }
-                    } catch {
-                        print(error.localizedDescription)
-                        DispatchQueue.main.async {
-                            completion([ApiNoteResponse(message: "Oops! We don't know what happened there")])
-                        }
-                    }
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
                 }
             }
         }.resume()

@@ -70,6 +70,7 @@
 		B8E1CBB325F14C2D00493EC5 /* StudySnapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBB225F14C2D00493EC5 /* StudySnapTests.swift */; };
 		B8E1CBBE25F14C2D00493EC5 /* StudySnapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */; };
 		B8E1CBDE25F17A5F00493EC5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */; };
+		B8F62ECB274858EE000D7042 /* Spaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F62ECA274858EE000D7042 /* Spaces.swift */; };
 		B8FC45F7262683BE002179F3 /* Neptune.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FC45F6262683BE002179F3 /* Neptune.swift */; };
 /* End PBXBuildFile section */
 
@@ -159,6 +160,7 @@
 		B8E1CBBD25F14C2D00493EC5 /* StudySnapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySnapUITests.swift; sourceTree = "<group>"; };
 		B8E1CBBF25F14C2D00493EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8E1CBDD25F17A5F00493EC5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		B8F62ECA274858EE000D7042 /* Spaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spaces.swift; sourceTree = "<group>"; };
 		B8FC45F6262683BE002179F3 /* Neptune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neptune.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -395,6 +397,7 @@
 			children = (
 				B8DACB482619040D0066755A /* Authentication.swift */,
 				B8FC45F6262683BE002179F3 /* Neptune.swift */,
+				B8F62ECA274858EE000D7042 /* Spaces.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				B8D1413B261BE8AD00D3822E /* KeyboardGuardian.swift in Sources */,
 				AE8349C127448E68001DFA35 /* CitationView.swift in Sources */,
 				4A012575260C1E9A009E3F6B /* NoteModel.swift in Sources */,
+				B8F62ECB274858EE000D7042 /* Spaces.swift in Sources */,
 				B8C5CD232628EBFC00C9FC74 /* NoteListRowItem.swift in Sources */,
 				4A0739B5260530A800A823DF /* MainView.swift in Sources */,
 				B8DA2056261A5E9400EF93AB /* KeychainWrapper.swift in Sources */,
