@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftyBibtex
+import PDFKit
 
 struct DetailedNoteView: View {
     @Binding var rootIsActive: Bool
@@ -17,8 +18,10 @@ struct DetailedNoteView: View {
     // View model
     @StateObject var viewModel: DetailedNoteViewViewModel = DetailedNoteViewViewModel()
     
-    // Alert value
+    // Sheet values
     @State private var showCitation = false
+    @State private var showFullNote = false
+    
     // Setup citation
     @State private var citationAuthor = ""
     @State var firstName: String = ""
@@ -76,7 +79,12 @@ struct DetailedNoteView: View {
                         VStack(alignment: .leading) {
                             // MARK: Note Download Button
                             HStack {
-                                Button(action: {print("Test")}, label: {
+                                Button(action: {
+                                    self.showFullNote = true
+                                    self.viewModel.getNoteFileFromCDN(fileId: self.viewModel.noteObj.fileUri!) {
+                                        print("Got file...")
+                                    }
+                                }, label: {
                                     Text("Get Full Note").foregroundColor(Color("Secondary")).padding()
                                 })
                                 Spacer()
@@ -84,6 +92,25 @@ struct DetailedNoteView: View {
                                     .font(.title3)
                                     .foregroundColor(Color("Secondary"))
                                     .padding(.horizontal)
+                            }.padding(.horizontal)
+                            .sheet(isPresented: self.$showFullNote) {
+                                if self.viewModel.pdfFile == nil {
+                                    ProgressView("Loading Data")
+                                        .foregroundColor(Color("Secondary"))
+                                } else {
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            Button(action: {
+                                                // Close the note view (PDF view)
+                                                self.showFullNote = false
+                                            }, label: {
+                                                Text("Done").foregroundColor(Color("Secondary")).padding()
+                                            })
+                                        }
+                                        PDFKitView(data: self.viewModel.pdfFile!)
+                                    }
+                                }
                             }
                             .background(Color("Accent"))
                             .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
@@ -184,6 +211,37 @@ struct DetailedNoteView: View {
                     }
                 }
             })
+    }
+}
+
+struct PDFKitView: View {
+    var data: Data
+    
+    var body: some View {
+        PDFKitRepresentedView(data)
+    }
+}
+
+struct PDFKitRepresentedView: UIViewRepresentable {
+    let data: Data
+
+    init(_ data: Data) {
+        self.data = data
+    }
+
+    func makeUIView(context: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
+        let pdfView = PDFView()
+        pdfView.document = PDFDocument(data: data)
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        pdfView.displaysAsBook = true
+        pdfView.displayDirection = .vertical
+        pdfView.autoScales = true
+        return pdfView
+    }
+
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PDFKitRepresentedView>) {
+        // Update the view (leave this empty ... this is read-only)
     }
 }
 
