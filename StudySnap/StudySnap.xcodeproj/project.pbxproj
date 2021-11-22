@@ -43,6 +43,8 @@
 		AE280A232714CCCB00809D7E /* ProfileViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */; };
 		AE8349C127448E68001DFA35 /* CitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8349C027448E68001DFA35 /* CitationView.swift */; };
 		AEB239922712452300F1C02F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB239912712452300F1C02F /* NoteEditorView.swift */; };
+		AED1323C274BED7C00906E08 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED1323B274BED7C00906E08 /* ChangePasswordView.swift */; };
+		AED1323E274BF24900906E08 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED1323D274BF24900906E08 /* ChangePasswordViewModel.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
 		B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F6A71274835370022A4C1 /* CitationModel.swift */; };
@@ -125,6 +127,8 @@
 		AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewViewModel.swift; sourceTree = "<group>"; };
 		AE8349C027448E68001DFA35 /* CitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationView.swift; sourceTree = "<group>"; };
 		AEB239912712452300F1C02F /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
+		AED1323B274BED7C00906E08 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		AED1323D274BF24900906E08 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
 		B85F6A71274835370022A4C1 /* CitationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationModel.swift; sourceTree = "<group>"; };
@@ -295,6 +299,15 @@
 				B87FCDB02742DEF40023F58B /* Profile View */,
 			);
 			path = "User Management";
+			sourceTree = "<group>";
+		};
+		AED1323A274BED4200906E08 /* Change Password */ = {
+			isa = PBXGroup;
+			children = (
+				AED1323B274BED7C00906E08 /* ChangePasswordView.swift */,
+				AED1323D274BF24900906E08 /* ChangePasswordViewModel.swift */,
+			);
+			path = "Change Password";
 			sourceTree = "<group>";
 		};
 		B833318D262A005900365D11 /* ViewModel */ = {
@@ -565,6 +578,7 @@
 		B8E1CBD725F179CD00493EC5 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				AED1323A274BED4200906E08 /* Change Password */,
 				B8DA2060261A80C800EF93AB /* Login */,
 				B8DA205F261A80B500EF93AB /* Sign Up */,
 				B8DA2054261A5E8500EF93AB /* Keychain */,
@@ -725,6 +739,7 @@
 				4A72D97126FFF4D700519D6A /* JoinClassroomView.swift in Sources */,
 				4A7CC1C827094C24003E1ACF /* UserModel.swift in Sources */,
 				4AB9997A2738B76400675FE7 /* Styles.swift in Sources */,
+				AED1323C274BED7C00906E08 /* ChangePasswordView.swift in Sources */,
 				4A72D92C26FFB23F00519D6A /* ClassroomGridItemView.swift in Sources */,
 				B8D14111261BA7F400D3822E /* SignUpModel.swift in Sources */,
 				AE280A232714CCCB00809D7E /* ProfileViewViewModel.swift in Sources */,
@@ -734,6 +749,7 @@
 				4A012570260C1AE1009E3F6B /* DetailedNoteView.swift in Sources */,
 				4A04FD6D2603F16B00895B0D /* StartButtonView.swift in Sources */,
 				4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */,
+				AED1323E274BF24900906E08 /* ChangePasswordViewModel.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,

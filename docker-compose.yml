@@ -67,7 +67,7 @@ services:
     networks:
       - client-dev-network
   authentication:
-    image: studysnap/authentication:1.0.3
+    image: studysnap/authentication:SSPP-20.1.0.4
     container_name: authentication
     restart: on-failure
     environment:

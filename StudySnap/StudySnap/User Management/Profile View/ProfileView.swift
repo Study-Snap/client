@@ -17,6 +17,9 @@ struct ProfileView: View {
     @State var error: Bool = false
     @State var deauthenticated: Bool = false
     
+    // Sheet values
+    @State private var showChangePassword = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -45,8 +48,11 @@ struct ProfileView: View {
                                 Section {
                                     // TODO: Implement change password =)
                                     Button("Change Password") {
-                                        print("Implement change password")
-                                    }.buttonStyle(BorderlessButtonStyle())
+                                        showChangePassword = true
+                                    }.buttonStyle(BorderlessButtonStyle()).sheet(isPresented: $showChangePassword) {
+                                        ChangePasswordView(rootIsActive: self.$rootIsActive)
+                                    }
+                                    
                                     
                                     Button("Log Out") {
                                         self.viewModel.performLogout()
