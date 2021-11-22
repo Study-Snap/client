@@ -48,7 +48,7 @@ struct ClassroomGridItemView: View {
 
         }
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)
+        .shadow(color: Color("Shadow").opacity(0.3), radius: 10, x:0, y: 5)
         .strokeStyle()
 
     }

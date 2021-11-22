@@ -15,6 +15,7 @@ struct ClassroomDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
     @StateObject var classroomViewModel: ClassroomDashboardViewModel = ClassroomDashboardViewModel()
+    @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
     @Binding var hasLeftClassroom: Bool //Used to determine if a user has left a classroom
     @State var displayResults : [ApiNoteResponse] = []
     @State private var searchText : String = ""
@@ -29,6 +30,7 @@ struct ClassroomDetailView: View {
     @State var className: String
     @State var refresh: Bool = false
     @State var isRatingDisabled: Bool = true
+    @State var noteRating: Int = 1
 
 
     var body: some View {
@@ -78,11 +80,16 @@ struct ClassroomDetailView: View {
                                         List {
                                             ForEach(viewModel.trending) { item in
                                                 
-                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0], isRatingDisabled: $isRatingDisabled)
+
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!,selectedRating: self.$noteRating, isRatingDisabled: $isRatingDisabled)
                                                     .onTapGesture {
                                                         self.targetNoteId = item.id!
                                                         self.showNoteDetails.toggle()
                                                     }.padding(.vertical, 15)
+
+  
+                                                    
+
                                                 
                                             }
                                         }
@@ -114,11 +121,18 @@ struct ClassroomDetailView: View {
                                         List {
                                             ForEach(viewModel.results) { item in
                                                 
-                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0], isRatingDisabled: $isRatingDisabled)
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!,selectedRating: self.$noteRating, isRatingDisabled: $isRatingDisabled)
+                                                    .onTapGesture {
+                                                        self.targetNoteId = item.id!
+                                                        self.showNoteDetails.toggle()
+                                                    }.padding(.vertical, 15)
+                                  
+                                                /*NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, selectedRating: item.ratings![0], isRatingDisabled: $isRatingDisabled)
                                                     .onTapGesture {
                                                         self.showNoteDetails.toggle()
                                                         self.targetNoteId = item.id!
                                                     }.padding(.vertical, 15)
+                                                 */
                                             }
                                         }.listStyle(.insetGrouped)
                                     } else {
@@ -344,9 +358,9 @@ struct ClassroomDetailView: View {
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             VStack {
-                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505", noteRating: 1)
                     .previewDevice("iPhone 11 Pro")
-                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505")
+                ClassroomDetailView(rootIsActive: .constant(true), hasLeftClassroom: .constant(true), classID: "448f7db0-e3ac", className: "Biology 505", noteRating: 1)
                     .previewDevice("iPhone 11 Pro")
                     .preferredColorScheme(.dark)
                     .previewInterfaceOrientation(.portrait)
