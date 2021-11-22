@@ -10,12 +10,16 @@ import SwiftUI
 struct PersonalNotesView: View {
     @State private var isShowingNotes: Bool = false
     @Binding var rootIsActive: Bool
-    @ObservedObject var globalString = GlobalString()
+    //@ObservedObject var globalString = GlobalString()
     @State var isDeleted = false
     @StateObject var viewModel : PersonalNotesViewModel = PersonalNotesViewModel()
+    @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
     @State var targetNoteId: Int? = 1
     @State var showNoteDetails = false
     @State var refresh: Bool = false
+    @State var isRatingDisabled: Bool = true
+    @State var noteRating: Int = 1
+    @State var isLoading: Bool = false
     
     var body: some View {
         VStack {
@@ -39,7 +43,13 @@ struct PersonalNotesView: View {
                             
                             ForEach(viewModel.results) { item in
                                 
-                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rating: [0,0,0,0,0])
+                              
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
+                                    .onAppear {
+                                        self.ratingViewModel.getAverageRating(currentNoteId: item.id!){
+                                            self.noteRating = self.ratingViewModel.ratingValue - 1
+                                        }
+                                    }
                                     .swipeActions() {
                                         Button(action: {
                                             self.viewModel.deleteUserNote(userNoteId: item.id!) {
@@ -98,6 +108,7 @@ struct PersonalNotesView: View {
                     self.rootIsActive = false
                 }
             }
+           
         })
             .onChange(of: refresh) { value in
                 if self.refresh {
@@ -108,6 +119,7 @@ struct PersonalNotesView: View {
                             self.rootIsActive = false
                         }
                     }
+                    
                     // Reset flag
                     self.refresh = false
                 }

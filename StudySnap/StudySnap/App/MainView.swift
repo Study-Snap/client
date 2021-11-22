@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-var globalEventManager = GlobalString()
+//var globalEventManager = GlobalString()
 struct MainView: View {
     @Binding var rootIsActive : Bool
     

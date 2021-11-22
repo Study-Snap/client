@@ -24,18 +24,18 @@ struct ChangePasswordView: View {
                 }
                     
                 // Input fields
-                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter old password", value: $viewModel.password).padding(.top, 20).padding(.horizontal, 17.5)
-                
-                InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter new password", value: $viewModel.newPassword).padding(.top, 20).padding(.horizontal, 17.5)
+                SecureInputField(fieldHeight: 15, placeholder: "Current Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
+                SecureInputField(fieldHeight: 15, placeholder: "New Password", value: $viewModel.newPassword).padding(.bottom, 10).padding(.horizontal, 17.5)
+                SecureInputField(fieldHeight: 15, placeholder: "New Password Again", value: $viewModel.newPasswordMatch).padding(.bottom, 10).padding(.horizontal, 17.5)
                     
                 Spacer()
                     
                 PrimaryButtonView(title: "Change Password", action: {
                     // Log in user
-                    if self.viewModel.password.isEmpty || self.viewModel.newPassword.isEmpty {
+                    if self.viewModel.password.isEmpty || self.viewModel.newPassword.isEmpty || (self.viewModel.newPassword != self.viewModel.newPasswordMatch) {
                         // Validation error
                         self.viewModel.error = true
-                        self.viewModel.errorMessage = "Make sure both your old and new passwords are entered!"
+                        self.viewModel.errorMessage = "Make sure you enter both your current and new password and that your new passwords match"
                     } else {
                         self.viewModel.changePassword(completion: {
                             if self.viewModel.unauthorized {

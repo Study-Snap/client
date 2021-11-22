@@ -17,6 +17,7 @@ struct DetailedNoteView: View {
     
     // View model
     @StateObject var viewModel: DetailedNoteViewViewModel = DetailedNoteViewViewModel()
+    @StateObject var ratingViewModel: NoteRatingViewModel = NoteRatingViewModel()
     
     // Sheet values
     @State private var showCitation = false
@@ -28,9 +29,10 @@ struct DetailedNoteView: View {
     @State var lastName: String = ""
     @State private var citationTitle = ""
     @State private var citationYear = ""
+    @State var isRatingDsiabled = false
+
     
     var body: some View {
-      
             VStack {
                 if viewModel.loading {
                     ProgressView("Loading note details...")
@@ -54,7 +56,7 @@ struct DetailedNoteView: View {
                                         .fontWeight(.light)
                                         .foregroundColor(.white)
                                     VStack {
-                                        NoteRatingView()
+                                        NoteRatingView(isDisabled: $isRatingDsiabled, rootIsActive: self.$rootIsActive, currentNote: self.viewModel.noteObj.id!)
                                     }.padding(.vertical, 10)
                                     HStack(alignment: .center) {
                                         ForEach(0..<3) { i in
@@ -86,12 +88,13 @@ struct DetailedNoteView: View {
                                     }
                                 }, label: {
                                     Text("Get Full Note").foregroundColor(Color("Secondary")).padding()
+                                    Spacer()
+                                    Image(systemName: "square.and.arrow.down")
+                                        .font(.title3)
+                                        .foregroundColor(Color("Secondary"))
+                                        .padding(.horizontal)
                                 })
                                 Spacer()
-                                Image(systemName: "square.and.arrow.down")
-                                    .font(.title3)
-                                    .foregroundColor(Color("Secondary"))
-                                    .padding(.horizontal)
                             }.padding(.horizontal)
                             .sheet(isPresented: self.$showFullNote) {
                                 if self.viewModel.pdfFile == nil {
@@ -100,20 +103,24 @@ struct DetailedNoteView: View {
                                 } else {
                                     VStack {
                                         HStack {
-                                            Spacer()
                                             Button(action: {
                                                 // Close the note view (PDF view)
                                                 self.showFullNote = false
                                             }, label: {
                                                 Text("Done").foregroundColor(Color("Secondary")).padding()
                                             })
+                                            Spacer()
                                         }
                                         PDFKitView(data: self.viewModel.pdfFile!)
                                     }
                                 }
                             }
+
                             .background(Color("Accent"))
                             .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
+                            .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 5)
+                            .strokeStyle()
+                            
                             
                             // MARK: Main Content
                             ScrollView {
@@ -143,15 +150,15 @@ struct DetailedNoteView: View {
                             Spacer()
                             
                             // MARK: Bottom buttons
-                            HStack {
+                            HStack(spacing: 1.0) {
                                 HStack {
-                                    Text("\(viewModel.noteObj.timeLength!) Minute Read").foregroundColor(Color("Secondary")).padding(.horizontal, 25).padding(.vertical, 15)
+                                    Text("\(viewModel.noteObj.timeLength!) Minute Read").foregroundColor(Color("Secondary")).padding(.vertical, 15)
                                 }
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                .padding(.horizontal, 10)
                                 .background(Color("Accent"))
-                                .cornerRadius(7.0)
-                                
+                                .cornerRadius(radius: 12, corners: [.topLeft, .bottomLeft])
+                           
+
                                 HStack {
                                     Button(action: {
                                         if (viewModel.noteObj.bibtextCitation! != "") {
@@ -178,16 +185,21 @@ struct DetailedNoteView: View {
                                         }
                                         showCitation = true
                                     }, label: {
-                                        Text("Cite Me").accentColor(Color("Secondary")).padding(.horizontal, 20).padding(.vertical, 15)
+                                        Text("Cite Me").accentColor(Color("Secondary")).padding(.vertical, 15)
                                     }).sheet(isPresented: $showCitation) {
                                         CitationView(citation: Citation(authorFirstName: firstName, authorLastName: lastName, publishYear: Int(citationYear) ?? 1998, publishTitle: citationTitle))
                                     }
                                 }
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                .padding(.horizontal, 10)
                                 .background(Color("Accent"))
-                                .cornerRadius(7.0)
+                                .cornerRadius(radius: 12, corners: [.topRight, .bottomRight])
+                                .shadow(color: Color("Shadow").opacity(0.15), radius: 10, x:10, y: 2)
+                                
+                              
+                                
+                               
                             }
+                            .padding(.horizontal)
                         }.offset(x: 0, y: -5)
                     }.edgesIgnoringSafeArea(.top).toolbar{
                         ToolbarItem(placement: .navigationBarLeading){

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Note: Identifiable, Codable {
+/*struct Note: Identifiable, Codable {
     var id : Int
     var title: String
     var author: String
@@ -19,3 +19,4 @@ struct Note: Identifiable, Codable {
     var rating: Int
     var description: String
 }
+*/

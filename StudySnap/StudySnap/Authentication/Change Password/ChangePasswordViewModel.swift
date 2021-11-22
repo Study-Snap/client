@@ -10,6 +10,7 @@ import SwiftUI
 class ChangePasswordViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var newPassword: String = ""
+    @Published var newPasswordMatch: String = ""
     @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String = ""
