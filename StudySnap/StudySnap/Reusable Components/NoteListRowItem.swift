@@ -13,6 +13,7 @@ struct NoteListRowItem: View {
     var author: String
     var shortDescription: String
     var readTime: Int
+    var ratings: [RatingModel]
     
     @Binding var rootIsActive: Bool
     
@@ -52,12 +53,20 @@ struct NoteListRowItem: View {
                     .font(.caption)
                     .foregroundColor(Color("Secondary"))
                 
-                NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, currentNote: id)
-                    .accentColor(.yellow)
+                HStack{
+                    NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, currentNote: id)
+                        .accentColor(.yellow)
+                    Spacer()
+                    Text("\(self.ratings.count)")
+                        .font(.headline)
+                        .foregroundColor(Color("Secondary"))
+                }
+
                 
                 
                 
             }.padding(.leading, 6)
+            
         }
     }
 }

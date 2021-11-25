@@ -35,6 +35,9 @@ struct SignUpMain: View {
 struct SignUpContent: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: SignUpViewModel
+    @State var checkTermsAndConditions: Bool = false // Check if user has read the terms and conditions
+    @State var acceptedTermsAndConditions: Bool = false //Check if they have accepted the terms and conditions
+
     
     var body: some View {
         VStack {
@@ -44,10 +47,33 @@ struct SignUpContent: View {
                 }
                 
                 SignUpInput(viewModel: viewModel)
+                HStack{
+                    Button {
+                        self.checkTermsAndConditions = true
+                    } label: {
+                        Text("Terms and Conditions")
+                    }
+                    .accentColor(Color("Primary"))
+                    .alert("Terms and Conditions", isPresented: self.$checkTermsAndConditions) {
+                        
+                        Button("Ok", role:.cancel){
+                            self.checkTermsAndConditions = false
+                        }
+                    } message:{
+                        Text("By registering for a StudySnap account, user acknowledges that by creating an account they are agreeing to the following terms \n \n- Only notes personally written can be uploaded or must be rephrased in their own words and must reference the original author and have their consent \n \n- Uploading of any document (assignments, quizzes, tests, projetcs etc.) that directly relates to being a graded material is prohibited \n \n- User will not distribute the content from StudySnap to other services in an attempt to use them for personal gains and or profit from them")
+                          
+                    }
+                    Toggle("", isOn:self.$acceptedTermsAndConditions)
+                }.padding(.horizontal)
+
+
             }
             Spacer()
             SignUpButton(presentationMode: self.presentationMode, viewModel: viewModel)
+                .disabled(!self.acceptedTermsAndConditions)
                 .padding(.horizontal)
+                .opacity(self.acceptedTermsAndConditions ? 1.0 : 0.5)
+                .animation(.easeInOut)
             
             // Navigate back to login
             Button(action: {

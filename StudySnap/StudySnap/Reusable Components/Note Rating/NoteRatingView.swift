@@ -13,6 +13,7 @@ struct NoteRatingView: View {
     @Binding var rootIsActive: Bool
     @State var selected: Int = 0
     @State var isLoading: Bool = true
+    @State var isNoteRatingUpdate: Bool = false
     var currentNote: Int
     @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
     var body: some View {
@@ -40,6 +41,7 @@ struct NoteRatingView: View {
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(self.selected >= i ? .yellow : .gray).onTapGesture {
                                     self.selected = i
+                                    self.isNoteRatingUpdate = true
                                 }
                         }
                     }
@@ -53,7 +55,7 @@ struct NoteRatingView: View {
                 self.isLoading = false
             }
         }
-        .onChange(of: self.selected) { value in
+        .onChange(of: self.isNoteRatingUpdate) { value in
             self.ratingViewModel.putRating(ratingValue: self.selected + 1, currentNoteId: currentNote) {
                 if self.ratingViewModel.unauthorized {
                     // Refresh failed, return to login
