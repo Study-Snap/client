@@ -60,7 +60,7 @@ struct SignUpContent: View {
                             self.checkTermsAndConditions = false
                         }
                     } message:{
-                        Text("By registering for a StudySnap account, user acknowledges that by creating an account they are agreeing to the following terms \n \n- Only notes personally written can be uploaded or must be rephrased in their own words and must reference the original author and have their consent \n \n- Uploading of any document (assignments, quizzes, tests, projetcs etc.) that directly relates to being a graded material is prohibited \n \n- User will not distribute the content from StudySnap to other services in an attempt to use them for personal gains and or profit from them")
+                        Text("By registering for a StudySnap account, user acknowledges that by creating an account they are agreeing to the following terms \n \n- Only notes personally written can be uploaded or must be rephrased in their own words and must reference the original author and have their consent \n \n- Uploading of any document (assignments, quizzes, tests, projects etc.) that directly relates to being a graded material is prohibited \n \n- User will not distribute the content from StudySnap to other services in an attempt to use them for personal gains and or profit from them")
                           
                     }
                     Toggle("", isOn:self.$acceptedTermsAndConditions)
