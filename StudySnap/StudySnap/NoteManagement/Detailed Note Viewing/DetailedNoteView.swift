@@ -87,15 +87,15 @@ struct DetailedNoteView: View {
                                         print("Got file...")
                                     }
                                 }, label: {
-                                    Text("Get Full Note").foregroundColor(Color("Secondary")).padding()
+                                    Text("Get Full Note").foregroundColor(Color("Secondary"))
                                     Spacer()
-                                    Image(systemName: "square.and.arrow.down")
+                                    Image(systemName: "text.viewfinder")
                                         .font(.title3)
                                         .foregroundColor(Color("Secondary"))
-                                        .padding(.horizontal)
+                                        //.padding(.horizontal)
                                 })
                                 Spacer()
-                            }.padding(.horizontal)
+                            }.padding()
                             .sheet(isPresented: self.$showFullNote) {
                                 if self.viewModel.pdfFile == nil {
                                     ProgressView("Loading Data")
@@ -193,7 +193,7 @@ struct DetailedNoteView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                 .background(Color("Accent"))
                                 .cornerRadius(radius: 12, corners: [.topRight, .bottomRight])
-                                .shadow(color: Color("Shadow").opacity(0.15), radius: 10, x:10, y: 2)
+                            
                                 
                               
                                 

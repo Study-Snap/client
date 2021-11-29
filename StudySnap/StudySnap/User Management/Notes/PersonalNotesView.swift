@@ -44,7 +44,7 @@ struct PersonalNotesView: View {
                             ForEach(viewModel.results) { item in
                                 
                               
-                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
                                     .onAppear {
                                         self.ratingViewModel.getAverageRating(currentNoteId: item.id!){
                                             self.noteRating = self.ratingViewModel.ratingValue - 1

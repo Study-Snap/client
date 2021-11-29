@@ -110,7 +110,7 @@
 		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A3E5C0F274AE41F00131E6A /* NoteRatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRatingViewModel.swift; sourceTree = "<group>"; };
-		4A3E5C17274AF9CE00131E6A /* RatingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingModel.swift; path = "StudySnap/Reusable Components/Note Rating/RatingModel.swift"; sourceTree = SOURCE_ROOT; };
+		4A3E5C17274AF9CE00131E6A /* RatingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingModel.swift; path = "StudySnap/Reusable Components/Note Rating/Models/RatingModel.swift"; sourceTree = SOURCE_ROOT; };
 		4A4893B927459BD900BF636F /* PersonalNotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesViewModel.swift; sourceTree = "<group>"; };
 		4A5FDCC9270652A400770DA7 /* ClassroomDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomDashboardViewModel.swift; sourceTree = "<group>"; };
 		4A6523712712996F004BD0C7 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
@@ -251,6 +251,7 @@
 		4A3E5C0E274AE3F500131E6A /* Note Rating */ = {
 			isa = PBXGroup;
 			children = (
+				B8A1675C27556EA80075BBBE /* Models */,
 				4A3E5C14274AEA3300131E6A /* Models */,
 				4A3E5C11274AE42800131E6A /* ViewModel */,
 				4A012609260C46C0009E3F6B /* NoteRatingView.swift */,
@@ -269,7 +270,6 @@
 		4A3E5C14274AEA3300131E6A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4A3E5C17274AF9CE00131E6A /* RatingModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -447,6 +447,14 @@
 				B898743A2626999100C25B23 /* ClassroomDetailViewViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B8A1675C27556EA80075BBBE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E5C17274AF9CE00131E6A /* RatingModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B8D14115261BDE2800D3822E /* Note Upload */ = {
