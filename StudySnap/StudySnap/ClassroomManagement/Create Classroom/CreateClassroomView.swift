@@ -59,8 +59,8 @@ struct CreateClassroomView: View {
 
                     Spacer()
                     PrimaryButtonView(title:"Create", action: {
-                        self.uploading = true
-                        if !viewModel.name.isEmpty{
+                        if !viewModel.name.isEmpty {
+                            self.uploading = true
                             self.viewModel.createClassroom(classCreateData: CreateClassroomData(name: viewModel.name, thumbnailData: classThumbnailImage.pngData())) {
                                 self.uploading = false
                                 if self.viewModel.unauthorized {
@@ -71,21 +71,21 @@ struct CreateClassroomView: View {
                                 }
                                 presentationMode.wrappedValue.dismiss()
                             }
-                        }else{
+                        } else {
                             self.incompleteEntry = true
                         }
                         
                     })
                     .padding()
-                    .alert("Error: Missing information", isPresented: $incompleteEntry) {
-                        Button("Ok", role: .cancel){
-                            self.incompleteEntry = false
-                        }
-                    } message:{
-                        Text("Please enter a class name")
-                    }
                 }.navigationBarTitle("Create Classroom", displayMode: .inline)
             }
+        }
+        .alert("Error: Missing information", isPresented: $incompleteEntry) {
+            Button("Ok", role: .cancel){
+                self.incompleteEntry = false
+            }
+        } message:{
+            Text("Please enter a class name")
         }
     }
 }

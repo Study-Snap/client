@@ -51,16 +51,16 @@ struct NoteUploadView: View {
     var body: some View {
         NavigationView {
             VStack {
+                HStack (alignment: .center) {
+                    Text("Note Upload")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.top, -50)
+                }
                 if (self.loading && !self.viewModel.error) {
                     ProgressView("Creating your Note!")
                         .foregroundColor(Color("Secondary"))
                 } else {
-                    HStack (alignment: .center) {
-                        Text("Note Upload")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .padding(.top, -50)
-                    }
                     ScrollView {
                         // Input section
                         Text("Required Information")
