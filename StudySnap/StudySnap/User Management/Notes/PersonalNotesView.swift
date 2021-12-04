@@ -66,7 +66,7 @@ struct PersonalNotesView: View {
                                     .onTapGesture {
                                         self.targetNoteId = item.id!
                                         self.showNoteDetails.toggle()
-                                    }
+                                    }.padding(.vertical, 10)
                                 
                                 
                             }
@@ -75,7 +75,7 @@ struct PersonalNotesView: View {
                             
                             
                             
-                        }.listStyle(.insetGrouped)
+                        }.listStyle(.plain)
                         
                     }.navigationBarTitle("Personal Notes",displayMode: .inline)
                 } else {

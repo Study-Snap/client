@@ -39,6 +39,7 @@
 		4A7D4AF8273CAE83004F5088 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7D4AF7273CAE83004F5088 /* PhotoPicker.swift */; };
 		4A7EDFE926F3EF120007D91B /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */; };
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
+		4A9947E8275C092C00551820 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9947E7275C092C00551820 /* EditNoteView.swift */; };
 		4AB9997A2738B76400675FE7 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB999792738B76400675FE7 /* Styles.swift */; };
 		AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */; };
 		AE187AD527435BAD00BA38B0 /* SwiftyBibtex in Frameworks */ = {isa = PBXBuildFile; productRef = AE187AD427435BAD00BA38B0 /* SwiftyBibtex */; };
@@ -107,7 +108,7 @@
 		4A04FD792604368900895B0D /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		4A0739B4260530A800A823DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4A0739BC2605340D00A823DF /* PersonalNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesView.swift; sourceTree = "<group>"; };
-		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A3E5C0F274AE41F00131E6A /* NoteRatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRatingViewModel.swift; sourceTree = "<group>"; };
 		4A3E5C17274AF9CE00131E6A /* RatingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingModel.swift; path = "StudySnap/Reusable Components/Note Rating/Models/RatingModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -126,6 +127,7 @@
 		4A7D4AF7273CAE83004F5088 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		4A7EDFF026F3F1910007D91B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4A9947E7275C092C00551820 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		4AB999792738B76400675FE7 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNoteView.swift; sourceTree = "<group>"; };
 		AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewViewModel.swift; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* DetailedNoteView.swift */,
 				AE8349C027448E68001DFA35 /* CitationView.swift */,
+				4A9947E7275C092C00551820 /* EditNoteView.swift */,
 			);
 			path = "Detailed Note Viewing";
 			sourceTree = "<group>";
@@ -790,6 +793,7 @@
 				4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */,
 				AED1323E274BF24900906E08 /* ChangePasswordViewModel.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
+				4A9947E8275C092C00551820 /* EditNoteView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A72D9AB2700145800519D6A /* JoinClassroomViewModel.swift in Sources */,

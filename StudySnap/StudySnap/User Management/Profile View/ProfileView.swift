@@ -32,19 +32,26 @@ struct ProfileView: View {
                         VStack {
                             List {
                                 Section {
-                                    Text("Full Name")
-                                        .foregroundColor(Color("Primary"))
-                                        .font(.system(size: 15))
-                                    Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
-                                        .font(.system(size: 20))
-                                    Text("Email")
-                                        .foregroundColor(Color("Primary"))
-                                        .font(.system(size: 15))
-                                    Text((viewModel.response?.email)!).fontWeight(.light)
-                                        .font(.system(size: 20))
+                                    VStack(alignment: .leading){
+                                        Text("Full Name")
+                                            .foregroundColor(Color("Primary"))
+                                            .font(.system(size: 15))
+                                            .padding(.bottom, 3)
+                                        Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
+                                            .font(.system(size: 20))
+                                    }
+
+                                    VStack(alignment: .leading){
+                                        Text("Email")
+                                            .foregroundColor(Color("Primary"))
+                                            .font(.system(size: 15))
+                                            .padding(.bottom, 3)
+                                        Text((viewModel.response?.email)!).fontWeight(.light)
+                                            .font(.system(size: 20))
+                                    }
+
                                 }.accentColor(.primary)
-                                    .listRowSeparatorTint(.blue)
-                                    .listRowSeparator(.hidden)
+
                                 Section {
                                     // TODO: Implement change password =)
                                     Button("Change Password") {

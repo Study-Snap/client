@@ -31,6 +31,8 @@ struct CreateClassroomData: Codable {
     var thumbnailUri: String?
 }
 
+
+
 struct ApiFileResponse: Codable {
     var statusCode: Int?
     var fileUri: String?
@@ -574,6 +576,56 @@ class NeptuneApi {
                         DispatchQueue.main.async {
                             completion([ApiNoteResponse(message: "Oops! We don't know what happened there")])
                         }
+                    }
+                }
+            }
+        }.resume()
+    }
+    func updateNote(noteData: ApiNoteResponse, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes")
+       
+        let parameters: [String: Any] = [
+            "noteId": noteData.id!,
+            "data": [
+                "title": noteData.title!,
+                "shortDescription": noteData.shortDescription!
+            ]
+
+        ]
+        print(parameters)
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
                     }
                 }
             }

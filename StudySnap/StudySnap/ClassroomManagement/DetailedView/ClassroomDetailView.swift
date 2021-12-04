@@ -85,7 +85,7 @@ struct ClassroomDetailView: View {
                                                     }.padding(.vertical, 15)
                                             }
                                         }
-                                        .listStyle(.insetGrouped)
+                                        .listStyle(.plain)
                                         .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
                                     } else {
                                         VStack(alignment: .center) {
@@ -117,11 +117,11 @@ struct ClassroomDetailView: View {
                                                     .onTapGesture {
                                                         self.targetNoteId = item.id!
                                                         self.showNoteDetails.toggle()
-                                                    }.padding(.vertical, 15)
+                                                    }.padding(.vertical, 10)
                                   
                                  
                                             }
-                                        }.listStyle(.insetGrouped)
+                                        }.listStyle(.plain)
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
