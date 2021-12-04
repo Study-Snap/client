@@ -13,8 +13,8 @@ struct FilePickedView: View {
     
     var body: some View {
         HStack {
-            Text(pickedFileName)
-                .font(.body)
+            Text(pickedFileName.lowercased())
+                .font(.caption)
                 .foregroundColor(Color("Secondary"))
             Button(action: {
                 self.pickedFile = Data()
@@ -23,14 +23,14 @@ struct FilePickedView: View {
                 if (pickedFileName != ""){
                     Image(systemName: "xmark")
                         .resizable()
-                        .frame(width:15,height:15)
+                        .frame(width:10,height:10)
                         .foregroundColor(Color("Secondary"))
  
                 }
        
         
             }
-        }.padding(.bottom)
+        }.padding(.vertical, 20)
     }
 }
 

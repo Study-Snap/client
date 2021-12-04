@@ -24,8 +24,8 @@ struct MainView: View {
             
             PersonalNotesView(rootIsActive: self.$rootIsActive)
                 .tabItem {
-                    Image(systemName: "photo.on.rectangle")
-                    Text("Storage")
+                    Image(systemName: "note")
+                    Text("My Notes")
                 }
             
             ProfileView(rootIsActive: self.$rootIsActive)
