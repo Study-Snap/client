@@ -188,7 +188,7 @@ struct DetailedNoteView: View {
                                     }
                                     showCitation = true
                                 }, label: {
-                                    Text("Cite Me").accentColor(Color("Secondary")).padding(.vertical, 15)
+                                    Text("Check Citations").accentColor(Color("Secondary")).padding(.vertical, 15)
                                 }).sheet(isPresented: $showCitation) {
                                     CitationView(citation: Citation(authorFirstName: firstName, authorLastName: lastName, publishYear: Int(citationYear) ?? 1998, publishTitle: citationTitle))
                                 }
@@ -234,8 +234,11 @@ struct DetailedNoteView: View {
                                     .foregroundColor(.black)
                             }
                             .halfSheet(showSheet: self.$showEditing){
-                                EditNoteView(rootIsActive: self.$rootIsActive, viewModel: self.viewModel)
-                                    .padding(.top)
+                                EditNoteView(rootIsActive: self.$rootIsActive, showEdit: self.$showEditing, viewModel: self.viewModel)
+                                    .ignoresSafeArea()
+                                    
+                            } onEnd: {
+                                
                             }
                             .alert("Inadequate Permissions", isPresented: self.$showAlert) {
                                 Button("Ok", role: .cancel){
@@ -247,7 +250,7 @@ struct DetailedNoteView: View {
                                 Text("You cannot make changes to someone else's note")
                             }
                             
-                            //Default sheet method
+                            //Default sheet method, if there are stability issues then use the code below and comment out the .halfSheet modifier
                             /*.sheet(isPresented: self.$showEditing) {
                                 
                                 EditNoteView(rootIsActive: self.$rootIsActive, viewModel: self.viewModel)
@@ -317,11 +320,11 @@ struct PDFKitRepresentedView: UIViewRepresentable {
 
 //Custom Half sheet modifier
 extension View{
-    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping ()->SheetView) -> some View{
+    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping ()->SheetView, onEnd: @escaping ()->()) -> some View{
         
         return self
             .background(
-                HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet)
+                HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet, onEnd: onEnd)
             )
     }
 }
@@ -330,8 +333,13 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable{
     
     var sheetView: SheetView
     @Binding var showSheet: Bool
+    var onEnd: ()->()
     
     let controller = UIViewController()
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
     
     func makeUIViewController(context: Context) -> some UIViewController {
         controller.view.backgroundColor = .clear
@@ -340,15 +348,29 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable{
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
-        let sheetController = CustomHostingController(rootView: sheetView)
         if showSheet{
-            uiViewController.present(sheetController, animated: true){
-                
-                DispatchQueue.main.async {
-                    self.showSheet.toggle()
-                }
-                
-            }
+            
+            let sheetController = CustomHostingController(rootView: sheetView)
+            sheetController.presentationController?.delegate = context.coordinator
+            uiViewController.present(sheetController, animated: true)
+        }
+        else{
+            uiViewController.dismiss(animated: true)
+        }
+        
+    }
+    
+    class Coordinator: NSObject, UISheetPresentationControllerDelegate{
+        
+        var parent: HalfSheetHelper
+        
+        init(parent: HalfSheetHelper){
+            self.parent = parent
+        }
+        
+        func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+            parent.showSheet = false
+            parent.onEnd()
         }
     }
     
@@ -371,6 +393,8 @@ struct CloudNoteView_Previews: PreviewProvider {
 
 class CustomHostingController<Content: View>: UIHostingController<Content>{
     override func viewDidLoad() {
+        
+        //view.backgroundColor = .clear
         
         if let presentationController = presentationController as? UISheetPresentationController{
             presentationController.detents = [

@@ -15,58 +15,101 @@ struct EditNoteView: View {
     @State private var shortDescription = ""
     @State private var showAlert = false
     @Binding var rootIsActive: Bool
+    @Binding var showEdit: Bool
     @ObservedObject var viewModel: DetailedNoteViewViewModel
-    var body: some View {
-        NavigationView{
-            VStack{
     
-                InputField(placeholder: "Enter a Title", value: $title)
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 10)
-                    .background(GeometryGetter(rect: $kGuardian.rects[0]))
-                InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
-                    .padding(.horizontal, 10)
-                    .padding(.bottom, 10)
-                    .background(GeometryGetter(rect: $kGuardian.rects[1]))
-                Spacer()
-                PrimaryButtonView(title:"Update", action: {
-                    if !self.title.isEmpty || !self.shortDescription.isEmpty{
+    
+    var body: some View {
+        
+        
+        
+        ZStack{
+            Color("Accent")
+            VStack{
+                Text("Edit Note")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .padding(.top)
+                
+                
+                GeometryReader{ geo in
+                    VStack{
+                        InputField(placeholder: "Enter a Title", value: $title)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom, 10)
+                            .background(GeometryGetter(rect: $kGuardian.rects[0]))
                         
-                        self.viewModel.noteObj.title! = !self.title.isEmpty ? self.title : self.viewModel.noteObj.title!
-                        self.viewModel.noteObj.shortDescription! = !self.shortDescription.isEmpty ? self.shortDescription : self.viewModel.noteObj.shortDescription!
                         
-                        self.viewModel.performUpdateNote(noteData: self.viewModel.noteObj) {
-                            if self.viewModel.unauthorized {
-                                // Refresh failed, return to login
-                                self.rootIsActive = false
+                        InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom, 10)
+                            .background(GeometryGetter(rect: $kGuardian.rects[1]))
+                        
+                        
+                        Spacer()
+                        Button(action: {
+                            if !self.title.isEmpty || !self.shortDescription.isEmpty{
+                                
+                                self.viewModel.noteObj.title! = !self.title.isEmpty ? self.title : self.viewModel.noteObj.title!
+                                self.viewModel.noteObj.shortDescription! = !self.shortDescription.isEmpty ? self.shortDescription : self.viewModel.noteObj.shortDescription!
+                                
+                                self.viewModel.performUpdateNote(noteData: self.viewModel.noteObj) {
+                                    if self.viewModel.unauthorized {
+                                        // Refresh failed, return to login
+                                        self.rootIsActive = false
+                                    }
+                                    self.showEdit = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                            }else{
+                                self.showEdit = false
+                                self.presentationMode.wrappedValue.dismiss()
+                                
                             }
-                        self.presentationMode.wrappedValue.dismiss()
-                        }
-                    }else{
+                            
+                        }) {
+                            Text("Update")
+                                .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
+                                .frame(minWidth: geo.size.width, maxWidth: .infinity, minHeight:0, maxHeight: 60, alignment: .center)
 
-                        self.presentationMode.wrappedValue.dismiss()
-                      
-                    }
-
-                })
-                    .padding()
-                    .alert("Inadequate Permissions", isPresented: self.$showAlert) {
-                        Button("Ok", role: .cancel){
-                            self.showAlert = false
-                            self.presentationMode.wrappedValue.dismiss()
                         }
                         
-                    } message:{
-                        Text("Non Admin permissions")
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight:0, maxHeight: 60, alignment: .center)
+                        .background(Color("Primary"))
+                        .cornerRadius(12)
+                        .shadow(color: Color("Shadow").opacity(0.3), radius: 5, x:0, y: 5)
+                        .strokeStyle()
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 40)
                     }
-            }.navigationBarTitle("Edit Note", displayMode: .inline)
-                .onAppear { self.kGuardian.addObserver() }
-                .onDisappear { self.kGuardian.removeObserver() }
-                .alert(isPresented: self.$viewModel.error, content: {
-                    Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
-                })
+                    
+                }
+                
+            }
+            .padding(.top, 10)
+            .onAppear { //UINavigationBar.appearance().backgroundColor = UIColor(Color("Accent"))
+                self.kGuardian.addObserver() }
+            .onDisappear { self.kGuardian.removeObserver() }
+            .alert(isPresented: self.$viewModel.error, content: {
+                Alert(title: Text("Error"), message: Text(self.viewModel.errorMessage ?? "No message provided"), dismissButton: Alert.Button.cancel(Text("Okay")))
+            })
+            
         }
+        
     }
 }
 
-
+/*struct EditNoteView_Previews: PreviewProvider {
+ @Binding var isNavigationBarHidden: Bool
+ init(isNavigationBarHidden: Binding<Bool>) {
+ _isNavigationBarHidden = .constant(false)
+ }
+ static var previews: some View{
+ Group {
+ EditNoteView(rootIsActive: .constant(true), showEdit: .constant(true), viewModel: DetailedNoteViewViewModel())
+ 
+ .preferredColorScheme(.dark)
+ 
+ }
+ }
+ }*/
