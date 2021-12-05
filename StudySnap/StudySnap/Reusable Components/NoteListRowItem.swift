@@ -25,7 +25,6 @@ struct NoteListRowItem: View {
     var ratings: [RatingModel]
     
     @Binding var rootIsActive: Bool
-    
     @Binding var isRatingDisabled: Bool
     
     var body: some View {

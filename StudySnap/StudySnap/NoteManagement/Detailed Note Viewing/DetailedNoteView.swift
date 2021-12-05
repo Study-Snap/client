@@ -132,15 +132,17 @@ struct DetailedNoteView: View {
                                     Text("DESCRIPTION")
                                         .font(.caption)
                                         .foregroundColor(Color("Primary"))
+                                        .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.shortDescription!).font(.caption).fontWeight(.light)
                                 }
                                 .padding()
                                 
                                 VStack(alignment: .leading) {
-                                    Text("ABSTRACT") // MARK: Spacing between title and content exists due to extra new line characters within the note body variable
+                                    Text("ABSTRACT / NOTE INSIGHT")
                                         .font(.caption)
                                         .foregroundColor(Color("Primary"))
+                                        .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.noteAbstract!).font(.caption).fontWeight(.light).multilineTextAlignment(.leading)
                                 }.padding()
