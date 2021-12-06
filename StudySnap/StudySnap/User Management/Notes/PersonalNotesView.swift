@@ -78,6 +78,21 @@ struct PersonalNotesView: View {
                         }.listStyle(.plain)
                         
                     }.navigationBarTitle("Personal Notes",displayMode: .inline)
+                        .toolbar {
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                HStack(spacing: 16) {
+                                    Button(action: {
+                                        self.refresh = true
+                       
+                                    }) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .foregroundColor(Color("Secondary"))
+                                        
+                                    }
+                                } //: HSTACK
+                            } //: BUTTONS
+                        } //: TOOLBAR
                 } else {
                     VStack(alignment: .center) {
                         Spacer()
