@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+func truncateRatingCount(ratingCount: Int) -> String {
+    if (ratingCount > 1000000) {
+        return "\(ratingCount / 1000000) M"
+    } else if (ratingCount > 1000) {
+        return "\(ratingCount / 1000) K"
+    }
+    return "\(ratingCount)"
+}
+
 struct NoteListRowItem: View {
     var id: Int
     var title: String
@@ -16,7 +25,6 @@ struct NoteListRowItem: View {
     var ratings: [RatingModel]
     
     @Binding var rootIsActive: Bool
-    
     @Binding var isRatingDisabled: Bool
     
     @Binding var isNoteUpdated: Bool
@@ -58,15 +66,11 @@ struct NoteListRowItem: View {
                 HStack{
                     NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, currentNote: id)
                         .accentColor(.yellow)
-                    Spacer()
-                    Text("\(self.ratings.count)")
-                        .font(.headline)
+                    Text("(\(truncateRatingCount(ratingCount: self.ratings.count)))")
+                        .font(.body)
                         .foregroundColor(Color("Secondary"))
+                        .padding(.leading, 5)
                 }
-
-                
-                
-                
             }.padding(.leading, 6)
             
         }

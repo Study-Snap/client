@@ -47,6 +47,7 @@ struct NoteRatingView: View {
                                 }
                         }
                     }
+                    
                 })
             }
 

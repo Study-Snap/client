@@ -35,13 +35,16 @@ struct EditNoteView: View {
                 
                 GeometryReader{ geo in
                     VStack{
-                        InputField(placeholder: "Enter a Title", value: $title)
+                        Text("Enter in new values for one or more of the available fields")
+                            .font(.caption)
+                            .foregroundColor(Color("Primary"))
+                        InputField(placeholder: "New title", value: $title)
                             .padding(.horizontal, 10)
                             .padding(.bottom, 10)
                             .background(GeometryGetter(rect: $kGuardian.rects[0]))
                         
                         
-                        InputField(autoCap: false, placeholder: "Enter a short description", value: $shortDescription)
+                        InputField(autoCap: false, placeholder: "New description", value: $shortDescription)
                             .padding(.horizontal, 10)
                             .padding(.bottom, 10)
                             .background(GeometryGetter(rect: $kGuardian.rects[1]))
