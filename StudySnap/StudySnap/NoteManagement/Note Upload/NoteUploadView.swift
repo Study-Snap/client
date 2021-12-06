@@ -96,6 +96,8 @@ struct NoteUploadView: View {
                                     }
                                 }, label: {
                                     Text("+")
+                                        .font(.body)
+                                        .fontWeight(.bold)
                                         .padding(.horizontal, 25)
                                         .padding(.vertical, 10)
                                         .accentColor(.white)
@@ -108,7 +110,7 @@ struct NoteUploadView: View {
                             }
                             HStack {
                                 ForEach(keywords) { word in
-                                    KeywordListItemView(keyword: word.value)
+                                    KeywordListItemView(allKeywords: self.$keywords, keyword: word.value)
                                 }
                                 Spacer()
                             }
