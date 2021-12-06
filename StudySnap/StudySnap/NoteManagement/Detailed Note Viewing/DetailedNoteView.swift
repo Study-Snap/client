@@ -11,6 +11,7 @@ import PDFKit
 
 struct DetailedNoteView: View {
     @Binding var rootIsActive: Bool
+    @Binding var isNoteUpdated: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let noteId: Int
@@ -59,7 +60,7 @@ struct DetailedNoteView: View {
                                     .fontWeight(.light)
                                     .foregroundColor(.white)
                                 VStack {
-                                    NoteRatingView(isDisabled: $isRatingDsiabled, rootIsActive: self.$rootIsActive, currentNote: self.viewModel.noteObj.id!)
+                                    NoteRatingView(isDisabled: $isRatingDsiabled, rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, currentNote: self.viewModel.noteObj.id!)
                                 }.padding(.vertical, 10)
                                 HStack(alignment: .center) {
                                     ForEach(0..<3) { i in
@@ -234,7 +235,7 @@ struct DetailedNoteView: View {
                                     .foregroundColor(.black)
                             }
                             .halfSheet(showSheet: self.$showEditing){
-                                EditNoteView(rootIsActive: self.$rootIsActive, showEdit: self.$showEditing, viewModel: self.viewModel)
+                                EditNoteView(rootIsActive: self.$rootIsActive, showEdit: self.$showEditing, isNoteUpdated: self.$isNoteUpdated, viewModel: self.viewModel)
                                     .ignoresSafeArea()
                                     
                             } onEnd: {
@@ -383,8 +384,8 @@ struct CloudNoteView_Previews: PreviewProvider {
     }
     static var previews: some View{
         Group {
-            DetailedNoteView(rootIsActive: .constant(true), noteId: 9)
-            DetailedNoteView(rootIsActive: .constant(true), noteId: 9)
+            DetailedNoteView(rootIsActive: .constant(true), isNoteUpdated: .constant(true), noteId: 9)
+            DetailedNoteView(rootIsActive: .constant(true), isNoteUpdated: .constant(true), noteId: 9)
                 .preferredColorScheme(.dark)
             
         }

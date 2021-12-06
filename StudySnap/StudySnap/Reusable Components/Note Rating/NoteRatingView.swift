@@ -11,6 +11,7 @@ struct NoteRatingView: View {
     
     @Binding var isDisabled: Bool
     @Binding var rootIsActive: Bool
+    @Binding var isNoteUpdated: Bool
     @State var selected: Int = 0
     @State var isLoading: Bool = true
     @State var isNoteRatingUpdate: Bool = false
@@ -41,6 +42,7 @@ struct NoteRatingView: View {
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(self.selected >= i ? .yellow : .gray).onTapGesture {
                                     self.selected = i
+                                    self.isNoteUpdated.toggle()
                                     self.isNoteRatingUpdate = true
                                 }
                         }
@@ -71,7 +73,7 @@ struct NoteRatingView_Previews: PreviewProvider {
     
    
     static var previews: some View {
-        NoteRatingView(isDisabled: .constant(true), rootIsActive: .constant(false), selected: 1, currentNote: 1)
+        NoteRatingView(isDisabled: .constant(true), rootIsActive: .constant(false), isNoteUpdated: .constant(false), selected: 1, currentNote: 1)
             .previewLayout(.fixed(width: 200, height: 80))
         
     }

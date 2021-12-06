@@ -16,6 +16,7 @@ struct EditNoteView: View {
     @State private var showAlert = false
     @Binding var rootIsActive: Bool
     @Binding var showEdit: Bool
+    @Binding var isNoteUpdated: Bool
     @ObservedObject var viewModel: DetailedNoteViewViewModel
     
     
@@ -58,6 +59,7 @@ struct EditNoteView: View {
                                         // Refresh failed, return to login
                                         self.rootIsActive = false
                                     }
+                                    self.isNoteUpdated = true
                                     self.showEdit = false
                                     self.presentationMode.wrappedValue.dismiss()
                                 }
