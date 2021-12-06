@@ -8,6 +8,11 @@
 import SwiftUI
 import MobileCoreServices
 
+struct Keyword: Identifiable {
+    let value: String
+    let id = UUID()
+}
+
 struct NoteUploadView: View {
     @Binding var rootIsActive: Bool
     @Binding var refreshClassroom: Bool
@@ -18,7 +23,8 @@ struct NoteUploadView: View {
     // Input state
     @State var title: String  = ""
     @State var shortDescription: String  = ""
-    @State var keywords: String  = ""
+    @State var keywordInput: String = ""
+    @State var keywords: [Keyword]  = []
     @State var classRoomId: String
     @State var citationAuthorFirstName: String = ""
     @State var citationAuthorLastName: String = ""
@@ -74,10 +80,42 @@ struct NoteUploadView: View {
                             .padding(.horizontal, 5)
                             .padding(.bottom, 10)
                             .background(GeometryGetter(rect: $kGuardian.rects[1]))
-                        InputField(placeholder: "Keywords (press return to confirm)", value: $keywords)
+                        VStack {
+                            // MARK: Keyword entry (start)
+                            HStack {
+                                InputField(placeholder: "Enter a Keyword", value: $keywordInput)
+                                    .padding(.horizontal, 5)
+                                    .padding(.bottom, 10)
+                                    .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                                Button(action: {
+                                    if self.keywords.count < 5 && !self.keywordInput.isEmpty {
+                                        // Add keyword to keywords if under 5
+                                        let trimmedKeyword = self.keywordInput.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+                                        self.keywords.append(Keyword(value: trimmedKeyword.components(separatedBy: " ").first ?? trimmedKeyword))
+                                        self.keywordInput = ""
+                                    }
+                                }, label: {
+                                    Text("+")
+                                        .padding(.horizontal, 25)
+                                        .padding(.vertical, 10)
+                                        .accentColor(.white)
+                                        .background(Color("Primary"))
+                                        .cornerRadius(7)
+                                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color("TextFieldPrimary")))
+                                })
+                                    .padding(.trailing, 5)
+                                    .padding(.bottom, 10)
+                            }
+                            HStack {
+                                ForEach(keywords) { word in
+                                    KeywordListItemView(keyword: word.value)
+                                }
+                                Spacer()
+                            }
                             .padding(.horizontal, 5)
-                            .padding(.bottom, 10)
-                            .background(GeometryGetter(rect: $kGuardian.rects[2]))
+                            // MARK: Keyword entry (end)
+                        }
+                        
                         
                         Text("Citation Information (Optional)")
                             .font(.caption)
@@ -173,8 +211,8 @@ struct NoteUploadView: View {
                         if !self.citationAuthorFirstName.isEmpty && !self.citationAuthorFirstName.isEmpty && !self.citationTitle.isEmpty && !self.citationYear.isEmpty {
                             self.fullCitation = "@article{ahu61, author={" + self.citationAuthorFirstName + " and " + self.citationAuthorLastName + "}, title={" + self.citationTitle + "}, year=" + self.citationYear + "}"
                         }
-                        
-                        self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: self.keywords.components(separatedBy: ", "), shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {
+                        let keywordValues: [String] = self.keywords.map { $0.value }
+                        self.viewModel.performUpload(noteData: CreateNoteData(title: self.title, classId: self.classRoomId, keywords: keywordValues, shortDescription: self.shortDescription, fileName: self.pickedFileName, fileData: self.pickedFile, bibtextCitation: self.fullCitation)) {
                             
                             if self.viewModel.unauthorized {
                                 // Pop to root
