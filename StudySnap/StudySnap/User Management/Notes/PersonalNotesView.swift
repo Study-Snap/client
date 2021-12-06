@@ -9,55 +9,144 @@ import SwiftUI
 
 struct PersonalNotesView: View {
     @State private var isShowingNotes: Bool = false
-
-    @ObservedObject var globalString = GlobalString()
+    @Binding var rootIsActive: Bool
+    @State var isNoteUpdated: Bool = false
     @State var isDeleted = false
-    @StateObject var viewModel : ClassroomDetailViewViewModel = ClassroomDetailViewViewModel()
+    @StateObject var viewModel : PersonalNotesViewModel = PersonalNotesViewModel()
+    @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
+    @State var targetNoteId: Int? = 1
+    @State var showNoteDetails = false
+    @State var refresh: Bool = false
+    @State var isRatingDisabled: Bool = true
+    @State var noteRating: Int = 1
+    @State var isLoading: Bool = false
+    
     var body: some View {
-      NavigationView {
-        List {
-            ForEach(globalString.notesData) { item in
-                NavigationLink(destination:{
-                    VStack{
-                        LocalNoteView(note: item)
+        VStack {
+            NavigationView {
+                
+                if viewModel.results.count > 0 {
+                    VStack {
+                        
+                        VStack {
+                            NavigationLink(
+                                destination: DetailedNoteView(rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                                isActive: $showNoteDetails,
+                                label: {
+                                    EmptyView()
+                                    
+                                }).isDetailLink(false)
+                            
+                        }
+                        
+                        List{
+                            
+                            ForEach(viewModel.results) { item in
+                                
+                              
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled, isNoteUpdated: self.$isNoteUpdated)
+                                    .onAppear {
+                                        self.ratingViewModel.getAverageRating(currentNoteId: item.id!){
+                                            self.noteRating = self.ratingViewModel.ratingValue - 1
+                                        }
+                                    }
+                                    .swipeActions() {
+                                        Button(action: {
+                                            self.viewModel.deleteUserNote(userNoteId: item.id!) {
+                                                self.isDeleted = true
+                                                self.refresh = true
+                                            }
+                                            
+                                        }) {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                        .tint(.red)
+                                        
+                                    }
+                                    .onTapGesture {
+                                        self.targetNoteId = item.id!
+                                        self.showNoteDetails.toggle()
+                                    }.padding(.vertical, 10)
+                                
+                                
+                            }
+                            
+                            
+                            
+                            
+                            
+                        }.listStyle(.plain)
+                        
+                    }.navigationBarTitle("Personal Notes",displayMode: .inline)
+                        .toolbar {
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                HStack(spacing: 16) {
+                                    Button(action: {
+                                        self.refresh = true
+                       
+                                    }) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .foregroundColor(Color("Secondary"))
+                                        
+                                    }
+                                } //: HSTACK
+                            } //: BUTTONS
+                        } //: TOOLBAR
+                } else {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Image(systemName: "questionmark.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color("AccentDark"))
+                            .frame(width: 100, height: 100, alignment: .center)
+                            .padding()
+                        Text("No notes could be found\nTry Uploading some")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(Color("AccentDark"))
+                            .padding(.horizontal)
+                        Spacer()
+                        Spacer()
                     }
-                }()) {
-                    NoteRowView(note: item)
-                        .padding(.vertical, 4)
-                    
+                    .cornerRadius(12)
+                }
+                
+            } //: NAVIGATION
+            
+        }.onAppear(perform: {
+            self.viewModel.getPersonalUserNotes(){
+                if self.viewModel.unauthorized {
+                    // Refresh failed, return to login
+                    self.rootIsActive = false
                 }
             }
-            .onDelete(perform: delete)
-        }
-        .navigationTitle("Storage")
-        .navigationBarItems(
-          trailing:
-            Button(action: {
-              isShowingNotes = true
-            }) {
-                Image(systemName: "plus")
-                    .font(.title)
-                    .foregroundColor(Color("Secondary"))
-            } //: BUTTON
-            .sheet(isPresented: $isShowingNotes) {
-              //NoteUploadView() // MARK: Implement when working on perosnal storage
+           
+        })
+            .onChange(of: refresh || isNoteUpdated) { value in
+                if self.refresh || self.isNoteUpdated {
+                    // Refresh top notes
+                    self.viewModel.getPersonalUserNotes() {
+                        if self.viewModel.unauthorized {
+                            // Refresh failed, return to login
+                            self.rootIsActive = false
+                        }
+                    }
+                    
+                    // Reset flag
+                    self.isNoteUpdated = false
+                    self.refresh = false
+                }
             }
-        )
-
-      } //: NAVIGATION
-      .navigationViewStyle(StackNavigationViewStyle())
     }
     
-    private func delete(at offSet: IndexSet){
-        globalString.notesData.remove(atOffsets: offSet)
-        isDeleted = true
-        
-    }
 }
 
 
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalNotesView()
+        PersonalNotesView(rootIsActive: .constant(true))
     }
 }

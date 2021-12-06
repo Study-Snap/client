@@ -19,27 +19,26 @@ class JoinClassroomViewModel: ObservableObject{
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (joinUserClassroom): \(refreshed)")
                         self.unauthorized = !refreshed
                         
-                        if !self.unauthorized {
+                        if self.unauthorized {
+                            completion()
+                        } else {
                             // If a new access token was generated, retry
                             self.joinUserClassroom(classId: classId, completion: completion)
-                        } else {
-                            // Failed, back to login sheharyaar...
-                            completion()
                         }
                     }
                 } else {
                     // Received message
                     self.error = true
                     self.errorMessage = res.message
+                    completion()
                 }
             } else{
                 // Success
                 completion()
             }
-            completion()
         }
     }
 }

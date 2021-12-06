@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NOTE_SPACES_EP</key>
+	<string>notesdata.nyc3.digitaloceanspaces.com</string>
 	<key>API_PROTOCOL</key>
 	<string>http</string>
 	<key>AUTH_ENDPOINT</key>
@@ -19,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.2.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NEPTUNE_ENDPOINT</key>
@@ -30,7 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>StudySnap needs access to the camera to take pictures of physical notes.</string>
+	<string>StudySnap needs access to the camera to scan physical notes.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

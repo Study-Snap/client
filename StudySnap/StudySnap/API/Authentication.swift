@@ -86,6 +86,55 @@ class AuthApi {
         }.resume()
     }
     
+    func changePassword(password: String, newPassword: String, completion: @escaping (User) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(authBaseUrl)/password")
+        
+        let parameters : [String: String] = [
+            "password": password,
+            "newPassword": newPassword
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let auth = try JSONDecoder().decode(User.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(auth)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(User(message: validation.message!.first!))
+                    }
+                        
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(User(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+
+        }.resume()
+    }
+    
     func login(email: String, password: String, completion: @escaping (UserAuth) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(authBaseUrl)/login")
         

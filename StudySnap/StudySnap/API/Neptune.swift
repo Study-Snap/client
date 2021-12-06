@@ -31,6 +31,8 @@ struct CreateClassroomData: Codable {
     var thumbnailUri: String?
 }
 
+
+
 struct ApiFileResponse: Codable {
     var statusCode: Int?
     var fileUri: String?
@@ -39,6 +41,19 @@ struct ApiFileResponse: Codable {
     var message: String?
 }
 
+struct ApiRatingResponse: Codable {
+    enum CodingKeys: String, CodingKey {
+        case value, statusCode, message
+        
+        case id = "id"
+    }
+    var id: Int?
+    var statusCode: Int?
+    var value: Int?
+    
+    // Info and error messaging
+    var message: String?
+}
 struct ApiClassMessageResponse: Codable {
     var statusCode: Int?
 
@@ -79,7 +94,7 @@ struct ApiUserId: Codable, Identifiable{
 }
 struct ApiNoteResponse : Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
-        case title, classId, keywords, shortDescription, noteAbstract, fileUri, authorId, timeLength, bibtextCitation, user, message
+        case title, classId, keywords, shortDescription, noteAbstract, noteCDN, fileUri, authorId, timeLength, ratings, bibtextCitation, user, message
         
         case id = "id"
     }
@@ -90,9 +105,11 @@ struct ApiNoteResponse : Codable, Identifiable {
     var keywords: [String]?
     var shortDescription: String?
     var noteAbstract: String?
+    var noteCDN: String?
     var fileUri: String?
     var authorId: Int?
     var timeLength: Int?
+    var ratings: [RatingModel]?
     var bibtextCitation: String?
     var user: UserModel?
     // For errors or other messages
@@ -452,7 +469,32 @@ class NeptuneApi {
             }
         }.resume()
     }
-
+    
+    func getAverageNoteRating(noteId: Int, completion: @escaping (ApiRatingResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/by-id/\(noteId)/rating")
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiRatingResponse = try JSONDecoder().decode(ApiRatingResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiRatingResponse(message: "Oops! We don't know what happened there"))
+                }
+            }
+        }.resume()
+    }
     func getUserClassrooms(completion: @escaping ([ApiClassroomResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/classrooms")
         
@@ -539,6 +581,103 @@ class NeptuneApi {
             }
         }.resume()
     }
+    func updateNote(noteData: ApiNoteResponse, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes")
+       
+        let parameters: [String: Any] = [
+            "noteId": noteData.id!,
+            "data": [
+                "title": noteData.title!,
+                "shortDescription": noteData.shortDescription!
+            ]
+
+        ]
+        print(parameters)
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+        }.resume()
+    }
+    
+    func deleteNote(noteId: Int, completion: @escaping (ApiClassMessageResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes")
+        print(noteId)
+        let parameters: [String: Any] = [
+            "noteId": noteId
+        ]
+        
+        print(parameters)
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiClassMessageResponse = try JSONDecoder().decode(ApiClassMessageResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                do {
+                    print(error.localizedDescription)
+                    let validation = try JSONDecoder().decode(ValidationError.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        completion(ApiClassMessageResponse(message: validation.message!.first!))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(ApiClassMessageResponse(message: "Oops! We don't know what happened there"))
+                    }
+                }
+            }
+        }.resume()
+    }
     
     func getUserNotes(completion: @escaping ([ApiNoteResponse]) -> ()) -> Void {
         let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/users/notes")
@@ -580,6 +719,41 @@ class NeptuneApi {
                             completion([ApiNoteResponse(message: "Oops! We don't know what happened there")])
                         }
                     }
+                }
+            }
+        }.resume()
+    }
+    func putNoteRating(value: Int, noteId: Int, completion: @escaping (ApiNoteResponse) -> ()) -> Void {
+        let reqUrl: URL! = URL(string: "\(neptuneBaseUrl)/notes/by-id/\(noteId)/rate")
+        
+        let parameters: [String: Any] = [
+            "value": value
+        ]
+        
+        var request: URLRequest = URLRequest(url: reqUrl)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(TokenService().getToken(key: .accessToken))", forHTTPHeaderField: "Authorization")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        URLSession.shared.dataTask(with: request) {(data, _, _) in
+            guard let data = data else { return }
+            
+            do {
+                let note: ApiNoteResponse = try JSONDecoder().decode(ApiNoteResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(note)
+                }
+            } catch {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion(ApiNoteResponse(message: "Oops! We don't know what happened there"))
                 }
             }
         }.resume()

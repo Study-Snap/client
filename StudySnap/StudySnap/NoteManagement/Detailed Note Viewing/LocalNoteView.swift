@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/*
 // MARK: To be removed
 struct LocalNoteView: View {
     let note: Note
@@ -54,9 +54,11 @@ struct LocalNoteView: View {
 }
 
 struct LocalNoteView_Previews: PreviewProvider {
-    static let notes: [Note] = Bundle.main.decode("notes_data.json")
+    //static let notes: [Note] = Bundle.main.decode("notes_data.json")
     
     static var previews: some View {
         LocalNoteView(note: notes[0])
             .previewDevice("iPhone 11")    }
 }
+
+*/

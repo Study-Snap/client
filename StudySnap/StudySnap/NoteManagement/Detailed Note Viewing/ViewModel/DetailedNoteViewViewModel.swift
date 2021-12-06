@@ -12,7 +12,8 @@ class DetailedNoteViewViewModel: ObservableObject {
     @Published var error: Bool = false
     @Published var errorMessage: String?
     @Published var loading: Bool = true
-    
+    @Published var pdfFile: Data?
+    //@Published var noteObj: ApiNoteResponse? = nil
     // With default value the note object
     @Published var noteObj: ApiNoteResponse = ApiNoteResponse(id: 1, title: "Cool", classId: "8834jjr9js9", keywords: ["not", "cool"], shortDescription: "Short description", noteAbstract: "This is a default note abstract", fileUri: "", authorId: 1, timeLength: 5, bibtextCitation: "", user: UserModel(id: 1, email: "test@exampe.com", firstName: "Ftester", lastName: "Ltester"), statusCode: 200)
     
@@ -22,7 +23,7 @@ class DetailedNoteViewViewModel: ObservableObject {
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getNoteDetailsForId): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {
@@ -44,6 +45,55 @@ class DetailedNoteViewViewModel: ObservableObject {
             }
             completion()
         }
+    }
+    
+    func getNoteFileFromCDN(fileId: String, completion: @escaping () -> ()) -> Void {
+        Spaces().getNoteDataFromCDN(fileId: fileId) { data in
+            if data == nil {
+                // Error getting note file data
+                self.error = true
+                self.errorMessage = "Failed to get note data from server"
+            } else {
+                self.pdfFile = data
+            }
+            completion()
+        }
+    }
+    
+    func performUpdateNote(noteData: ApiNoteResponse, completion: @escaping () -> ()) -> Void {
+        
+        NeptuneApi().updateNote(noteData: noteData) { res in
+            if res.message != nil || res.error != nil {
+                // Error occurred... or something
+                if res.message!.contains("Unauthorized") {
+                    AuthApi().refreshAccessWithHandling { refreshed in
+                        print("Refreshed (performUpload): \(refreshed)")
+                        self.unauthorized = !refreshed
+                        
+                        if self.unauthorized {
+                            completion()
+                        }
+                        else {
+                            // If a new access token was generated, retry note upload
+                            self.performUpdateNote(noteData: noteData, completion: completion)
+                        }
+                    }
+                } else {
+                    // Another error occurred
+                    self.loading = false
+                    self.error.toggle()
+                    self.errorMessage = res.message
+                    completion()
+                }
+            } else {
+                
+                // Note update successful. Complete execution and set response
+                self.noteObj = res
+                self.loading = false
+                completion()
+            }
+        }
+        
     }
     
 }
