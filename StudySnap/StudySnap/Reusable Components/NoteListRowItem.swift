@@ -25,8 +25,9 @@ struct NoteListRowItem: View {
     var ratings: [RatingModel]
     
     @Binding var rootIsActive: Bool
-    
     @Binding var isRatingDisabled: Bool
+    
+    @Binding var isNoteUpdated: Bool
     
     var body: some View {
         
@@ -63,7 +64,7 @@ struct NoteListRowItem: View {
                     .foregroundColor(Color("Secondary"))
                 
                 HStack{
-                    NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, currentNote: id)
+                    NoteRatingView(isDisabled: $isRatingDisabled, rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, currentNote: id)
                         .accentColor(.yellow)
                     Text("(\(truncateRatingCount(ratingCount: self.ratings.count)))")
                         .font(.body)

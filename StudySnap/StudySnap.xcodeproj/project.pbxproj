@@ -39,6 +39,7 @@
 		4A7D4AF8273CAE83004F5088 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7D4AF7273CAE83004F5088 /* PhotoPicker.swift */; };
 		4A7EDFE926F3EF120007D91B /* InfoPlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */; };
 		4A7EDFF126F3F1910007D91B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7EDFF026F3F1910007D91B /* Constants.swift */; };
+		4A9947E8275C092C00551820 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9947E7275C092C00551820 /* EditNoteView.swift */; };
 		4AB9997A2738B76400675FE7 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB999792738B76400675FE7 /* Styles.swift */; };
 		AE12DF302710E0B60091EC2A /* ScanNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */; };
 		AE187AD527435BAD00BA38B0 /* SwiftyBibtex in Frameworks */ = {isa = PBXBuildFile; productRef = AE187AD427435BAD00BA38B0 /* SwiftyBibtex */; };
@@ -47,6 +48,7 @@
 		AEB239922712452300F1C02F /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB239912712452300F1C02F /* NoteEditorView.swift */; };
 		AED1323C274BED7C00906E08 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED1323B274BED7C00906E08 /* ChangePasswordView.swift */; };
 		AED1323E274BF24900906E08 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED1323D274BF24900906E08 /* ChangePasswordViewModel.swift */; };
+		B813A5FF275D91B500703727 /* KeywordListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B813A5FE275D91B500703727 /* KeywordListItemView.swift */; };
 		B833317A26294CF700365D11 /* FilePickedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833317926294CF700365D11 /* FilePickedView.swift */; };
 		B833318F262A007100365D11 /* NoteUploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B833318E262A007100365D11 /* NoteUploadViewModel.swift */; };
 		B85F6A72274835370022A4C1 /* CitationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F6A71274835370022A4C1 /* CitationModel.swift */; };
@@ -107,7 +109,7 @@
 		4A04FD792604368900895B0D /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		4A0739B4260530A800A823DF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4A0739BC2605340D00A823DF /* PersonalNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalNotesView.swift; sourceTree = "<group>"; };
-		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4A0739C1260534B000A823DF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		4A073A0A2605565A00A823DF /* MiniNoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniNoteCardView.swift; sourceTree = "<group>"; };
 		4A3E5C0F274AE41F00131E6A /* NoteRatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRatingViewModel.swift; sourceTree = "<group>"; };
 		4A3E5C17274AF9CE00131E6A /* RatingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingModel.swift; path = "StudySnap/Reusable Components/Note Rating/Models/RatingModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -126,6 +128,7 @@
 		4A7D4AF7273CAE83004F5088 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		4A7EDFE826F3EF120007D91B /* InfoPlistParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPlistParser.swift; sourceTree = "<group>"; };
 		4A7EDFF026F3F1910007D91B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4A9947E7275C092C00551820 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		4AB999792738B76400675FE7 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		AE12DF2F2710E0B60091EC2A /* ScanNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanNoteView.swift; sourceTree = "<group>"; };
 		AE280A222714CCCB00809D7E /* ProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewViewModel.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		AEB239912712452300F1C02F /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
 		AED1323B274BED7C00906E08 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		AED1323D274BF24900906E08 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
+		B813A5FE275D91B500703727 /* KeywordListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordListItemView.swift; sourceTree = "<group>"; };
 		B833317926294CF700365D11 /* FilePickedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickedView.swift; sourceTree = "<group>"; };
 		B833318E262A007100365D11 /* NoteUploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteUploadViewModel.swift; sourceTree = "<group>"; };
 		B85F6A71274835370022A4C1 /* CitationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitationModel.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 				B8AB655C261A1F8100FC4320 /* InputFieldViewCollection.swift */,
 				B8AB6561261A231000FC4320 /* PrimaryButtonView.swift */,
 				B8C5CD222628EBFC00C9FC74 /* NoteListRowItem.swift */,
+				B813A5FE275D91B500703727 /* KeywordListItemView.swift */,
 			);
 			path = "Reusable Components";
 			sourceTree = "<group>";
@@ -486,6 +491,7 @@
 				4A01256A260C1AC3009E3F6B /* LocalNoteView.swift */,
 				4A01256F260C1AE1009E3F6B /* DetailedNoteView.swift */,
 				AE8349C027448E68001DFA35 /* CitationView.swift */,
+				4A9947E7275C092C00551820 /* EditNoteView.swift */,
 			);
 			path = "Detailed Note Viewing";
 			sourceTree = "<group>";
@@ -790,10 +796,12 @@
 				4A4893BA27459BD900BF636F /* PersonalNotesViewModel.swift in Sources */,
 				AED1323E274BF24900906E08 /* ChangePasswordViewModel.swift in Sources */,
 				4A012560260C000D009E3F6B /* NoteUploadView.swift in Sources */,
+				4A9947E8275C092C00551820 /* EditNoteView.swift in Sources */,
 				4A073A0B2605565A00A823DF /* MiniNoteCardView.swift in Sources */,
 				4A01260A260C46C0009E3F6B /* NoteRatingView.swift in Sources */,
 				4A72D9AB2700145800519D6A /* JoinClassroomViewModel.swift in Sources */,
 				4A0739BD2605340D00A823DF /* PersonalNotesView.swift in Sources */,
+				B813A5FF275D91B500703727 /* KeywordListItemView.swift in Sources */,
 				B8D14140261BE95300D3822E /* GeometryGetter.swift in Sources */,
 				B866B1FE262A4B44004C2681 /* DetailedNoteViewViewModel.swift in Sources */,
 				B8DACB492619040D0066755A /* Authentication.swift in Sources */,

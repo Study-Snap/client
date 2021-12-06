@@ -30,6 +30,7 @@ struct ClassroomDetailView: View {
     @State var className: String
     @State var refresh: Bool = false
     @State var isRatingDisabled: Bool = true
+    @State var isNoteUpdated: Bool = false
   
 
     var body: some View {
@@ -40,7 +41,7 @@ struct ClassroomDetailView: View {
                     
                     VStack {
                         NavigationLink(
-                            destination: DetailedNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                            destination: DetailedNoteView(rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
                             isActive: $showNoteDetails,
                             label: {
                                 EmptyView()
@@ -78,14 +79,14 @@ struct ClassroomDetailView: View {
                                             .padding(.top, 3)
                                         List {
                                             ForEach(viewModel.trending) { item in
-                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled, isNoteUpdated: self.$isNoteUpdated)
                                                     .onTapGesture {
                                                         self.targetNoteId = item.id!
                                                         self.showNoteDetails.toggle()
                                                     }.padding(.vertical, 15)
                                             }
                                         }
-                                        .listStyle(.insetGrouped)
+                                        .listStyle(.plain)
                                         .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
                                     } else {
                                         VStack(alignment: .center) {
@@ -113,15 +114,15 @@ struct ClassroomDetailView: View {
                                         List {
                                             ForEach(viewModel.results) { item in
                                                 
-                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
+                                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled, isNoteUpdated: self.$isNoteUpdated)
                                                     .onTapGesture {
                                                         self.targetNoteId = item.id!
                                                         self.showNoteDetails.toggle()
-                                                    }.padding(.vertical, 15)
+                                                    }.padding(.vertical, 10)
                                   
                                  
                                             }
-                                        }.listStyle(.insetGrouped)
+                                        }.listStyle(.plain)
                                     } else {
                                         VStack(alignment: .center) {
                                             Spacer()
@@ -149,8 +150,8 @@ struct ClassroomDetailView: View {
                     })
                     
                 }
-                .onChange(of: refresh) { value in
-                        if self.refresh {
+                .onChange(of: refresh || isNoteUpdated) { value in
+                    if self.refresh || self.isNoteUpdated{
                             // Refresh top notes
                             self.viewModel.getTopTrendingNotes(currentClassId: self.classID) {
                                 if self.viewModel.unauthorized {
@@ -159,6 +160,7 @@ struct ClassroomDetailView: View {
                                 }
                             }
                             // Reset flag
+                            self.isNoteUpdated = false
                             self.refresh = false
                         }
                     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct PersonalNotesView: View {
     @State private var isShowingNotes: Bool = false
     @Binding var rootIsActive: Bool
-    //@ObservedObject var globalString = GlobalString()
+    @State var isNoteUpdated: Bool = false
     @State var isDeleted = false
     @StateObject var viewModel : PersonalNotesViewModel = PersonalNotesViewModel()
     @StateObject var ratingViewModel : NoteRatingViewModel = NoteRatingViewModel()
@@ -30,7 +30,7 @@ struct PersonalNotesView: View {
                         
                         VStack {
                             NavigationLink(
-                                destination: DetailedNoteView(rootIsActive: self.$rootIsActive, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
+                                destination: DetailedNoteView(rootIsActive: self.$rootIsActive, isNoteUpdated: self.$isNoteUpdated, noteId: self.targetNoteId!)   .navigationBarBackButtonHidden(true) ,
                                 isActive: $showNoteDetails,
                                 label: {
                                     EmptyView()
@@ -44,7 +44,7 @@ struct PersonalNotesView: View {
                             ForEach(viewModel.results) { item in
                                 
                               
-                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled)
+                                NoteListRowItem(id: item.id!, title: item.title!, author: "\(item.user!.firstName) \(item.user!.lastName)", shortDescription: item.shortDescription!, readTime: item.timeLength!, ratings: item.ratings!, rootIsActive: self.$rootIsActive, isRatingDisabled: $isRatingDisabled, isNoteUpdated: self.$isNoteUpdated)
                                     .onAppear {
                                         self.ratingViewModel.getAverageRating(currentNoteId: item.id!){
                                             self.noteRating = self.ratingViewModel.ratingValue - 1
@@ -66,7 +66,7 @@ struct PersonalNotesView: View {
                                     .onTapGesture {
                                         self.targetNoteId = item.id!
                                         self.showNoteDetails.toggle()
-                                    }
+                                    }.padding(.vertical, 10)
                                 
                                 
                             }
@@ -75,9 +75,24 @@ struct PersonalNotesView: View {
                             
                             
                             
-                        }.listStyle(.insetGrouped)
+                        }.listStyle(.plain)
                         
                     }.navigationBarTitle("Personal Notes",displayMode: .inline)
+                        .toolbar {
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                HStack(spacing: 16) {
+                                    Button(action: {
+                                        self.refresh = true
+                       
+                                    }) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .foregroundColor(Color("Secondary"))
+                                        
+                                    }
+                                } //: HSTACK
+                            } //: BUTTONS
+                        } //: TOOLBAR
                 } else {
                     VStack(alignment: .center) {
                         Spacer()
@@ -110,8 +125,8 @@ struct PersonalNotesView: View {
             }
            
         })
-            .onChange(of: refresh) { value in
-                if self.refresh {
+            .onChange(of: refresh || isNoteUpdated) { value in
+                if self.refresh || self.isNoteUpdated {
                     // Refresh top notes
                     self.viewModel.getPersonalUserNotes() {
                         if self.viewModel.unauthorized {
@@ -121,6 +136,7 @@ struct PersonalNotesView: View {
                     }
                     
                     // Reset flag
+                    self.isNoteUpdated = false
                     self.refresh = false
                 }
             }
