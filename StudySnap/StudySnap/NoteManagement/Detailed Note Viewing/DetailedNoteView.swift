@@ -132,7 +132,8 @@ struct DetailedNoteView: View {
                                 VStack(alignment: .leading) {
                                     Text("DESCRIPTION")
                                         .font(.caption)
-                                        .foregroundColor(Color("Primary"))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color("Secondary"))
                                         .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.shortDescription!).font(.caption).fontWeight(.light)
@@ -142,7 +143,8 @@ struct DetailedNoteView: View {
                                 VStack(alignment: .leading) {
                                     Text("ABSTRACT / NOTE INSIGHT")
                                         .font(.caption)
-                                        .foregroundColor(Color("Primary"))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color("Secondary"))
                                         .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.noteAbstract!).font(.caption).fontWeight(.light).multilineTextAlignment(.leading)
@@ -226,7 +228,7 @@ struct DetailedNoteView: View {
                         HStack(spacing: 5) {
                             Button(action: {
                                
-                                if self.userViewModel.response!.id == self.viewModel.noteObj.authorId! {
+                                if self.userViewModel.userDataResponse!.id == self.viewModel.noteObj.authorId! {
                                     self.showEditing = true
                                 }else{
                                     self.showAlert = true

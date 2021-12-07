@@ -51,10 +51,11 @@ struct SignUpContent: View {
                     Button {
                         self.checkTermsAndConditions = true
                     } label: {
-                        Text("Terms and Conditions")
+                        Text("Terms & Conditions")
+                            
                     }
                     .accentColor(Color("Primary"))
-                    .alert("Terms and Conditions", isPresented: self.$checkTermsAndConditions) {
+                    .alert("Terms & Conditions", isPresented: self.$checkTermsAndConditions) {
                         
                         Button("Ok", role:.cancel){
                             self.checkTermsAndConditions = false

@@ -18,8 +18,8 @@ struct PrimaryButtonView: View {
             Button(action: self.action, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color("Primary"))
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight:0, maxHeight: 60, alignment: .center)
+                        .fill(Color("ButtonColors"))
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight:0, maxHeight: 50, alignment: .center)
                     
                     Text(self.title).font(.custom("Inter Semi Bold", size: self.fontSize)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).multilineTextAlignment(.center)
                 }

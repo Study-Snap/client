@@ -20,7 +20,7 @@ class PersonalNotesViewModel: ObservableObject{
                 if res[0].message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed: \(refreshed)")
+                        print("Refreshed (getPersonalUserNotes): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if !self.unauthorized {
@@ -52,7 +52,7 @@ class PersonalNotesViewModel: ObservableObject{
                 if res.message!.contains("Unauthorized") {
                     // Authentication error
                     AuthApi().refreshAccessWithHandling { refreshed in
-                        print("Refreshed (joinUserClassroom): \(refreshed)")
+                        print("Refreshed (deleteUserNote): \(refreshed)")
                         self.unauthorized = !refreshed
                         
                         if self.unauthorized {

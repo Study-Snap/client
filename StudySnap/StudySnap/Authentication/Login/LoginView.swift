@@ -19,16 +19,22 @@ struct LoginView: View {
     @State var showPassword: Bool = false
     @State var loggedIn: Bool = !TokenService().getToken(key: .accessToken).isEmpty
     
+    // Applicaiton (globals)
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         if !self.loggedIn {
             NavigationView {
                 VStack(alignment: .center) {
-                    HStack(alignment: .center) {
-                        Text("Log In").font(.largeTitle).padding()
+                    if (colorScheme == ColorScheme.light) {
+                        Image("LogoRound").resizable().scaledToFit().padding(.horizontal, 100).padding(.top, 25).padding()
+                    } else {
+                        Image("LogoRoundDark").resizable().scaledToFit().padding(.horizontal, 100).padding(.top, 25).padding()
                     }
+                    Text("StudySnap").font(.title).foregroundColor(Color("Secondary"))
                     
                     // Input fields
-                    InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $viewModel.email).padding(.top, 20).padding(.bottom, 10).padding(.horizontal, 17.5)
+                    InputField(fieldHeight: 15, textStyle: .emailAddress, autoCap: false, placeholder: "Enter your email address", value: $viewModel.email).padding(.top, 30).padding(.bottom, 10).padding(.horizontal, 17.5)
                     
                     if showPassword {
                         InputField(fieldHeight: 15, autoCap: false, placeholder: "Password", value: $viewModel.password).padding(.bottom, 10).padding(.horizontal, 17.5)
@@ -102,6 +108,7 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+            .preferredColorScheme(.light)
     }
 }
 

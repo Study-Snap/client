@@ -20,7 +20,8 @@ struct NoteEditorView: View {
     @State private var index = 0
     
     var body: some View {
-        Text("Note Editor: Page " + String(index + 1) + " of " + String(pagesText.count)).font(.system(size: 26, weight: .heavy, design: .default))
+        Text("Note Editor").font(.system(size: 26, weight: .heavy, design: .default))
+        Text("page \(String(index + 1) + " of " + String(pagesText.count))").font(.caption2).foregroundColor(Color("AccentReversed"))
         VStack {
             ZStack {
                 TextEditor(text: $pagesText[index])
@@ -29,27 +30,17 @@ struct NoteEditorView: View {
             Spacer()
             
             HStack {
-                Button (action: {
+                PrimaryButtonView(title: "Next Page", action: {
                     index += 1
-                }) {
-                    Text("Next Page")
-                }
-                .padding()
-                .foregroundColor(.white)
-                .background(Capsule().fill(Color("Primary")))
-                .disabled(index + 1 >= $pagesText.count ? true : false)
+                })
+                    .padding()
+                    .disabled(index + 1 >= $pagesText.count)
                 
-                Button (action: {
+                PrimaryButtonView(title: "Save to PDF", action: {
                     $pickedFile.wrappedValue = createPDF(from: pagesText).dataRepresentation()!
                     $pickedFileName.wrappedValue = "ScannedNote.pdf"
                     $didCompleteScan.wrappedValue = false
-                    
-                }) {
-                    Text("Save PDF")
-                }
-                .padding()
-                .foregroundColor(.white)
-                .background(Capsule().fill(Color("Primary")))
+                })
             }
             .padding()
         }
