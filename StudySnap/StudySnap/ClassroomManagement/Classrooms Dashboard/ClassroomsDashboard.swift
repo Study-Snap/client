@@ -105,7 +105,7 @@ struct ClassroomsDashboard: View {
                                 Button(action: {
                                     isJoiningClassroom = true
                                 }) {
-                                    PrimaryButtonView(title: "Join Classroom", action:{
+                                    PrimaryButtonView(title: "Join", action:{
                                         isJoiningClassroom = true
                                     })
                                         .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 10)
@@ -120,7 +120,7 @@ struct ClassroomsDashboard: View {
                                 Button(action: {
                                     isJoiningClassroom = true
                                 }) {
-                                    PrimaryButtonView(title: "Create Classroom", action:{
+                                    PrimaryButtonView(title: "Create", action:{
                                         isCreatingClassroom = true
                                     })
                                         .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x:0, y: 10)

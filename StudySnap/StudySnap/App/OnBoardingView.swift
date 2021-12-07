@@ -9,36 +9,37 @@ import SwiftUI
 
 struct OnBoardingView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
+    // Applicaiton (globals)
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
-       
             ZStack {
-                    //image 1
-                    Image("LandingPageBkg")
-                        .resizable()
-                        .ignoresSafeArea(.all)
-        
-
-                    VStack(alignment: .center) {
-                        Spacer()
-                        Image("Logo")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(50)
-                        Spacer()
-                        Spacer()
-                            
-                    
-                        StartButtonView().padding()
-                    
-                    }
-
+                if (colorScheme == ColorScheme.light) {
+                    Image("Background").resizable().ignoresSafeArea()
+                } else {
+                    Image("BackgroundDark").resizable().ignoresSafeArea()
                 }
-      
+                
+                VStack(alignment: .center) {
+                    Spacer()
+                    Text("Study Snap").font(.largeTitle).fontWeight(.bold).foregroundColor(Color("AccentDark"))
+                    if (colorScheme == ColorScheme.light) {
+                        Image("LogoRound").resizable().scaledToFit().padding(.horizontal, 100).padding(.top, 25).padding()
+                    } else {
+                        Image("LogoRoundDark").resizable().scaledToFit().padding(.horizontal, 100).padding(.top, 25).padding()
+                    }
+                    Spacer()
+                    StartButtonView().padding()
+                
+                }
+            }
     }
 }
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnBoardingView()
+            .preferredColorScheme(.light)
     }
 }

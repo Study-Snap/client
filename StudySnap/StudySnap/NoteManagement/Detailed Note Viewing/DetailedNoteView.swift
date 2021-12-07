@@ -132,7 +132,7 @@ struct DetailedNoteView: View {
                                 VStack(alignment: .leading) {
                                     Text("DESCRIPTION")
                                         .font(.caption)
-                                        .foregroundColor(Color("Primary"))
+                                        .foregroundColor(Color("Secondary"))
                                         .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.shortDescription!).font(.caption).fontWeight(.light)
@@ -142,7 +142,7 @@ struct DetailedNoteView: View {
                                 VStack(alignment: .leading) {
                                     Text("ABSTRACT / NOTE INSIGHT")
                                         .font(.caption)
-                                        .foregroundColor(Color("Primary"))
+                                        .foregroundColor(Color("Secondary"))
                                         .padding(.bottom, 5)
                                     
                                     Text(viewModel.noteObj.noteAbstract!).font(.caption).fontWeight(.light).multilineTextAlignment(.leading)

@@ -30,11 +30,14 @@ struct ProfileView: View {
                             .foregroundColor(Color("Secondary"))
                     } else {
                         VStack {
+                            HStack(alignment: .center) {
+                                Text("Profile").font(.title).fontWeight(.medium).foregroundColor(Color(.white)).padding(.top, -50)
+                            }
                             List {
                                 Section {
                                     VStack(alignment: .leading){
                                         Text("Full Name")
-                                            .foregroundColor(Color("Primary"))
+                                            .foregroundColor(Color("AccentReversed"))
                                             .font(.system(size: 15))
                                             .padding(.bottom, 3)
                                         Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
@@ -43,7 +46,7 @@ struct ProfileView: View {
 
                                     VStack(alignment: .leading){
                                         Text("Email")
-                                            .foregroundColor(Color("Primary"))
+                                            .foregroundColor(Color("AccentReversed"))
                                             .font(.system(size: 15))
                                             .padding(.bottom, 3)
                                         Text((viewModel.response?.email)!).fontWeight(.light)
@@ -70,8 +73,8 @@ struct ProfileView: View {
                                     }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.red)
                                 }.accentColor(.primary)
                             }.listStyle(.insetGrouped)
-                             .navigationTitle("Profile")
-                        }
+                             .navigationTitle("")
+                        }.background(Color("Primary"))
                     }
                 }
             }
