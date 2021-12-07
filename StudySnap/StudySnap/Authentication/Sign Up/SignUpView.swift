@@ -52,6 +52,7 @@ struct SignUpContent: View {
                         self.checkTermsAndConditions = true
                     } label: {
                         Text("Terms and Conditions")
+                            
                     }
                     .accentColor(Color("Primary"))
                     .alert("Terms and Conditions", isPresented: self.$checkTermsAndConditions) {

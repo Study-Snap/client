@@ -161,7 +161,7 @@ struct ClassroomsDashboard: View {
                                             }) {
                                                 Image(systemName: toolbarIcon)
                                                     .font(.title2)
-                                                    .foregroundColor(isGridViewActive ? .accentColor : .primary)
+                                                    .foregroundColor(isGridViewActive ? Color("Secondary") : Color("Secondary"))
                                             }
                                         } //: HSTACK
                                     } //: BUTTONS

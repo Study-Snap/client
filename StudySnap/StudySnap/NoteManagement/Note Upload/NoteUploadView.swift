@@ -57,12 +57,12 @@ struct NoteUploadView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack (alignment: .center) {
+                /*HStack (alignment: .center) {
                     Text("Note Upload")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.top, -50)
-                }
+                }*/
                 if (self.loading && !self.viewModel.error) {
                     ProgressView("Creating your Note!")
                         .foregroundColor(Color("Secondary"))
@@ -235,6 +235,7 @@ struct NoteUploadView: View {
                     }
                 }
             }
+            .navigationBarTitle("Note Upload", displayMode: .inline)
             .onAppear { self.kGuardian.addObserver() }
             .onDisappear { self.kGuardian.removeObserver() }
             .alert(isPresented: self.$viewModel.error, content: {

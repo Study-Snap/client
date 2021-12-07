@@ -30,31 +30,87 @@ struct ProfileView: View {
                             .foregroundColor(Color("Secondary"))
                     } else {
                         VStack {
-                            HStack(alignment: .center) {
-                                Text("Profile").font(.title).fontWeight(.medium).foregroundColor(Color(.white)).padding(.top, -50)
-                            }
+
                             List {
-                                Section {
-                                    VStack(alignment: .leading){
-                                        Text("Full Name")
-                                            .foregroundColor(Color("AccentReversed"))
-                                            .font(.system(size: 15))
-                                            .padding(.bottom, 3)
-                                        Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)").fontWeight(.light)
-                                            .font(.system(size: 20))
+                                VStack {
+                                    VStack(alignment: .center){
+                                        Spacer()
+                                        Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)")
+                                            .font(.title)
+                                            .fontWeight(.semibold)
+                                            .padding(.top, 40)
+                                            
+                                        Text((viewModel.response?.email)!)
+                                            .font(.subheadline)
+                                            .fontWeight(.none)
+                                            .padding(.bottom, 20)
+                                           
+                                    } .frame(maxWidth: .infinity)
+
+                                }
+                                .background(
+                                    ProfileBackground()
+                                        .offset(x: -50, y: -120)
+                                    
+                                ).accentColor(.primary)
+
+                                Section{
+                                    VStack(alignment: .center){
+                                      
+                                        HStack{
+                                            VStack{
+                                                Text("25")
+                                                    .padding(.vertical, 10)
+                                                    .font(.title2)
+                                                    .foregroundColor(Color("Primary"))
+                                                Text("Notes Published")
+                                                    .font(.caption)
+
+                                            }
+                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color("Primary"), lineWidth: 1)
+                                            )
+                                            VStack{
+                                                Text("7")
+                                                    .padding(.vertical, 10)
+                                                    .font(.title2)
+                                                    .foregroundColor(Color("Primary"))
+                                                Text("Classrooms Joined")
+                                                    .font(.caption)
+                                            }
+                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color("Primary"), lineWidth: 1)
+                                            )
+                                            
+                                            
+       
+                                        }
+                                        VStack{
+                                            Text("25 mins")
+                                                .padding(.vertical, 10)
+                                                .font(.title2)
+                                                .foregroundColor(Color("Primary"))
+                                            Text("Content uploaded")
+                                                .font(.caption)
+                                        }
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                        .padding()
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color("Primary"), lineWidth: 1)
+                                        )
+                                      
                                     }
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                }
 
-                                    VStack(alignment: .leading){
-                                        Text("Email")
-                                            .foregroundColor(Color("AccentReversed"))
-                                            .font(.system(size: 15))
-                                            .padding(.bottom, 3)
-                                        Text((viewModel.response?.email)!).fontWeight(.light)
-                                            .font(.system(size: 20))
-                                    }
-
-                                }.accentColor(.primary)
-
+                                
                                 Section {
                                     // TODO: Implement change password =)
                                     Button("Change Password") {
@@ -72,12 +128,14 @@ struct ProfileView: View {
                                         }
                                     }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.red)
                                 }.accentColor(.primary)
+                                
+
                             }.listStyle(.insetGrouped)
-                             .navigationTitle("")
-                        }.background(Color("Primary"))
+                        }
                     }
                 }
-            }
+
+            }.navigationBarHidden(true)
         }.onAppear(perform: {
             self.viewModel.getUserInformation() {
                 if self.viewModel.unauthorized {
