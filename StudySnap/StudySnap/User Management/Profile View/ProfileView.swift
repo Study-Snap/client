@@ -16,7 +16,7 @@ struct ProfileView: View {
     @StateObject var viewModel : ProfileViewViewModel = ProfileViewViewModel()
     @State var error: Bool = false
     @State var deauthenticated: Bool = false
-    
+    @State var showTermsAndConditions: Bool = false
     // Sheet values
     @State private var showChangePassword = false
     
@@ -110,9 +110,24 @@ struct ProfileView: View {
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 }
 
-                                
                                 Section {
-                                    // TODO: Implement change password =)
+                                    
+                                    Button {
+                                        self.showTermsAndConditions = true
+                                    } label: {
+                                        Text("Terms & Conditions")
+                                            
+                                    }
+                                    .alert("Terms & Conditions", isPresented: self.$showTermsAndConditions) {
+                                        
+                                        Button("Ok", role:.cancel){
+                                            self.showTermsAndConditions = false
+                                        }
+                                    } message:{
+                                        Text("By registering for a StudySnap account, user acknowledges that by creating an account they are agreeing to the following terms \n \n- Only notes personally written can be uploaded or must be rephrased in their own words and must reference the original author and have their consent \n \n- Uploading of any document (assignments, quizzes, tests, projects etc.) that directly relates to being a graded material is prohibited \n \n- User will not distribute the content from StudySnap to other services in an attempt to use them for personal gains and or profit from them")
+                                          
+                                    }
+                                    
                                     Button("Change Password") {
                                         showChangePassword = true
                                     }.buttonStyle(BorderlessButtonStyle()).sheet(isPresented: $showChangePassword) {
