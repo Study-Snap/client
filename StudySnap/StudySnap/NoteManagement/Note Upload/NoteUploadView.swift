@@ -57,12 +57,12 @@ struct NoteUploadView: View {
     var body: some View {
         NavigationView {
             VStack {
-                /*HStack (alignment: .center) {
+                HStack (alignment: .center) {
                     Text("Note Upload")
-                        .font(.largeTitle)
+                        .font(.title2)
                         .fontWeight(.bold)
                         .padding(.top, -50)
-                }*/
+                }
                 if (self.loading && !self.viewModel.error) {
                     ProgressView("Creating your Note!")
                         .foregroundColor(Color("Secondary"))
@@ -71,7 +71,7 @@ struct NoteUploadView: View {
                         // Input section
                         Text("Required Information")
                             .font(.caption)
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("BrightPrimaryConstant"))
                         InputField(placeholder: "Title", value: $title)
                             .padding(.horizontal, 5)
                             .padding(.bottom, 10)
@@ -121,7 +121,7 @@ struct NoteUploadView: View {
                         
                         Text("Citation Information (Optional)")
                             .font(.caption)
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("BrightPrimaryConstant"))
                         HStack {
                             InputField(placeholder: "Author First Name (optional)", value: $citationAuthorFirstName)
                                 .background(GeometryGetter(rect: $kGuardian.rects[2]))
@@ -147,7 +147,7 @@ struct NoteUploadView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(Color("Accent"))
-                                        .cornerRadius(10)
+                                        .cornerRadius(10).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("TextFieldPrimary"), lineWidth: 0.25))
 
                                     
                                     VStack {
@@ -175,7 +175,7 @@ struct NoteUploadView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(Color("Accent"))
-                                        .cornerRadius(10)
+                                        .cornerRadius(10).overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("TextFieldPrimary"), lineWidth: 0.25))
                                                 
                                         VStack {
                                             Image(systemName: "highlighter")
@@ -235,7 +235,7 @@ struct NoteUploadView: View {
                     }
                 }
             }
-            .navigationBarTitle("Note Upload", displayMode: .inline)
+            .navigationBarTitle("", displayMode: .inline)
             .onAppear { self.kGuardian.addObserver() }
             .onDisappear { self.kGuardian.removeObserver() }
             .alert(isPresented: self.$viewModel.error, content: {

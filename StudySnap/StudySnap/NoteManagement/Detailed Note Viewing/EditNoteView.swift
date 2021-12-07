@@ -37,7 +37,7 @@ struct EditNoteView: View {
                     VStack{
                         Text("Enter in new values for one or more of the available fields")
                             .font(.caption)
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("AccentReversed"))
                         InputField(placeholder: "New title", value: $title)
                             .padding(.horizontal, 10)
                             .padding(.bottom, 10)

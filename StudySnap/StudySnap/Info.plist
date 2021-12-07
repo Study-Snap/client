@@ -5,9 +5,9 @@
 	<key>NOTE_SPACES_EP</key>
 	<string>notesdata.nyc3.digitaloceanspaces.com</string>
 	<key>API_PROTOCOL</key>
-	<string>http</string>
+	<string>https</string>
 	<key>AUTH_ENDPOINT</key>
-	<string>localhost:5555</string>
+	<string>auth.studysnap.ca</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -21,11 +21,11 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.0</string>
+	<string>1.2.1</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NEPTUNE_ENDPOINT</key>
-	<string>localhost:7777</string>
+	<string>neptune.studysnap.ca</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

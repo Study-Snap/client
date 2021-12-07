@@ -33,7 +33,7 @@ struct CitationView: View {
                 VStack(alignment:.leading) {
                     Text("APA")
                         .font(.headline)
-                        .foregroundColor(Color("Primary"))
+                        .foregroundColor(Color("BrightPrimaryConstant"))
                         .padding(.top, 20)
                     let apaCitation = "\(self.citation.authorLastName), \(self.citation.authorFirstName). (\(self.citation.publishYear)). \(self.citation.publishTitle)."
                     VStack(alignment: .leading) {
@@ -53,7 +53,7 @@ struct CitationView: View {
                         
                     Text("IEEE")
                         .font(.headline)
-                        .foregroundColor(Color("Primary"))
+                        .foregroundColor(Color("BrightPrimaryConstant"))
                         .padding(.top, 20)
                     let ieeeCitation = "\(self.citation.authorLastName), \(self.citation.authorFirstName), '\(self.citation.publishTitle),' \(self.citation.publishYear)."
                     VStack(alignment: .leading) {
@@ -71,7 +71,7 @@ struct CitationView: View {
                         .strokeStyle()
                     Text("MLA")
                         .font(.headline)
-                        .foregroundColor(Color("Primary"))
+                        .foregroundColor(Color("BrightPrimaryConstant"))
                         .padding(.top, 20)
                     let mlaCitation = "\(self.citation.authorLastName). '\(self.citation.publishTitle),' \(self.citation.publishYear)."
                     VStack(alignment: .leading) {

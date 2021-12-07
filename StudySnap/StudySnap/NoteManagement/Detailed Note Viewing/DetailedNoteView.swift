@@ -228,7 +228,7 @@ struct DetailedNoteView: View {
                         HStack(spacing: 5) {
                             Button(action: {
                                
-                                if self.userViewModel.response!.id == self.viewModel.noteObj.authorId! {
+                                if self.userViewModel.userDataResponse!.id == self.viewModel.noteObj.authorId! {
                                     self.showEditing = true
                                 }else{
                                     self.showAlert = true

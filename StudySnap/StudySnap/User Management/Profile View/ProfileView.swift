@@ -24,7 +24,7 @@ struct ProfileView: View {
         NavigationView {
             ZStack {
                 VStack {
-                    if viewModel.response == nil {
+                    if viewModel.userDataResponse == nil {
                         // Loading still
                         ProgressView("Loading user profile")
                             .foregroundColor(Color("Secondary"))
@@ -35,81 +35,70 @@ struct ProfileView: View {
                                 VStack {
                                     VStack(alignment: .center){
                                         Spacer()
-                                        Text("\((viewModel.response?.firstName)!) \((viewModel.response?.lastName)!)")
+                                        Text("\((viewModel.userDataResponse?.firstName)!) \((viewModel.userDataResponse?.lastName)!)")
                                             .font(.title)
                                             .fontWeight(.semibold)
-                                            .padding(.top, 40)
+                                            .padding(.top, 45)
+                                            .padding(.bottom, 5)
                                             
-                                        Text((viewModel.response?.email)!)
+                                        Text((viewModel.userDataResponse?.email)!)
                                             .font(.subheadline)
                                             .fontWeight(.none)
-                                            .padding(.bottom, 20)
+                                            .foregroundColor(Color("AccentReversed"))
+                                            .padding(.bottom, 30)
                                            
                                     } .frame(maxWidth: .infinity)
 
                                 }
                                 .background(
                                     ProfileBackground()
-                                        .offset(x: -50, y: -120)
+                                        .offset(x: -50, y: -130)
                                     
                                 ).accentColor(.primary)
 
-                                Section{
-                                    VStack(alignment: .center){
-                                      
-                                        HStack{
-                                            VStack{
-                                                Text("25")
-                                                    .padding(.vertical, 10)
-                                                    .font(.title2)
-                                                    .foregroundColor(Color("Primary"))
-                                                Text("Notes Published")
-                                                    .font(.caption)
-
-                                            }
-                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                            .padding()
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 12)
-                                                    .stroke(Color("Primary"), lineWidth: 1)
-                                            )
-                                            VStack{
-                                                Text("7")
-                                                    .padding(.vertical, 10)
-                                                    .font(.title2)
-                                                    .foregroundColor(Color("Primary"))
-                                                Text("Classrooms Joined")
-                                                    .font(.caption)
-                                            }
-                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                            .padding()
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 12)
-                                                    .stroke(Color("Primary"), lineWidth: 1)
-                                            )
-                                            
-                                            
-       
-                                        }
+                                Section {
+                                    HStack{
                                         VStack{
-                                            Text("25 mins")
+                                            Text("\(self.viewModel.userNotesCount ?? 0)")
                                                 .padding(.vertical, 10)
                                                 .font(.title2)
-                                                .foregroundColor(Color("Primary"))
-                                            Text("Content uploaded")
+                                                .foregroundColor(Color("BrightPrimaryConstant"))
+                                            Text("notes published")
+                                                .font(.caption)
+
+                                        }
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                        .padding()
+                                        Divider()
+                                        VStack{
+                                            Text("\(self.viewModel.userClassroomCount ?? 0)")
+                                                .padding(.vertical, 10)
+                                                .font(.title2)
+                                                .foregroundColor(Color("BrightPrimaryConstant"))
+                                            Text("classrooms joined")
                                                 .font(.caption)
                                         }
                                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                         .padding()
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .stroke(Color("Primary"), lineWidth: 1)
-                                        )
-                                      
+                                    }
+                                }
+                                
+                                Section {
+                                    VStack(alignment: .center){
+                                        VStack{
+                                            Text("\(self.viewModel.userTotalContentMinutes ?? 0)")
+                                                .padding(.vertical, 10)
+                                                .font(.title2)
+                                                .foregroundColor(Color("BrightPrimaryConstant"))
+                                            Text("minutes of content published")
+                                                .font(.caption)
+                                        }
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                        .padding()
                                     }
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 }
-
+                                
                                 Section {
                                     
                                     Button {
@@ -163,6 +152,54 @@ struct ProfileView: View {
                     if (self.viewModel.logout) {
                         self.rootIsActive = false
                         self.presentationMode.wrappedValue.dismiss()
+                    }
+                }
+                
+                // Load user classrooms
+                self.viewModel.getClassroomsCount {
+                    if self.viewModel.unauthorized {
+                        // If we cannot refresh, pop off back to login
+                        self.rootIsActive = false
+                    }
+                    if self.viewModel.error {
+                        // Unknown error getting user data -- logout user
+                        self.viewModel.performLogout()
+                        if (self.viewModel.logout) {
+                            self.rootIsActive = false
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                    
+                    // Load user published notes
+                    self.viewModel.getTotalNotesByUser {
+                        if self.viewModel.unauthorized {
+                            // If we cannot refresh, pop off back to login
+                            self.rootIsActive = false
+                        }
+                        if self.viewModel.error {
+                            // Unknown error getting user data -- logout user
+                            self.viewModel.performLogout()
+                            if (self.viewModel.logout) {
+                                self.rootIsActive = false
+                                self.presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                        
+                        // Load user content length (minutes)
+                        self.viewModel.getTotalContentMinutes {
+                            if self.viewModel.unauthorized {
+                                // If we cannot refresh, pop off back to login
+                                self.rootIsActive = false
+                            }
+                            if self.viewModel.error {
+                                // Unknown error getting user data -- logout user
+                                self.viewModel.performLogout()
+                                if (self.viewModel.logout) {
+                                    self.rootIsActive = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                            }
+                        }
                     }
                 }
             }

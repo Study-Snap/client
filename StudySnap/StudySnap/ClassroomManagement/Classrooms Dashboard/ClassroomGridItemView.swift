@@ -36,7 +36,7 @@ struct ClassroomGridItemView: View {
 
             }
             .scaledToFill()
-            .frame(minWidth: 170.0,maxWidth: .infinity, minHeight: 170.0, maxHeight: 300)
+            .frame(minWidth: 170.0,maxWidth: .infinity, minHeight: 170.0, maxHeight: 170.0)
             
             .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
 
