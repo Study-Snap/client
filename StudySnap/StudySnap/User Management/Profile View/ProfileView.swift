@@ -59,7 +59,7 @@ struct ProfileView: View {
                                 Section {
                                     HStack{
                                         VStack{
-                                            Text("\(self.viewModel.userNotesCount ?? 0)")
+                                            Text("\(self.viewModel.userNotesCount ?? 12)")
                                                 .padding(.vertical, 10)
                                                 .font(.title2)
                                                 .foregroundColor(Color("BrightPrimaryConstant"))
@@ -71,7 +71,7 @@ struct ProfileView: View {
                                         .padding()
                                         Divider()
                                         VStack{
-                                            Text("\(self.viewModel.userClassroomCount ?? 0)")
+                                            Text("\(self.viewModel.userClassroomCount ?? 3)")
                                                 .padding(.vertical, 10)
                                                 .font(.title2)
                                                 .foregroundColor(Color("BrightPrimaryConstant"))
@@ -86,7 +86,7 @@ struct ProfileView: View {
                                 Section {
                                     VStack(alignment: .center){
                                         VStack{
-                                            Text("\(self.viewModel.userTotalContentMinutes ?? 0)")
+                                            Text("\(self.viewModel.userTotalContentMinutes ?? 73)")
                                                 .padding(.vertical, 10)
                                                 .font(.title2)
                                                 .foregroundColor(Color("BrightPrimaryConstant"))
@@ -154,54 +154,54 @@ struct ProfileView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
-                
-                // Load user classrooms
-                self.viewModel.getClassroomsCount {
-                    if self.viewModel.unauthorized {
-                        // If we cannot refresh, pop off back to login
-                        self.rootIsActive = false
-                    }
-                    if self.viewModel.error {
-                        // Unknown error getting user data -- logout user
-                        self.viewModel.performLogout()
-                        if (self.viewModel.logout) {
-                            self.rootIsActive = false
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                    }
-                    
-                    // Load user published notes
-                    self.viewModel.getTotalNotesByUser {
-                        if self.viewModel.unauthorized {
-                            // If we cannot refresh, pop off back to login
-                            self.rootIsActive = false
-                        }
-                        if self.viewModel.error {
-                            // Unknown error getting user data -- logout user
-                            self.viewModel.performLogout()
-                            if (self.viewModel.logout) {
-                                self.rootIsActive = false
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }
-                        
-                        // Load user content length (minutes)
-                        self.viewModel.getTotalContentMinutes {
-                            if self.viewModel.unauthorized {
-                                // If we cannot refresh, pop off back to login
-                                self.rootIsActive = false
-                            }
-                            if self.viewModel.error {
-                                // Unknown error getting user data -- logout user
-                                self.viewModel.performLogout()
-                                if (self.viewModel.logout) {
-                                    self.rootIsActive = false
-                                    self.presentationMode.wrappedValue.dismiss()
-                                }
-                            }
-                        }
-                    }
-                }
+
+//                // Load user classrooms
+//                self.viewModel.getClassroomsCount {
+//                    if self.viewModel.unauthorized {
+//                        // If we cannot refresh, pop off back to login
+//                        self.rootIsActive = false
+//                    }
+//                    if self.viewModel.error {
+//                        // Unknown error getting user data -- logout user
+//                        self.viewModel.performLogout()
+//                        if (self.viewModel.logout) {
+//                            self.rootIsActive = false
+//                            self.presentationMode.wrappedValue.dismiss()
+//                        }
+//                    }
+//
+//                    // Load user published notes
+//                    self.viewModel.getTotalNotesByUser {
+//                        if self.viewModel.unauthorized {
+//                            // If we cannot refresh, pop off back to login
+//                            self.rootIsActive = false
+//                        }
+//                        if self.viewModel.error {
+//                            // Unknown error getting user data -- logout user
+//                            self.viewModel.performLogout()
+//                            if (self.viewModel.logout) {
+//                                self.rootIsActive = false
+//                                self.presentationMode.wrappedValue.dismiss()
+//                            }
+//                        }
+//
+//                        // Load user content length (minutes)
+//                        self.viewModel.getTotalContentMinutes {
+//                            if self.viewModel.unauthorized {
+//                                // If we cannot refresh, pop off back to login
+//                                self.rootIsActive = false
+//                            }
+//                            if self.viewModel.error {
+//                                // Unknown error getting user data -- logout user
+//                                self.viewModel.performLogout()
+//                                if (self.viewModel.logout) {
+//                                    self.rootIsActive = false
+//                                    self.presentationMode.wrappedValue.dismiss()
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
         })
     }
