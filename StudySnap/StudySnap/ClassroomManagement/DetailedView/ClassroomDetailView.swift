@@ -32,17 +32,12 @@ struct ClassroomDetailView: View {
     @State var isRatingDisabled: Bool = true
     @State var isNoteUpdated: Bool = false
 
-  
-
     var body: some View {
-    
         ZStack(alignment: .center) {
             NavigationView {
                 if viewModel.loading {
-                    
                     ProgressView("Loading classroom")
                         .foregroundColor(Color("Secondary"))
-                    
                 } else {
                     VStack {
                         
@@ -209,7 +204,6 @@ struct ClassroomDetailView: View {
                                         Image(systemName: "rectangle.portrait.and.arrow.right")
                                             .accentColor(Color(.systemRed))
                                             .font(.body)
-                                        
                                     }
                                     .alert("Delete Classroom Confirmation", isPresented: $isLeavingClassroom) {
                                         Button("Cancel", role: .cancel){
@@ -277,7 +271,6 @@ struct ClassroomDetailView: View {
                         } //: BUTTONS
                     }
                 }
-
             }//: TOOLBAR
         }.onAppear(perform: {
             self.classroomViewModel.getUser() {

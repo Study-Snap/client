@@ -66,7 +66,6 @@ struct NoteRatingView: View {
                 }
                 //Reset flag
                 self.isNoteUpdated = true
-                print("isNoteUpdated: \(isNoteUpdated)")
                 self.isNoteRatingUpdate = false
             }
         }
