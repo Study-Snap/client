@@ -13,6 +13,7 @@ class ClassroomDetailViewViewModel: ObservableObject {
     @Published var unauthorized: Bool = false
     @Published var error: Bool = false
     @Published var errorMessage: String?
+    @Published var loading: Bool = true
     
     func getTopTrendingNotes(currentClassId: String, completion: @escaping () -> ()) -> Void {
         NeptuneApi().getTopNotesByRating(classId: currentClassId) { res in
@@ -34,17 +35,20 @@ class ClassroomDetailViewViewModel: ObservableObject {
                 } else if res[0].message!.contains("No notes were found") {
                     // No notes exist for classroom (no need for error message)
                     self.trending = []
+                    self.loading = false
                     completion()
                 } else {
                     // Some error occurred (unkown)
                     self.trending = []
                     self.error = true
                     self.errorMessage = res[0].message
+                    self.loading = false
                     completion()
                 }
             } else {
                 // Success
                 self.trending = res
+                self.loading = false
                 completion()
             }
         }
