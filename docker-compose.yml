@@ -59,7 +59,7 @@ services:
     networks:
       - client-dev-network
   neptune:
-    image: studysnap/neptune:SSPP-323.0.x
+    image: studysnap/neptune:0.x
     container_name: neptune
     restart: on-failure
     environment: 
@@ -92,7 +92,7 @@ services:
       DB_HOST: ssdb
       DB_USER_DATABASE: studysnap_db
       JWT_SECRET: dev
-      JWT_ACCESS_TOKEN_EXPIRE_TIME: 99m
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 5s
     depends_on:
       - ssdb
     ports:
