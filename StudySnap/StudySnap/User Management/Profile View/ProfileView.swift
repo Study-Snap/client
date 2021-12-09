@@ -141,63 +141,28 @@ struct ProfileView: View {
 
             }.navigationBarHidden(true)
         }.onAppear(perform: {
-            self.viewModel.getUserInformation() {
+            self.viewModel.getUserInformation {
                 if self.viewModel.unauthorized {
-                    // If we cannot refresh, pop off back to login
+                    // Refresh failed, return to login
                     self.rootIsActive = false
                 }
-                if self.viewModel.error {
-                    // Unknown error getting user data -- logout user
-                    self.viewModel.performLogout()
-                    if (self.viewModel.logout) {
-                        self.rootIsActive = false
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                }
                 
-                // Load user classrooms
-                self.viewModel.getClassroomsCount {
+                self.viewModel.getTotalContentMinutes {
                     if self.viewModel.unauthorized {
-                        // If we cannot refresh, pop off back to login
+                        // Refresh failed, return to login
                         self.rootIsActive = false
-                    }
-                    if self.viewModel.error {
-                        // Unknown error getting user data -- logout user
-                        self.viewModel.performLogout()
-                        if (self.viewModel.logout) {
-                            self.rootIsActive = false
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
                     }
                     
-                    // Load user published notes
                     self.viewModel.getTotalNotesByUser {
                         if self.viewModel.unauthorized {
-                            // If we cannot refresh, pop off back to login
+                            // Refresh failed, return to login
                             self.rootIsActive = false
                         }
-                        if self.viewModel.error {
-                            // Unknown error getting user data -- logout user
-                            self.viewModel.performLogout()
-                            if (self.viewModel.logout) {
-                                self.rootIsActive = false
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }
                         
-                        // Load user content length (minutes)
-                        self.viewModel.getTotalContentMinutes {
+                        self.viewModel.getClassroomsCount {
                             if self.viewModel.unauthorized {
-                                // If we cannot refresh, pop off back to login
+                                // Refresh failed, return to login
                                 self.rootIsActive = false
-                            }
-                            if self.viewModel.error {
-                                // Unknown error getting user data -- logout user
-                                self.viewModel.performLogout()
-                                if (self.viewModel.logout) {
-                                    self.rootIsActive = false
-                                    self.presentationMode.wrappedValue.dismiss()
-                                }
                             }
                         }
                     }

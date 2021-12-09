@@ -95,8 +95,7 @@ struct DetailedNoteView: View {
                                 Spacer()
                                 Image(systemName: "text.viewfinder")
                                     .font(.title3)
-                                    .foregroundColor(Color("Secondary"))
-                                
+                                    .foregroundColor(Color("Secondary"))                     
                             })
                             Spacer()
                         }.padding()

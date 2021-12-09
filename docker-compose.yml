@@ -9,6 +9,20 @@ services:
       - "discovery.type=single-node"
     networks: 
       - client-dev-network
+  es_sidecar:
+    image: bash:latest
+    container_name: es_sidecar
+    restart: on-failure
+    environment:
+      ES_HOST: elasticsearch
+      ES_PORT: 9200
+    command: bash -c "/util/config-scripts/elastic-customizer.sh"
+    volumes:
+      - "./.docker/es-search/scripts/:/util/config-scripts/"
+    depends_on:
+      - elasticsearch
+    networks:
+      - client-dev-network
   logstash:
     image: studysnap/logstash-pg-es:1.x
     container_name: sem_logstash
@@ -78,7 +92,7 @@ services:
       DB_HOST: ssdb
       DB_USER_DATABASE: studysnap_db
       JWT_SECRET: dev
-      JWT_ACCESS_TOKEN_EXPIRE_TIME: 1m
+      JWT_ACCESS_TOKEN_EXPIRE_TIME: 5s
     depends_on:
       - ssdb
     ports:

@@ -42,7 +42,7 @@ struct NoteRatingView: View {
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(self.selected >= i ? .yellow : .gray).onTapGesture {
                                     self.selected = i
-                                    self.isNoteUpdated.toggle()
+
                                     self.isNoteRatingUpdate = true
                                 }
                         }
@@ -64,6 +64,9 @@ struct NoteRatingView: View {
                     // Refresh failed, return to login
                     self.rootIsActive = false
                 }
+                //Reset flag
+                self.isNoteUpdated = true
+                self.isNoteRatingUpdate = false
             }
         }
         
